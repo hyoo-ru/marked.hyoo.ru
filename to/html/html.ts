@@ -3,6 +3,10 @@ namespace $ {
 	function flow( marked: string ): string {
 		return [ ... $mol_regexp_mt_flow.parse( marked ) ].map( token => {
 			
+			if( token.cut ) {
+				return '<hr/>'
+			}
+			
 			if( token.header ) {
 				const level = token.marker.length
 				const tag = `h${level}`
