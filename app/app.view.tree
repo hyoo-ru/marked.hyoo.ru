@@ -1,0 +1,28 @@
+$hyoo_marked_app $mol_book2
+	plugins /
+		<= Theme $mol_theme_auto
+	pages /
+		<= Marked $mol_page
+			title \MarkedText
+			tools /
+				<= Lights $mol_lights_toggle
+				<= Html_show $mol_link 
+					sub /
+						<= html_show_label \HTML
+					arg *
+						html \
+			body /
+				<= Marked_text $mol_textarea
+					value?val <=> marked?val \
+		<= Html $mol_page
+			title \HTML
+			tools /
+				<= Close $mol_link 
+					sub /
+						<= Close_icon $mol_icon_cross
+					arg *
+						html null
+			body /
+				<= Html_text $mol_textarea
+					enabled false
+					value <= html \
