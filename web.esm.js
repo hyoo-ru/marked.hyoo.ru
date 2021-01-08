@@ -7296,7 +7296,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("hyoo/marked/app/app.view.css", "[hyoo_marked_app_marked] {\n\tflex: 1000 0 40rem;\n}\n\n[hyoo_marked_app_marked_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_marked_app_html] {\n\tflex: 1000 0 40rem;\n}\n");
+    $.$mol_style_attach("hyoo/marked/app/app.view.css", "[hyoo_marked_app_marked] {\n\tflex: 1000 1 40rem;\n}\n\n[hyoo_marked_app_marked_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_marked_app_html_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_marked_app_html] {\n\tflex: 1000 1 40rem;\n}\n");
 })($ || ($ = {}));
 //app.view.css.js.map
 ;
