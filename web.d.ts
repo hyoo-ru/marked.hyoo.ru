@@ -2322,6 +2322,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_regexp_mt_cut: $mol_regexp<{}>;
+}
+
+declare namespace $ {
     let $mol_regexp_mt_line_content: $mol_regexp<{}>;
     let $mol_regexp_mt_line: $mol_regexp<{
         content: string;
@@ -2468,6 +2472,7 @@ declare namespace $ {
         header: string;
         table: string;
         list: string;
+        cut: string;
         quote: string;
         paragraph: string;
     }>;

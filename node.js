@@ -7136,6 +7136,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_regexp_mt_cut = $.$mol_regexp.from([
+        '--',
+        $.$mol_regexp.line_end,
+    ]);
+})($ || ($ = {}));
+//cut.js.map
+;
+"use strict";
+var $;
+(function ($) {
     const { optional, slash_back, byte, byte_except, repeat } = $.$mol_regexp;
     $.$mol_regexp_mt_line_content = repeat(byte, 1);
     const uri = repeat(byte_except(slash_back));
@@ -7264,6 +7274,7 @@ var $;
     $.$mol_regexp_mt_flow = $.$mol_regexp.from([
         $.$mol_regexp.begin,
         {
+            cut: $.$mol_regexp_mt_cut,
             header: $.$mol_regexp_mt_header,
             list: $.$mol_regexp_mt_list,
             quote: $.$mol_regexp_mt_quote,
@@ -7280,6 +7291,9 @@ var $;
 (function ($) {
     function flow(marked) {
         return [...$.$mol_regexp_mt_flow.parse(marked)].map(token => {
+            if (token.cut) {
+                return '<hr/>';
+            }
             if (token.header) {
                 const level = token.marker.length;
                 const tag = `h${level}`;
