@@ -1,0 +1,15 @@
+{
+  "name": "hyoo_marked_app",
+  "version": "0.0.1",
+  "main": "node.js",
+  "module": "node.esm.js",
+  "browser": "web.js",
+  "types": "web.d.ts",
+  "dependencies": {
+    "require": "*",
+    "jsdom": "*",
+    "colorette": "*",
+    "chokidar": "*",
+    "node-fetch": "*"
+  }
+}
