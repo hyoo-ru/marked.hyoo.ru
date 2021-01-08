@@ -2322,6 +2322,42 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_partial_deep<Val> = {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
+    };
+}
+
+declare namespace $ {
+    let $mol_jsx_prefix: string;
+    let $mol_jsx_booked: Set<string> | null;
+    let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
+    function $mol_jsx<Props extends {
+        id?: string;
+    }, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element) | typeof $mol_jsx_view, props: Props, ...childNodes: Children): Element;
+    namespace $mol_jsx.JSX {
+        interface Element extends HTMLElement {
+        }
+        interface ElementClass {
+            attributes: {};
+            ownerDocument: Pick<Document, 'getElementById' | 'createElement'>;
+            childNodes: Array<Node | string>;
+            valueOf(): Element;
+        }
+        type IntrinsicElements = {
+            [key in keyof HTMLElementTagNameMap]?: $.$mol_type_partial_deep<HTMLElementTagNameMap[key]>;
+        };
+        interface IntrinsicAttributes {
+            id?: string;
+        }
+        interface ElementAttributesProperty {
+            attributes: {};
+        }
+        interface ElementChildrenAttribute {
+        }
+    }
+}
+
+declare namespace $ {
     let $hyoo_marked_cut: $mol_regexp<{}>;
 }
 
@@ -2479,6 +2515,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $hyoo_marked_to_dom(this: $, marked: string): $mol_jsx.JSX.Element;
+}
+
+declare namespace $ {
     function $hyoo_marked_to_html(this: $, marked: string): string;
 }
 
@@ -2600,4 +2640,16 @@ declare namespace $ {
             [key: string]: string;
         };
     };
+}
+
+declare namespace $ {
+    class $mol_jsx_view extends $mol_object2 {
+        static of<This extends typeof $mol_jsx_view>(this: This, node: Element): InstanceType<This>;
+        [Symbol.toStringTag]: string;
+        attributes: Partial<Pick<this, Exclude<keyof this, 'valueOf'>>>;
+        ownerDocument: typeof $mol_jsx_document;
+        childNodes: Array<Node | string>;
+        valueOf(): HTMLElement;
+        render(): HTMLElement;
+    }
 }

@@ -7127,6 +7127,79 @@ var $;
 //app.view.tree.js.map
 ;
 "use strict";
+//deep.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_jsx_prefix = '';
+    $.$mol_jsx_booked = null;
+    $.$mol_jsx_document = {
+        getElementById: () => null,
+        createElement: (name) => $.$mol_dom_context.document.createElement(name)
+    };
+    function $mol_jsx(Elem, props, ...childNodes) {
+        const id = props && props.id || '';
+        if ($.$mol_jsx_booked) {
+            if ($.$mol_jsx_booked.has(id)) {
+                $.$mol_fail(new Error(`JSX already has tag with id ${JSON.stringify(id)}`));
+            }
+            else {
+                $.$mol_jsx_booked.add(id);
+            }
+        }
+        const guid = $.$mol_jsx_prefix + id;
+        let node = guid && $.$mol_jsx_document.getElementById(guid);
+        if (typeof Elem !== 'string') {
+            if (Elem.prototype) {
+                const view = node && node[Elem] || new Elem;
+                Object.assign(view, props);
+                view[Symbol.toStringTag] = guid;
+                view.childNodes = childNodes;
+                if (!view.ownerDocument)
+                    view.ownerDocument = $.$mol_jsx_document;
+                node = view.valueOf();
+                node[Elem] = view;
+                return node;
+            }
+            else {
+                const prefix = $.$mol_jsx_prefix;
+                const booked = $.$mol_jsx_booked;
+                try {
+                    $.$mol_jsx_prefix = guid;
+                    $.$mol_jsx_booked = new Set;
+                    return Elem(props, ...childNodes);
+                }
+                finally {
+                    $.$mol_jsx_prefix = prefix;
+                    $.$mol_jsx_booked = booked;
+                }
+            }
+        }
+        if (!node)
+            node = $.$mol_jsx_document.createElement(Elem);
+        $.$mol_dom_render_children(node, [].concat(...childNodes));
+        for (const key in props) {
+            if (typeof props[key] === 'string') {
+                node.setAttribute(key, props[key]);
+            }
+            else if (props[key] && props[key]['constructor'] === Object) {
+                if (typeof node[key] === 'object') {
+                    Object.assign(node[key], props[key]);
+                    continue;
+                }
+            }
+            node[key] = props[key];
+        }
+        if (guid)
+            node.id = guid;
+        return node;
+    }
+    $.$mol_jsx = $mol_jsx;
+})($ || ($ = {}));
+//jsx.js.map
+;
+"use strict";
 var $;
 (function ($) {
     $.$hyoo_marked_cut = $.$mol_regexp.from([
@@ -7282,36 +7355,55 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const NL = '\n';
     function flow(marked) {
         return [...$.$hyoo_marked_flow.parse(marked)].map(token => {
             if (token.cut) {
-                return '<hr/>';
+                return $.$mol_jsx("hr", null);
             }
             if (token.header) {
                 const level = token.marker.length;
-                const tag = `h${level}`;
-                return `\n<${tag}>${line(token.content)}</${tag}>\n`;
+                const Tag = `h${level}`;
+                return $.$mol_jsx(Tag, null,
+                    NL,
+                    line(token.content),
+                    NL);
             }
             if (token.list) {
-                const tag = token.list[0] === '+' ? 'ol' : 'ul';
-                return `<${tag}>\n${list_items(token.list)}\n</${tag}>`;
+                const Tag = token.list[0] === '+' ? 'ol' : 'ul';
+                return $.$mol_jsx(Tag, null,
+                    NL,
+                    list_items(token.list),
+                    NL);
             }
             if (token.table) {
-                return `<table>\n${table_rows(token.table)}\n</table>`;
+                return $.$mol_jsx("table", null,
+                    NL,
+                    table_rows(token.table),
+                    NL);
             }
             if (token.script) {
-                return `<pre>\n${script_lines(token.script)}\n</pre>`;
+                return $.$mol_jsx("pre", null,
+                    NL,
+                    script_lines(token.script),
+                    NL);
             }
             if (token.quote) {
-                return `<blockquote>\n${flow(token.quote.replace(/^" /gm, ''))}\n</blockquote>`;
+                return $.$mol_jsx("blockquote", null,
+                    NL,
+                    flow(token.quote.replace(/^" /gm, '')),
+                    NL);
             }
             if (token.paragraph) {
                 if (!token.content)
                     return '';
-                return `<p>${line(token.content)}</p>`;
+                return $.$mol_jsx("p", null,
+                    NL,
+                    line(token.content),
+                    NL);
             }
             return token[0];
-        }).filter(Boolean).join('\n');
+        }).filter(Boolean);
     }
     function table_cells(marked) {
         const tokens = [...$.$hyoo_marked_table_line.parse(marked)];
@@ -7323,59 +7415,93 @@ var $;
         }
         return cols.map(col => {
             const lines = col.map(line => line.content);
-            return `<td>\n${flow(lines.join('\n') + '\n')}\n</td>`;
-        }).join('\n');
+            return $.$mol_jsx("td", null,
+                NL,
+                flow(lines.join('\n') + '\n'),
+                NL);
+        });
     }
     function table_rows(marked) {
         return [...$.$hyoo_marked_table_row.parse(marked)].map(token => {
-            return `<tr>\n${table_cells(token.content)}\n</tr>`;
-        }).filter(Boolean).join('\n');
+            return $.$mol_jsx("tr", null,
+                NL,
+                table_cells(token.content),
+                NL);
+        }).filter(Boolean);
     }
     function list_items(marked) {
         return [...$.$hyoo_marked_list_item.parse(marked)].map(token => {
             const kids = token.kids.replace(/^  /gm, '');
-            return `<li>${flow(token.content + '\n')} \n${flow(kids)}</li>`;
-        }).filter(Boolean).join('\n');
+            return $.$mol_jsx("li", null,
+                NL,
+                flow(token.content + '\n'),
+                flow(kids),
+                NL);
+        }).filter(Boolean);
     }
     function script_lines(marked) {
         return [...$.$hyoo_marked_script_line.parse(marked)].map(token => {
             if (token.marker === '++')
-                return `<ins>${token.content}</ins>`;
+                return $.$mol_jsx("ins", null,
+                    "$",
+                    token.content,
+                    NL);
             if (token.marker === '--')
-                return `<del>${token.content}</del>`;
+                return $.$mol_jsx("del", null,
+                    "$",
+                    token.content,
+                    NL);
             if (token.marker === '**')
-                return `<strong>${token.content}</strong>`;
-            return `${token.content}`;
-        }).filter(Boolean).join('\n');
+                return $.$mol_jsx("strong", null,
+                    "$",
+                    token.content,
+                    NL);
+            return $.$mol_jsx("span", null,
+                token.content,
+                NL);
+        }).filter(Boolean);
     }
     function line(marked) {
         return [...$.$hyoo_marked_line.parse(marked)].map(token => {
             if (token.strong) {
-                return `<strong>${line(token.content)}</strong>`;
+                return $.$mol_jsx("strong", null, line(token.content));
             }
             if (token.emphasis) {
-                return `<em>${line(token.content)}</em>`;
+                return $.$mol_jsx("em", null, line(token.content));
             }
             if (token.insertion) {
-                return `<ins>${line(token.content)}</ins>`;
+                return $.$mol_jsx("ins", null, line(token.content));
             }
             if (token.deletion) {
-                return `<del>${line(token.content)}</del>`;
+                return $.$mol_jsx("del", null, line(token.content));
             }
             if (token.code) {
-                return ` <code>${line(token.content)}</code> `;
+                return $.$mol_jsx("span", null,
+                    " ",
+                    $.$mol_jsx("code", null, line(token.content)),
+                    " ");
             }
             if (token.link) {
-                return `<a href="${token.uri}">${line(token.content || token.uri)}</a>`;
+                return $.$mol_jsx("a", { href: token.uri }, line(token.content || token.uri));
             }
             if (token.embed) {
-                return `<object data="${token.uri}">${line(token.content || token.uri)}</object>`;
+                return $.$mol_jsx("object", { data: token.uri }, line(token.content || token.uri));
             }
             return token[0];
-        }).filter(Boolean).join('');
+        }).filter(Boolean);
     }
+    function $hyoo_marked_to_dom(marked) {
+        return $.$mol_jsx("body", null, flow(marked + '\n'));
+    }
+    $.$hyoo_marked_to_dom = $hyoo_marked_to_dom;
+})($ || ($ = {}));
+//dom.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $hyoo_marked_to_html(marked) {
-        return flow(marked + '\n');
+        return this.$hyoo_marked_to_dom(marked).innerHTML;
     }
     $.$hyoo_marked_to_html = $hyoo_marked_to_html;
 })($ || ($ = {}));
@@ -8032,6 +8158,37 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    class $mol_jsx_view extends $.$mol_object2 {
+        static of(node) {
+            return node[this];
+        }
+        valueOf() {
+            const prefix = $.$mol_jsx_prefix;
+            const booked = $.$mol_jsx_booked;
+            const document = $.$mol_jsx_document;
+            try {
+                $.$mol_jsx_prefix = this[Symbol.toStringTag];
+                $.$mol_jsx_booked = new Set;
+                $.$mol_jsx_document = this.ownerDocument;
+                return this.render();
+            }
+            finally {
+                $.$mol_jsx_prefix = prefix;
+                $.$mol_jsx_booked = booked;
+                $.$mol_jsx_document = document;
+            }
+        }
+        render() {
+            return $.$mol_fail(new Error('dom_tree() not implemented'));
+        }
+    }
+    $.$mol_jsx_view = $mol_jsx_view;
+})($ || ($ = {}));
+//view.js.map
+;
+"use strict";
+var $;
 (function ($_1) {
     function $mol_test(set) {
         for (let name in set) {
@@ -8120,9 +8277,6 @@ var $;
 //deep.test.js.map
 ;
 "use strict";
-//deep.js.map
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_test({
@@ -8187,76 +8341,6 @@ var $;
     });
 })($ || ($ = {}));
 //jsx.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_jsx_prefix = '';
-    $.$mol_jsx_booked = null;
-    $.$mol_jsx_document = {
-        getElementById: () => null,
-        createElement: (name) => $.$mol_dom_context.document.createElement(name)
-    };
-    function $mol_jsx(Elem, props, ...childNodes) {
-        const id = props && props.id || '';
-        if ($.$mol_jsx_booked) {
-            if ($.$mol_jsx_booked.has(id)) {
-                $.$mol_fail(new Error(`JSX already has tag with id ${JSON.stringify(id)}`));
-            }
-            else {
-                $.$mol_jsx_booked.add(id);
-            }
-        }
-        const guid = $.$mol_jsx_prefix + id;
-        let node = guid && $.$mol_jsx_document.getElementById(guid);
-        if (typeof Elem !== 'string') {
-            if (Elem.prototype) {
-                const view = node && node[Elem] || new Elem;
-                Object.assign(view, props);
-                view[Symbol.toStringTag] = guid;
-                view.childNodes = childNodes;
-                if (!view.ownerDocument)
-                    view.ownerDocument = $.$mol_jsx_document;
-                node = view.valueOf();
-                node[Elem] = view;
-                return node;
-            }
-            else {
-                const prefix = $.$mol_jsx_prefix;
-                const booked = $.$mol_jsx_booked;
-                try {
-                    $.$mol_jsx_prefix = guid;
-                    $.$mol_jsx_booked = new Set;
-                    return Elem(props, ...childNodes);
-                }
-                finally {
-                    $.$mol_jsx_prefix = prefix;
-                    $.$mol_jsx_booked = booked;
-                }
-            }
-        }
-        if (!node)
-            node = $.$mol_jsx_document.createElement(Elem);
-        $.$mol_dom_render_children(node, [].concat(...childNodes));
-        for (const key in props) {
-            if (typeof props[key] === 'string') {
-                node.setAttribute(key, props[key]);
-            }
-            else if (props[key] && props[key]['constructor'] === Object) {
-                if (typeof node[key] === 'object') {
-                    Object.assign(node[key], props[key]);
-                    continue;
-                }
-            }
-            node[key] = props[key];
-        }
-        if (guid)
-            node.id = guid;
-        return node;
-    }
-    $.$mol_jsx = $mol_jsx;
-})($ || ($ = {}));
-//jsx.js.map
 ;
 "use strict";
 var $;
@@ -10859,37 +10943,6 @@ var $;
     });
 })($ || ($ = {}));
 //view.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_jsx_view extends $.$mol_object2 {
-        static of(node) {
-            return node[this];
-        }
-        valueOf() {
-            const prefix = $.$mol_jsx_prefix;
-            const booked = $.$mol_jsx_booked;
-            const document = $.$mol_jsx_document;
-            try {
-                $.$mol_jsx_prefix = this[Symbol.toStringTag];
-                $.$mol_jsx_booked = new Set;
-                $.$mol_jsx_document = this.ownerDocument;
-                return this.render();
-            }
-            finally {
-                $.$mol_jsx_prefix = prefix;
-                $.$mol_jsx_booked = booked;
-                $.$mol_jsx_document = document;
-            }
-        }
-        render() {
-            return $.$mol_fail(new Error('dom_tree() not implemented'));
-        }
-    }
-    $.$mol_jsx_view = $mol_jsx_view;
-})($ || ($ = {}));
-//view.js.map
 ;
 "use strict";
 //equals.test.js.map
