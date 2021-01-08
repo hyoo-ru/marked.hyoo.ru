@@ -1,11 +1,15 @@
 [hyoo_marked_app_marked] {
-	flex: 1000 0 40rem;
+	flex: 1000 1 40rem;
 }
 
 [hyoo_marked_app_marked_body] {
 	padding: var(--mol_gap_block);
 }
 
+[hyoo_marked_app_html_body] {
+	padding: var(--mol_gap_block);
+}
+
 [hyoo_marked_app_html] {
-	flex: 1000 0 40rem;
+	flex: 1000 1 40rem;
 }
