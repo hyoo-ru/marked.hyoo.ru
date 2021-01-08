@@ -2309,12 +2309,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_cut: $mol_regexp<{}>;
+    let $hyoo_marked_cut: $mol_regexp<{}>;
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_line_content: $mol_regexp<{}>;
-    let $mol_regexp_mt_line: $mol_regexp<{
+    let $hyoo_marked_line_content: $mol_regexp<{}>;
+    let $hyoo_marked_line: $mol_regexp<{
         content: string;
     } & {
         marker: string;
@@ -2336,7 +2336,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_header: $mol_regexp<{
+    let $hyoo_marked_header: $mol_regexp<{
         marker: string;
     } & {
         content: string;
@@ -2344,14 +2344,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_list_line: $mol_regexp<{
+    let $hyoo_marked_list_line: $mol_regexp<{
         indent: string;
     } & {
         marker: string;
     } & {
         content: string;
     }>;
-    let $mol_regexp_mt_list_item: $mol_regexp<{
+    let $hyoo_marked_list_item: $mol_regexp<{
         kids: string;
     } & {
         indent: string;
@@ -2360,7 +2360,7 @@ declare namespace $ {
     } & {
         content: string;
     }>;
-    let $mol_regexp_mt_list: $mol_regexp<{
+    let $hyoo_marked_list: $mol_regexp<{
         indent: string;
     } & {
         marker: string;
@@ -2370,12 +2370,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_quote_line: $mol_regexp<{
+    let $hyoo_marked_quote_line: $mol_regexp<{
         marker: string;
     } & {
         content: string;
     }>;
-    let $mol_regexp_mt_quote: $mol_regexp<{
+    let $hyoo_marked_quote: $mol_regexp<{
         marker: string;
     } & {
         content: string;
@@ -2383,14 +2383,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_table_line: $mol_regexp<{
+    let $hyoo_marked_table_line: $mol_regexp<{
         indent: string;
     } & {
         marker: string;
     } & {
         content: string;
     }>;
-    let $mol_regexp_mt_table_row: $mol_regexp<{
+    let $hyoo_marked_table_row: $mol_regexp<{
         indent: string;
     } & {
         marker: string;
@@ -2399,7 +2399,7 @@ declare namespace $ {
     } & {
         content: string;
     }>;
-    let $mol_regexp_mt_table: $mol_regexp<{
+    let $hyoo_marked_table: $mol_regexp<{
         indent: string;
     } & {
         marker: string;
@@ -2409,12 +2409,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_script_line: $mol_regexp<{
+    let $hyoo_marked_script_line: $mol_regexp<{
         marker: string;
     } & {
         content: string;
     }>;
-    let $mol_regexp_mt_script: $mol_regexp<{
+    let $hyoo_marked_script: $mol_regexp<{
         marker: string;
     } & {
         content: string;
@@ -2422,13 +2422,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_paragraph: $mol_regexp<{
+    let $hyoo_marked_paragraph: $mol_regexp<{
         content: string;
     }>;
 }
 
 declare namespace $ {
-    let $mol_regexp_mt_flow: $mol_regexp<{
+    let $hyoo_marked_flow: $mol_regexp<{
         indent: string;
     } & {
         marker: string;

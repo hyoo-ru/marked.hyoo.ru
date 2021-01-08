@@ -7129,7 +7129,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_cut = $.$mol_regexp.from([
+    $.$hyoo_marked_cut = $.$mol_regexp.from([
         '--',
         $.$mol_regexp.line_end,
     ]);
@@ -7140,10 +7140,10 @@ var $;
 var $;
 (function ($) {
     const { optional, slash_back, byte, byte_except, repeat } = $.$mol_regexp;
-    $.$mol_regexp_mt_line_content = repeat(byte, 1);
+    $.$hyoo_marked_line_content = repeat(byte, 1);
     const uri = repeat(byte_except(slash_back));
     function with_marker(marker, content = $.$mol_regexp.from({
-        content: $.$mol_regexp_mt_line_content
+        content: $.$hyoo_marked_line_content
     })) {
         return $.$mol_regexp.from([{ marker }, content, marker]);
     }
@@ -7153,7 +7153,7 @@ var $;
     const deletion = with_marker('--');
     const code = with_marker('  ');
     function with_uri(content = $.$mol_regexp.from({
-        content: $.$mol_regexp_mt_line_content
+        content: $.$hyoo_marked_line_content
     })) {
         return $.$mol_regexp.from([
             optional([content, slash_back]),
@@ -7162,7 +7162,7 @@ var $;
     }
     const link = with_marker('\\\\', with_uri());
     const embed = with_marker('""', with_uri());
-    $.$mol_regexp_mt_line = $.$mol_regexp.from([
+    $.$hyoo_marked_line = $.$mol_regexp.from([
         { strong, emphasis, insertion, deletion, code, link, embed }
     ]);
 })($ || ($ = {}));
@@ -7171,10 +7171,10 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_header = $.$mol_regexp.from([
+    $.$hyoo_marked_header = $.$mol_regexp.from([
         { marker: $.$mol_regexp.repeat_greedy('=', 1, 6) },
         ' ',
-        { content: $.$mol_regexp_mt_line_content },
+        { content: $.$hyoo_marked_line_content },
         $.$mol_regexp.line_end,
     ]);
 })($ || ($ = {}));
@@ -7183,57 +7183,57 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_list_line = $.$mol_regexp.from([
+    $.$hyoo_marked_list_line = $.$mol_regexp.from([
         { indent: $.$mol_regexp.repeat('  ') },
         { marker: ['-', $.$mol_regexp.or, '+'] },
         ' ',
-        { content: $.$mol_regexp_mt_line_content },
+        { content: $.$hyoo_marked_line_content },
         $.$mol_regexp.line_end,
     ]);
-    $.$mol_regexp_mt_list_item = $.$mol_regexp.from([
-        $.$mol_regexp_mt_list_line,
+    $.$hyoo_marked_list_item = $.$mol_regexp.from([
+        $.$hyoo_marked_list_line,
         { kids: $.$mol_regexp.repeat_greedy([
                 '  ',
-                $.$mol_regexp_mt_line_content,
+                $.$hyoo_marked_line_content,
                 $.$mol_regexp.line_end,
             ]) },
     ]);
-    $.$mol_regexp_mt_list = $.$mol_regexp.repeat_greedy($.$mol_regexp_mt_list_line, 1);
+    $.$hyoo_marked_list = $.$mol_regexp.repeat_greedy($.$hyoo_marked_list_line, 1);
 })($ || ($ = {}));
 //list.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_quote_line = $.$mol_regexp.from([
+    $.$hyoo_marked_quote_line = $.$mol_regexp.from([
         { marker: '"' },
         ' ',
-        { content: $.$mol_regexp_mt_line_content },
+        { content: $.$hyoo_marked_line_content },
         $.$mol_regexp.line_end,
     ]);
-    $.$mol_regexp_mt_quote = $.$mol_regexp.repeat_greedy($.$mol_regexp_mt_quote_line, 1);
+    $.$hyoo_marked_quote = $.$mol_regexp.repeat_greedy($.$hyoo_marked_quote_line, 1);
 })($ || ($ = {}));
 //quote.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_table_line = $.$mol_regexp.from([
+    $.$hyoo_marked_table_line = $.$mol_regexp.from([
         { indent: $.$mol_regexp.repeat('  ') },
         { marker: '!' },
         ' ',
-        { content: $.$mol_regexp_mt_line_content },
+        { content: $.$hyoo_marked_line_content },
         $.$mol_regexp.line_end,
     ]);
-    $.$mol_regexp_mt_table_row = $.$mol_regexp.from({ content: [
-            $.$mol_regexp_mt_table_line,
+    $.$hyoo_marked_table_row = $.$mol_regexp.from({ content: [
+            $.$hyoo_marked_table_line,
             $.$mol_regexp.repeat_greedy([
                 '  ',
-                $.$mol_regexp_mt_line_content,
+                $.$hyoo_marked_line_content,
                 $.$mol_regexp.line_end,
             ]),
         ] });
-    $.$mol_regexp_mt_table = $.$mol_regexp.repeat_greedy($.$mol_regexp_mt_table_line, 1);
+    $.$hyoo_marked_table = $.$mol_regexp.repeat_greedy($.$hyoo_marked_table_line, 1);
 })($ || ($ = {}));
 //table.js.map
 ;
@@ -7241,20 +7241,20 @@ var $;
 var $;
 (function ($) {
     const { or } = $.$mol_regexp;
-    $.$mol_regexp_mt_script_line = $.$mol_regexp.from([
+    $.$hyoo_marked_script_line = $.$mol_regexp.from([
         '  ',
         { marker: ['  ', or, '++', or, '--', or, '**'] },
-        { content: $.$mol_regexp_mt_line_content },
+        { content: $.$hyoo_marked_line_content },
         $.$mol_regexp.line_end,
     ]);
-    $.$mol_regexp_mt_script = $.$mol_regexp.repeat_greedy($.$mol_regexp_mt_script_line, 1);
+    $.$hyoo_marked_script = $.$mol_regexp.repeat_greedy($.$hyoo_marked_script_line, 1);
 })($ || ($ = {}));
 //script.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_paragraph = $.$mol_regexp.from([
+    $.$hyoo_marked_paragraph = $.$mol_regexp.from([
         { content: $.$mol_regexp.repeat($.$mol_regexp.byte) },
         $.$mol_regexp.line_end,
     ]);
@@ -7264,16 +7264,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_regexp_mt_flow = $.$mol_regexp.from([
+    $.$hyoo_marked_flow = $.$mol_regexp.from([
         $.$mol_regexp.begin,
         {
-            cut: $.$mol_regexp_mt_cut,
-            header: $.$mol_regexp_mt_header,
-            list: $.$mol_regexp_mt_list,
-            quote: $.$mol_regexp_mt_quote,
-            table: $.$mol_regexp_mt_table,
-            script: $.$mol_regexp_mt_script,
-            paragraph: $.$mol_regexp_mt_paragraph,
+            cut: $.$hyoo_marked_cut,
+            header: $.$hyoo_marked_header,
+            list: $.$hyoo_marked_list,
+            quote: $.$hyoo_marked_quote,
+            table: $.$hyoo_marked_table,
+            script: $.$hyoo_marked_script,
+            paragraph: $.$hyoo_marked_paragraph,
         },
     ], { multiline: true });
 })($ || ($ = {}));
@@ -7283,7 +7283,7 @@ var $;
 var $;
 (function ($) {
     function flow(marked) {
-        return [...$.$mol_regexp_mt_flow.parse(marked)].map(token => {
+        return [...$.$hyoo_marked_flow.parse(marked)].map(token => {
             if (token.cut) {
                 return '<hr/>';
             }
@@ -7314,7 +7314,7 @@ var $;
         }).filter(Boolean).join('\n');
     }
     function table_cells(marked) {
-        const tokens = [...$.$mol_regexp_mt_table_line.parse(marked)];
+        const tokens = [...$.$hyoo_marked_table_line.parse(marked)];
         const cols = [];
         for (const token of tokens) {
             const index = Math.ceil(token.indent.length / 2);
@@ -7327,18 +7327,18 @@ var $;
         }).join('\n');
     }
     function table_rows(marked) {
-        return [...$.$mol_regexp_mt_table_row.parse(marked)].map(token => {
+        return [...$.$hyoo_marked_table_row.parse(marked)].map(token => {
             return `<tr>\n${table_cells(token.content)}\n</tr>`;
         }).filter(Boolean).join('\n');
     }
     function list_items(marked) {
-        return [...$.$mol_regexp_mt_list_item.parse(marked)].map(token => {
+        return [...$.$hyoo_marked_list_item.parse(marked)].map(token => {
             const kids = token.kids.replace(/^  /gm, '');
             return `<li>${flow(token.content + '\n')} \n${flow(kids)}</li>`;
         }).filter(Boolean).join('\n');
     }
     function script_lines(marked) {
-        return [...$.$mol_regexp_mt_script_line.parse(marked)].map(token => {
+        return [...$.$hyoo_marked_script_line.parse(marked)].map(token => {
             if (token.marker === '++')
                 return `<ins>${token.content}</ins>`;
             if (token.marker === '--')
@@ -7349,7 +7349,7 @@ var $;
         }).filter(Boolean).join('\n');
     }
     function line(marked) {
-        return [...$.$mol_regexp_mt_line.parse(marked)].map(token => {
+        return [...$.$hyoo_marked_line.parse(marked)].map(token => {
             if (token.strong) {
                 return `<strong>${line(token.content)}</strong>`;
             }
@@ -10527,64 +10527,64 @@ var $;
 (function ($) {
     $.$mol_test({
         'strong'() {
-            const res = $.$mol_regexp_mt_line.parse('**text**').next().value;
+            const res = $.$hyoo_marked_line.parse('**text**').next().value;
             $.$mol_assert_equal(res.strong, '**text**');
             $.$mol_assert_equal(res.marker, '**');
             $.$mol_assert_equal(res.content, 'text');
         },
         'emphasis'() {
-            const res = $.$mol_regexp_mt_line.parse('//text//').next().value;
+            const res = $.$hyoo_marked_line.parse('//text//').next().value;
             $.$mol_assert_equal(res.emphasis, '//text//');
             $.$mol_assert_equal(res.marker, '//');
             $.$mol_assert_equal(res.content, 'text');
         },
         'insertion'() {
-            const res = $.$mol_regexp_mt_line.parse('++text++').next().value;
+            const res = $.$hyoo_marked_line.parse('++text++').next().value;
             $.$mol_assert_equal(res.insertion, '++text++');
             $.$mol_assert_equal(res.marker, '++');
             $.$mol_assert_equal(res.content, 'text');
         },
         'deletion'() {
-            const res = $.$mol_regexp_mt_line.parse('--text--').next().value;
+            const res = $.$hyoo_marked_line.parse('--text--').next().value;
             $.$mol_assert_equal(res.deletion, '--text--');
             $.$mol_assert_equal(res.marker, '--');
             $.$mol_assert_equal(res.content, 'text');
         },
         'code'() {
-            const res = $.$mol_regexp_mt_line.parse('  text  ').next().value;
+            const res = $.$hyoo_marked_line.parse('  text  ').next().value;
             $.$mol_assert_equal(res.code, '  text  ');
             $.$mol_assert_equal(res.marker, '  ');
             $.$mol_assert_equal(res.content, 'text');
         },
         'nested simple'() {
-            const res = $.$mol_regexp_mt_line.parse('**//foo//bar**').next().value;
+            const res = $.$hyoo_marked_line.parse('**//foo//bar**').next().value;
             $.$mol_assert_equal(res.strong, '**//foo//bar**');
             $.$mol_assert_equal(res.marker, '**');
             $.$mol_assert_equal(res.content, '//foo//bar');
         },
         'nested simple overlap'() {
-            const res = [...$.$mol_regexp_mt_line.parse('**//foo**bar//')];
+            const res = [...$.$hyoo_marked_line.parse('**//foo**bar//')];
             $.$mol_assert_equal(res[0].strong, '**//foo**');
             $.$mol_assert_equal(res[0].marker, '**');
             $.$mol_assert_equal(res[0].content, '//foo');
             $.$mol_assert_equal(res[1][0], 'bar//');
         },
         'link'() {
-            const res = $.$mol_regexp_mt_line.parse('\\\\text\\url\\\\').next().value;
+            const res = $.$hyoo_marked_line.parse('\\\\text\\url\\\\').next().value;
             $.$mol_assert_equal(res.link, '\\\\text\\url\\\\');
             $.$mol_assert_equal(res.marker, '\\\\');
             $.$mol_assert_equal(res.content, 'text');
             $.$mol_assert_equal(res.uri, 'url');
         },
         'embed'() {
-            const res = $.$mol_regexp_mt_line.parse('""text\\url""').next().value;
+            const res = $.$hyoo_marked_line.parse('""text\\url""').next().value;
             $.$mol_assert_equal(res.embed, '""text\\url""');
             $.$mol_assert_equal(res.marker, '""');
             $.$mol_assert_equal(res.content, 'text');
             $.$mol_assert_equal(res.uri, 'url');
         },
         'link with embed'() {
-            const res = $.$mol_regexp_mt_line.parse('\\\\""text\\url1""\\url2\\\\').next().value;
+            const res = $.$hyoo_marked_line.parse('\\\\""text\\url1""\\url2\\\\').next().value;
             $.$mol_assert_equal(res.link, '\\\\""text\\url1""\\url2\\\\');
             $.$mol_assert_equal(res.marker, '\\\\');
             $.$mol_assert_equal(res.content, '""text\\url1""');
@@ -10599,19 +10599,19 @@ var $;
 (function ($) {
     $.$mol_test({
         'header level 1'() {
-            const res = [...$.$mol_regexp_mt_flow.parse(`= text\n`)];
+            const res = [...$.$hyoo_marked_flow.parse(`= text\n`)];
             $.$mol_assert_equal(res[0].header, '= text\n');
             $.$mol_assert_equal(res[0].marker, '=');
             $.$mol_assert_equal(res[0].content, 'text');
         },
         'header level 6'() {
-            const res = [...$.$mol_regexp_mt_flow.parse(`====== text\n`)];
+            const res = [...$.$hyoo_marked_flow.parse(`====== text\n`)];
             $.$mol_assert_equal(res[0].header, '====== text\n');
             $.$mol_assert_equal(res[0].marker, '======');
             $.$mol_assert_equal(res[0].content, 'text');
         },
         'header level too many'() {
-            const res = [...$.$mol_regexp_mt_flow.parse(`======= text\n`)];
+            const res = [...$.$hyoo_marked_flow.parse(`======= text\n`)];
             $.$mol_assert_equal(res[0].paragraph, '======= text\n');
             $.$mol_assert_equal(res[0].content, '======= text');
         },
@@ -10621,7 +10621,7 @@ var $;
 				paragraph
 				= header
 			`.replace(/^\t+/gm, '');
-            const res = [...$.$mol_regexp_mt_flow.parse(text)];
+            const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].paragraph, '\n');
             $.$mol_assert_equal(res[0].content, '');
             $.$mol_assert_equal(res[1].header, '= header\n');
@@ -10638,7 +10638,7 @@ var $;
 				- foo
 				- bar
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$mol_regexp_mt_flow.parse(text)];
+            const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].list, '- foo\n- bar\n');
         },
         'nested lists'() {
@@ -10647,7 +10647,7 @@ var $;
 				  + bar
 				- lol
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$mol_regexp_mt_flow.parse(text)];
+            const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].list, '- foo\n  + bar\n- lol\n');
         },
         'quote'() {
@@ -10655,7 +10655,7 @@ var $;
 				" foo
 				" bar
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$mol_regexp_mt_flow.parse(text)];
+            const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].quote, '" foo\n" bar\n');
         },
         'table'() {
@@ -10665,7 +10665,7 @@ var $;
 				! lol
 				  ! 777
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$mol_regexp_mt_flow.parse(text)];
+            const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].table, '! foo\n  ! bar\n! lol\n  ! 777\n');
         },
         'script'() {
@@ -10675,7 +10675,7 @@ var $;
 			  --lol
 			  **777
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$mol_regexp_mt_flow.parse(text)];
+            const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].script, '    foo\n  ++bar\n  --lol\n  **777\n');
         },
     });
