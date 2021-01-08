@@ -58,6 +58,7 @@
 
 - Песочница: \\https://marked.hyoo.ru/\\
 - \\Статья о MarkedText\https://github.com/nin-jin/HabHub/issues/39\\
-- \\Парсер на TS\https://github.com/hyoo-ru/mam_mol/tree/master/regexp/mt\\
+- \\Парсер на TS\https://github.com/hyoo-ru/marked.hyoo.ru/\\
+- \\Конвертер в HTML на TS\https://github.com/hyoo-ru/marked.hyoo.ru/tree/master/to/html\\
 - ""Результат билда $mol_regexp\https://github.com/hyoo-ru/mam_mol/workflows/mol_regexp/badge.svg""
 ```
