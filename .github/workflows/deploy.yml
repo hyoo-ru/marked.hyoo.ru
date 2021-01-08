@@ -17,7 +17,7 @@ jobs:
       uses: hyoo-ru/mam_build@master2
       with:
         package: 'hyoo/marked'
-        module: 'app'
+        modules: 'app'
     
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
