@@ -39,7 +39,7 @@
 
 == Парсинг
 
-    const res = [ ... $mol_regexp_mt_line.parse( '**text**' ) ]
+    const res = [ ... $hyoo_marked_line.parse( '**text**' ) ]
   --$mol_assert_equal( res[0].strong, '**text**' )
   ++$mol_assert_equal( res[0].marker, '**' )
   **$mol_assert_equal( res[0].content, 'text' )

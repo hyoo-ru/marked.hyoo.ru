@@ -1,7 +1,7 @@
 namespace $ {
 
 	function flow( marked: string ): string {
-		return [ ... $mol_regexp_mt_flow.parse( marked ) ].map( token => {
+		return [ ... $hyoo_marked_flow.parse( marked ) ].map( token => {
 			
 			if( token.cut ) {
 				return '<hr/>'
@@ -42,7 +42,7 @@ namespace $ {
 	
 	function table_cells( marked: string ): string {
 		
-		const tokens = [ ... $mol_regexp_mt_table_line.parse( marked ) ]
+		const tokens = [ ... $hyoo_marked_table_line.parse( marked ) ]
 		const cols = [] as ( typeof tokens )[]
 		
 		for( const token of tokens ) {
@@ -59,7 +59,7 @@ namespace $ {
 	}
 	
 	function table_rows( marked: string ): string {
-		return [ ... $mol_regexp_mt_table_row.parse( marked ) ].map( token => {
+		return [ ... $hyoo_marked_table_row.parse( marked ) ].map( token => {
 			
 			return `<tr>\n${ table_cells( token.content ) }\n</tr>`
 			
@@ -67,7 +67,7 @@ namespace $ {
 	}
 	
 	function list_items( marked: string ): string {
-		return [ ... $mol_regexp_mt_list_item.parse( marked ) ].map( token => {
+		return [ ... $hyoo_marked_list_item.parse( marked ) ].map( token => {
 
 			const kids = token.kids.replace( /^  /gm, '' )
 
@@ -77,7 +77,7 @@ namespace $ {
 	}
 	
 	function script_lines( marked: string ): string {
-		return [ ... $mol_regexp_mt_script_line.parse( marked ) ].map( token => {
+		return [ ... $hyoo_marked_script_line.parse( marked ) ].map( token => {
 
 			if( token.marker === '++' ) return `<ins>${ token.content }</ins>`
 			if( token.marker === '--' ) return `<del>${ token.content }</del>`
@@ -89,7 +89,7 @@ namespace $ {
 	}
 	
 	function line( marked: string ): string {
-		return [ ... $mol_regexp_mt_line.parse( marked ) ].map( token => {
+		return [ ... $hyoo_marked_line.parse( marked ) ].map( token => {
 			
 			if( token.strong ) {
 				return `<strong>${ line( token.content ) }</strong>`
