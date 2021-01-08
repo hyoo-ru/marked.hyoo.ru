@@ -6,6 +6,8 @@ $hyoo_marked_app $mol_book2
 			title \MarkedText
 			tools /
 				<= Lights $mol_lights_toggle
+				<= Source $mol_link_source
+					uri \https://github.com/hyoo-ru/marked.hyoo.ru/
 				<= Html_show $mol_link 
 					sub /
 						<= html_show_label \HTML
