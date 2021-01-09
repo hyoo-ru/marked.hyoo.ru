@@ -2585,6 +2585,15 @@ var $;
             const res = [...$.$hyoo_marked_flow.parse(text)];
             $.$mol_assert_equal(res[0].quote, '" foo\n" bar\n');
         },
+        'quote in list'() {
+            const text = `
+				- foo
+				  " bar
+				- lol
+			`.slice(1).replace(/^\t+/gm, '');
+            const res = [...$.$hyoo_marked_flow.parse(text)];
+            $.$mol_assert_equal(res[0].list, '- foo\n  " bar\n- lol\n');
+        },
         'table'() {
             const text = `
 				! foo

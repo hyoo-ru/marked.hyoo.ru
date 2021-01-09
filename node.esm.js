@@ -7323,7 +7323,7 @@ var $;
                 $.$mol_regexp.line_end,
             ]) },
     ]);
-    $.$hyoo_marked_list = $.$mol_regexp.repeat_greedy($.$hyoo_marked_list_line, 1);
+    $.$hyoo_marked_list = $.$mol_regexp.repeat_greedy($.$hyoo_marked_list_item, 1);
 })($ || ($ = {}));
 //list.js.map
 ;
@@ -7486,7 +7486,7 @@ var $;
             const kids = token.kids.replace(/^  /gm, '');
             return $.$mol_jsx("li", null,
                 NL,
-                flow(token.content + '\n'),
+                flow(token.content.replace(/^  /gm, '') + '\n'),
                 flow(kids),
                 NL);
         }).filter(Boolean);

@@ -2425,6 +2425,8 @@ declare namespace $ {
         content: string;
     }>;
     let $hyoo_marked_list: $mol_regexp<{
+        kids: string;
+    } & {
         indent: string;
     } & {
         marker: string;
@@ -2499,13 +2501,15 @@ declare namespace $ {
     } & {
         content: string;
     } & {
-        indent: string;
+        content: string;
     } & {
         marker: string;
     } & {
         content: string;
     } & {
-        content: string;
+        kids: string;
+    } & {
+        indent: string;
     } & {
         marker: string;
     } & {
