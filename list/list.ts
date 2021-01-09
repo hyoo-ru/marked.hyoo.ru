@@ -17,6 +17,6 @@ namespace $ {
 		]) },
 	])
 
-	export let $hyoo_marked_list = $mol_regexp.repeat_greedy( $hyoo_marked_list_line, 1 )
+	export let $hyoo_marked_list = $mol_regexp.repeat_greedy( $hyoo_marked_list_item, 1 )
 
 }
