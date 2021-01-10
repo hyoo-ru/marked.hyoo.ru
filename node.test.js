@@ -7269,7 +7269,7 @@ var $;
     const emphasis = with_marker('//');
     const insertion = with_marker('++');
     const deletion = with_marker('--');
-    const code = with_marker('  ');
+    const code = with_marker(';;');
     function with_uri(content = $.$mol_regexp.from({
         content: $.$hyoo_marked_line_content
     })) {
@@ -7521,10 +7521,7 @@ var $;
                 return $.$mol_jsx("del", null, line(token.content));
             }
             if (token.code) {
-                return $.$mol_jsx("span", null,
-                    " ",
-                    $.$mol_jsx("code", null, line(token.content)),
-                    " ");
+                return $.$mol_jsx("code", null, token.content);
             }
             if (token.link) {
                 return $.$mol_jsx("a", { href: token.uri }, line(token.content || token.uri));
@@ -10680,9 +10677,9 @@ var $;
             $.$mol_assert_equal(res.content, 'text');
         },
         'code'() {
-            const res = $.$hyoo_marked_line.parse('  text  ').next().value;
-            $.$mol_assert_equal(res.code, '  text  ');
-            $.$mol_assert_equal(res.marker, '  ');
+            const res = $.$hyoo_marked_line.parse(';;text;;').next().value;
+            $.$mol_assert_equal(res.code, ';;text;;');
+            $.$mol_assert_equal(res.marker, ';;');
             $.$mol_assert_equal(res.content, 'text');
         },
         'nested simple'() {
