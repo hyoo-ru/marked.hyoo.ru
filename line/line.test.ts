@@ -30,9 +30,9 @@ namespace $ {
 		},
 		
 		'code'() {
-			const res = $hyoo_marked_line.parse( '  text  ' ).next().value!
-			$mol_assert_equal( res.code, '  text  ' )
-			$mol_assert_equal( res.marker, '  ' )
+			const res = $hyoo_marked_line.parse( ';;text;;' ).next().value!
+			$mol_assert_equal( res.code, ';;text;;' )
+			$mol_assert_equal( res.marker, ';;' )
 			$mol_assert_equal( res.content, 'text' )
 		},
 		

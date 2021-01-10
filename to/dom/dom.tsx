@@ -111,7 +111,7 @@ namespace $ {
 			}
 			
 			if( token.code ) {
-				return <span> <code>{ line( token.content ) }</code> </span>
+				return <code>{ token.content }</code>
 			}
 			
 			if( token.link ) {

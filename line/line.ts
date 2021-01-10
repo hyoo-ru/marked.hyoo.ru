@@ -21,7 +21,7 @@ namespace $ {
 	const emphasis = with_marker( '//' )
 	const insertion = with_marker( '++' )
 	const deletion = with_marker( '--' )
-	const code = with_marker( '  ' )
+	const code = with_marker( ';;' )
 
 	function with_uri<
 		Groups extends { content: string }
