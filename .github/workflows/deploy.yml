@@ -17,6 +17,7 @@ jobs:
     - name: Build app
       uses: hyoo-ru/mam_build@master2
       with:
+        token: ${{ secrets.GH_PAT }}
         package: 'hyoo/marked'
         modules: 'app'
     
