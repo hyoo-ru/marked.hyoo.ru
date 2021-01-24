@@ -2401,6 +2401,8 @@ declare namespace $ {
         emphasis: string;
         insertion: string;
         deletion: string;
+    } & {
+        inline: string;
     }>;
 }
 

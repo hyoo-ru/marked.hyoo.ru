@@ -7320,9 +7320,8 @@ var $;
     }
     const link = with_marker('\\\\', with_uri());
     const embed = with_marker('""', with_uri());
-    $.$hyoo_marked_line = $.$mol_regexp.from([
-        { strong, emphasis, insertion, deletion, code, link, embed }
-    ]);
+    const inline = $.$mol_regexp.from({ strong, emphasis, insertion, deletion, code, link, embed });
+    $.$hyoo_marked_line = $.$mol_regexp.from({ inline });
 })($ || ($ = {}));
 //line.js.map
 ;
