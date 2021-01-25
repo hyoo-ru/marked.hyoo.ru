@@ -109,9 +109,11 @@ namespace $ {
 	export function $hyoo_marked_tree_to_js( this: $, mt: $mol_tree2 ) {
 
 		return mt.list([
-			mt.struct(
-				'{;}',
-				mt.hack({
+			mt.struct( 'function', [
+
+				mt.struct( 'make_dom' ),
+				mt.struct( '(,)', [ mt.struct( 'parent' ), ] ),
+				mt.struct( '{;}', mt.hack({
 
 					'strong': hack_inline( 'strong' ),
 					'emphasis': hack_inline( 'em' ),
@@ -123,8 +125,9 @@ namespace $ {
 
 					'': hack_text,
 
-				}),
-			) 
+				}) ),
+			
+			] ),
 		])
 		
 	}
