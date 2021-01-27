@@ -1,119 +1,109 @@
 namespace $ {
 
-	// {
-	//   const child = document.createElement( 'object' );
-	//   child.setAttribute( 'data', 'http://example.org' );
-	//   ((parent)=>{
-	//     ...
-	//   })(child);
-	//   parent.appendChild( child );
-	// }
+	const templates = $$.$mol_tree2_from_string( `
+		body function
+			make_dom
+			(,) parent
+			{;} %body
+		element const
+			child
+			()
+				document
+				[] \\createElement
+				(,) %name
+		attr ()
+			child
+			[] \\setAttribute
+			(,)
+				%name
+				%value
+		text const
+			child
+			()
+				document
+				[] \\createTextNode
+				(,) %text
+		content ()
+			(,) =>
+				parent
+				%content
+			(,) child
+		append ()
+			parent
+			[] \\appendChild
+			(,) child
+	`, '$hyoo_marked_tree_to_js_templates' )
+
+	const wrap_body = templates.select( 'body', '' )
+	const wrap_element = templates.select( 'element', '' )
+	const wrap_attr = templates.select( 'attr', '' )
+	const wrap_text = templates.select( 'text', '' )
+	const wrap_content = templates.select( 'content', '' )
+	const append_child = templates.select( 'append', '' )
+
 	function hack_inline( name: string, link_attr?: string ) {
-		return ( input: $mol_tree2, belt: Record< string, $mol_tree2_hack< never > > )=> {
+		return < Belt extends $mol_tree2_belt< any > >(
+			input: $mol_tree2,
+			belt: Belt,
+			context: {},
+		)=> {
 
 			const uri = link_attr ? input.kids[0] : null
 			const content = link_attr ? input.kids.slice( 1 ) : input.kids
-			const end = new $mol_tree2( input.type, input.value, input.kids, input.span.slice( -2, -1 ) )
 
 			return [
 				input.struct( '{;}', [
 
-					input.struct( 'const', [
-						input.struct( 'child' ),
-						input.struct( '()', [
-							input.struct( 'document' ),
-							input.struct( '[]', [
-								input.data( 'createElement' ),
-							] ),
-							input.struct( '(,)', [
-								input.data( name ),
-							] ),
-						] ),
-					] ),
+					... wrap_element.hack(
+						{ '%name': ()=> [ input.data( name ) ] },
+						{ ... context, span: input.span },
+					),
 					
 					... uri ? [
-						uri.struct( '()', [
-							uri.struct( 'child' ),
-							uri.struct( '[]', [
-								uri.data( 'setAttribute' ),
-							] ),
-							uri.struct( '(,)', [
-								uri.data( link_attr! ),
-								uri,
-							] ),
-						] )
+						... wrap_attr.hack(
+							{
+								'%name': ()=> [ uri.data( link_attr! ) ],
+								'%value': ()=> [ uri ],
+							},
+							{ ... context, span: input.span }
+						),
 					] : [],
 
 					... content.length ? [
-						input.struct( '()', [
-							input.struct( '(,)', [
-								input.struct( '=>', [
-									input.struct( 'parent' ),
-									... input.list( content ).hack( belt ),
-								] ),
-							] ),
-							end.struct( '(,)', [
-								end.struct( 'child' ),
-							] ),
-						] )
+						... wrap_content.hack(
+							{ '%content': ()=> input.list( content ).hack( belt, context ) },
+							{ ... context, span: input.span },
+						),
 					] : [],
 
-					end.struct( '()', [
-						end.struct( 'parent' ),
-						end.struct( '[]', [
-							end.data( 'appendChild' ),
-						] ),
-						end.struct( '(,)', [
-							end.struct( 'child' ),
-						] ),
-					] ),
+					... append_child.hack( {}, { ... context, span: input.span.slice( -2, -1 ) } ),
 
 				] )
 			]
 		}
 	}
 
-	// {
-	//   const child = document.createTextNode( 'foo' );
-	//   parent.appendChild( child );
-	// }
-	function hack_text( input: $mol_tree2, belt: Record< string, $mol_tree2_hack< never > > ) {
+	function hack_text< Belt extends $mol_tree2_belt< any > >(
+		input: $mol_tree2,
+		belt: Belt,
+		context: {},
+	) {
 		return [
 			input.struct( '{;}', [
-				
-				input.struct( 'const', [
-					input.struct( 'child' ),
-					input.struct( '()', [
-						input.struct( 'document' ),
-						input.struct( '[]', [
-							input.data( 'createTextNode' ),
-						] ),
-						input.struct( '(,)', [ input ] ),
-					] ),
-				] ),
-				
-				input.struct( '()', [
-					input.struct( 'parent' ),
-					input.struct( '[]', [
-						input.data( 'appendChild' ),
-					] ),
-					input.struct( '(,)', [
-						input.struct( 'child' ),
-					] ),
-				] ),
-
+				... wrap_text.hack(
+					{ '%text': ()=> [ input ] },
+					{ ... context, span: input.span },
+				),
+				... append_child.hack( {}, { ... context, span: input.span } ),
 			] ),
 		]
 	}
 
 	export function $hyoo_marked_tree_to_js( this: $, mt: $mol_tree2 ) {
 
-		return mt.list([
-			mt.struct( 'function', [
-
-				mt.struct( 'make_dom' ),
-				mt.struct( '(,)', [ mt.struct( 'parent' ), ] ),
-				mt.struct( '{;}', mt.hack({
+		return mt.list(
+			wrap_body.hack({
+				'%body': ()=> mt.hack({
 
 					'strong': hack_inline( 'strong' ),
 					'emphasis': hack_inline( 'em' ),
@@ -125,10 +115,9 @@ namespace $ {
 
 					'': hack_text,
 
-				}) ),
-			
-			] ),
-		])
+				}),
+			}),
+		)
 		
 	}
 

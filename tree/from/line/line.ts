@@ -19,17 +19,20 @@ namespace $ {
 	
 			if( token.inline ) {
 
-				span = span.after( token.marker.length * 2 + token.content.length + token.uri.length + ( token.uri && token.content ? 1 : 0 ) )
+				const uri_sep_length = token.uri.length + ( token.uri && token.content ? 1 : 0 )
+				span = span.after( token.marker.length * 2 + token.content.length + uri_sep_length )
 				const span_content = span.slice( token.marker.length, - token.marker.length )
 
 				const content = token.code
 					? [ $mol_tree2.data( token.content, [], span_content ) ]
 					: [
-						... token.uri ? [ $mol_tree2.data( token.uri, [], span_content ) ] : [],
-						... this.$hyoo_marked_tree_from_line(
+						... token.uri ? [
+							$mol_tree2.data( token.uri, [], span_content.slice( - uri_sep_length ) )
+						] : [],
+						... token.content ? this.$hyoo_marked_tree_from_line(
 							token.content,
-							span_content,
-						).kids,
+							span_content.slice( 0, - uri_sep_length ),
+						).kids : [],
 					]
 				
 				const name = marker2name[ token.marker ]
