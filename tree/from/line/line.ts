@@ -10,7 +10,11 @@ namespace $ {
 		'""': 'embed',
 	}
 	
-	export function $hyoo_marked_tree_from_line( this: $, code: string, span_entire = $mol_span.unknown ) {
+	export function $hyoo_marked_tree_from_line(
+		this: $,
+		code: string,
+		span_entire = $mol_span.entire( 'unknown', code ),
+	) {
 
 		let span = span_entire.slice( 0, 0 )
 		const nodes = [] as $mol_tree2[]
