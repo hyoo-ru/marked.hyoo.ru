@@ -1549,10 +1549,12 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_link extends $.$mol_link {
         uri(): string;
+        uri_native(): URL;
         current(): boolean;
         event_click(event?: Event): void;
         file_name(): string;
         minimal_height(): number;
+        target(): "_self" | "_blank";
     }
 }
 
