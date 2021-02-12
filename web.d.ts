@@ -1825,6 +1825,7 @@ declare namespace $ {
         line_height(): number;
         letter_width(): number;
         width_limit(): number;
+        sub(): readonly any[];
     }
 }
 
