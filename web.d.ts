@@ -2282,11 +2282,17 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_textarea extends $mol_view {
+        attr(): {
+            mol_textarea_clickable: any;
+        };
         event(): {
             keydown: (event?: any) => any;
+            pointermove: (event?: any) => any;
         };
         sub(): readonly any[];
+        clickable(val?: any): any;
         press(event?: any): any;
+        hover(event?: any): any;
         value(val?: any): any;
         hint(): string;
         enabled(): boolean;
@@ -2303,6 +2309,7 @@ declare namespace $.$$ {
     class $mol_textarea extends $.$mol_textarea {
         indent_inc(): void;
         indent_dec(): void;
+        hover(event: PointerEvent): void;
         press(event: KeyboardEvent): void;
     }
 }

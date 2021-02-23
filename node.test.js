@@ -6309,7 +6309,7 @@ var $;
     $.$mol_syntax2_md_code = new $.$mol_syntax2({
         'code-docs': /\/\/\/.*?$/,
         'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/,
-        'code-link': /\w+:\S+/,
+        'code-link': /\w+:\S+?(?=\s|\\\\|""|$)/,
         'code-comment-inline': /\/\/.*?$/,
         'code-string': /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*\b|(?:^|[ \t])\\[^\n]*\n)/,
         'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
@@ -6797,9 +6797,15 @@ var $;
 var $;
 (function ($) {
     class $mol_textarea extends $.$mol_view {
+        attr() {
+            return {
+                mol_textarea_clickable: this.clickable()
+            };
+        }
         event() {
             return {
-                keydown: (event) => this.press(event)
+                keydown: (event) => this.press(event),
+                pointermove: (event) => this.hover(event)
             };
         }
         sub() {
@@ -6808,7 +6814,17 @@ var $;
                 this.View()
             ];
         }
+        clickable(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
         press(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        hover(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -6845,7 +6861,13 @@ var $;
     }
     __decorate([
         $.$mol_mem
+    ], $mol_textarea.prototype, "clickable", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_textarea.prototype, "press", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_textarea.prototype, "hover", null);
     __decorate([
         $.$mol_mem
     ], $mol_textarea.prototype, "value", null);
@@ -6862,7 +6884,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tposition: relative;\n\tz-index: 0;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\tz-index: 1;\n\twhite-space: inherit;\n}\n\n[mol_textarea_edit] {\n\tfont-family: monospace;\n\tz-index: -1 !important;\n\tpadding: var(--mol_gap_text);\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\twidth: 100%;\n\theight: 100%;\n\tcolor: transparent;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\twhite-space: inherit;\n\ttab-size: 4;\n\toverflow-anchor: none;\n}\n");
+    $.$mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tposition: relative;\n\tz-index: 0;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\tz-index: 1;\n\twhite-space: inherit;\n}\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: monospace;\n\tz-index: -1 !important;\n\tpadding: var(--mol_gap_text);\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\twidth: 100%;\n\theight: 100%;\n\tcolor: transparent;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\twhite-space: inherit;\n\ttab-size: 4;\n\toverflow-anchor: none;\n}\n");
 })($ || ($ = {}));
 //textarea.view.css.js.map
 ;
@@ -6876,6 +6898,9 @@ var $;
                 document.execCommand('insertText', false, '\t');
             }
             indent_dec() {
+            }
+            hover(event) {
+                this.clickable(event.ctrlKey);
             }
             press(event) {
                 switch (event.keyCode) {
