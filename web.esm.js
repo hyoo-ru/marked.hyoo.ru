@@ -7152,16 +7152,15 @@ var $;
     const insertion = with_marker('++');
     const deletion = with_marker('--');
     const code = with_marker(';;');
-    function with_uri(content = $.$mol_regexp.from({
-        content: $.$hyoo_marked_line_content
-    })) {
-        return $.$mol_regexp.from([
-            optional([content, slash_back]),
-            { uri },
-        ]);
-    }
-    const link = with_marker('\\\\', with_uri());
-    const embed = with_marker('""', with_uri());
+    const with_uri = $.$mol_regexp.from([
+        optional([
+            { content: $.$hyoo_marked_line_content },
+            slash_back
+        ]),
+        { uri },
+    ]);
+    const link = with_marker('\\\\', with_uri);
+    const embed = with_marker('""', with_uri);
     const inline = $.$mol_regexp.from({ strong, emphasis, insertion, deletion, code, link, embed });
     $.$hyoo_marked_line = $.$mol_regexp.from({ inline });
 })($ || ($ = {}));
