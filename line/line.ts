@@ -23,21 +23,16 @@ namespace $ {
 	const deletion = with_marker( '--' )
 	const code = with_marker( ';;' )
 
-	function with_uri<
-		Groups extends { content: string }
-	>(
-		content = $mol_regexp.from({
-			content: $hyoo_marked_line_content
-		}) as $mol_regexp< Groups >,
-	) {
-		return $mol_regexp.from([
-			optional([ content, slash_back ]),
-			{ uri },
-		])
-	}
+	const with_uri = $mol_regexp.from([
+		optional([
+			{ content: $hyoo_marked_line_content },
+			slash_back
+		]),
+		{ uri },
+	])
 
-	const link = with_marker( '\\\\', with_uri() )
-	const embed = with_marker( '""', with_uri() )
+	const link = with_marker( '\\\\', with_uri ) 
+	const embed = with_marker( '""', with_uri )
 
 	const inline = $mol_regexp.from({ strong, emphasis, insertion, deletion, code, link, embed })
 
