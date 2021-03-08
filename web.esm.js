@@ -6395,14 +6395,21 @@ var $;
 var $;
 (function ($) {
     class $mol_text_code_row extends $.$mol_paragraph {
-        attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_code_row_numb: this.numb() });
-        }
         text() {
             return "";
         }
         minimal_height() {
             return 24;
+        }
+        numb_showed() {
+            return true;
+        }
+        Numb() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.numb()
+            ];
+            return obj;
         }
         Token(id) {
             const obj = new this.$.$mol_text_code_token();
@@ -6431,6 +6438,9 @@ var $;
         }
     }
     __decorate([
+        $.$mol_mem
+    ], $mol_text_code_row.prototype, "Numb", null);
+    __decorate([
         $.$mol_mem_key
     ], $mol_text_code_row.prototype, "Token", null);
     __decorate([
@@ -6448,14 +6458,10 @@ var $;
         const { rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$mol_text_code_row, {
             display: 'block',
-            margin: {
-                left: rem(3),
-            },
-            '::before': {
-                content: 'attr(mol_text_code_row_numb)',
+            Numb: {
                 textAlign: 'right',
                 color: $.$mol_theme.shade,
-                width: rem(1.5),
+                width: rem(3),
                 padding: {
                     right: rem(1.5),
                 },
@@ -6464,6 +6470,7 @@ var $;
                 },
                 display: 'inline-block',
                 whiteSpace: 'nowrap',
+                userSelect: 'none',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -6488,7 +6495,10 @@ var $;
                 return tokens;
             }
             sub() {
-                return this.row_content([]);
+                return [
+                    ...this.numb_showed() ? [this.Numb()] : [],
+                    ...this.row_content([])
+                ];
             }
             row_content(path) {
                 return this.tokens(path).map((t, i) => this.Token([...path, i]));
@@ -6546,6 +6556,9 @@ var $;
 var $;
 (function ($) {
     class $mol_text_code extends $.$mol_list {
+        attr() {
+            return Object.assign(Object.assign({}, super.attr()), { mol_text_code_sidebar_showed: this.sidebar_showed() });
+        }
         text() {
             return "";
         }
@@ -6554,10 +6567,14 @@ var $;
         }
         Row(id) {
             const obj = new this.$.$mol_text_code_row();
+            obj.numb_showed = () => this.sidebar_showed();
             obj.numb = () => this.row_numb(id);
             obj.text = () => this.row_text(id);
             obj.highlight = () => this.highlight();
             return obj;
+        }
+        sidebar_showed() {
+            return false;
         }
         row_numb(id) {
             return 0;
@@ -6581,11 +6598,21 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const { rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$mol_text_code, {
             padding: $.$mol_gap.text,
             whiteSpace: 'pre-wrap',
             font: {
                 family: 'monospace',
+            },
+            '@': {
+                'mol_text_code_sidebar_showed': {
+                    true: {
+                        margin: {
+                            left: rem(3),
+                        },
+                    },
+                },
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -6630,9 +6657,7 @@ var $;
 (function ($) {
     class $mol_textarea extends $.$mol_view {
         attr() {
-            return {
-                mol_textarea_clickable: this.clickable()
-            };
+            return Object.assign(Object.assign({}, super.attr()), { mol_textarea_clickable: this.clickable(), mol_textarea_sidebar_showed: this.sidebar_showed() });
         }
         event() {
             return {
@@ -6649,6 +6674,9 @@ var $;
         clickable(val) {
             if (val !== undefined)
                 return val;
+            return false;
+        }
+        sidebar_showed() {
             return false;
         }
         press(event) {
@@ -6684,10 +6712,15 @@ var $;
             obj.length_max = () => this.length_max();
             return obj;
         }
+        row_numb(index) {
+            return 0;
+        }
         View() {
             const obj = new this.$.$mol_text_code();
             obj.text = () => this.value();
             obj.render_visible_only = () => false;
+            obj.row_numb = (index) => this.row_numb(index);
+            obj.sidebar_showed = () => this.sidebar_showed();
             return obj;
         }
     }
@@ -6716,7 +6749,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tposition: relative;\n\tz-index: 0;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\tz-index: 1;\n\twhite-space: inherit;\n}\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: monospace;\n\tz-index: -1 !important;\n\tpadding: var(--mol_gap_text);\n\tposition: absolute;\n\tleft: 3rem;\n\ttop: 0;\n\twidth: calc( 100% - 3rem );\n\theight: 100%;\n\tcolor: transparent;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\twhite-space: inherit;\n\ttab-size: 4;\n\toverflow-anchor: none;\n}\n");
+    $.$mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tposition: relative;\n\tz-index: 0;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\tz-index: 1;\n\twhite-space: inherit;\n}\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: monospace;\n\tz-index: -1 !important;\n\tpadding: var(--mol_gap_text);\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\twidth: 100%;\n\theight: 100%;\n\tcolor: transparent;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\twhite-space: inherit;\n\ttab-size: 4;\n\toverflow-anchor: none;\n}\n\n[mol_textarea_sidebar_showed] [mol_textarea_edit] {\n\tleft: 3rem;\n\twidth: calc( 100% - 3rem );\n}\n");
 })($ || ($ = {}));
 //textarea.view.css.js.map
 ;
@@ -6745,6 +6778,9 @@ var $;
                     default: return;
                 }
                 event.preventDefault();
+            }
+            row_numb(index) {
+                return index;
             }
         }
         $$.$mol_textarea = $mol_textarea;
