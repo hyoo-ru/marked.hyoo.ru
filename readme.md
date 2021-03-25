@@ -1,64 +1,81 @@
+# MAM
+
+**M**am owns **A**gnostic **M**odules.
+This is base **MAM** project.
+
+# Features
+
+* **Agnostic modules.** Module is directory with mixed source files (JS, TS, CSS, JSON, HTML, Tree, images etc).
+* **Automatic dependency tracking.** You don't need import/export - simply use namespaced names in accordance to directory structure, like `$mol_http_resource` / `$jin.time.moment` in `*.JAM.JS`/`*.TS` or `--mol_skin_light` / `[mol_page_title]` / `.my-header-avatar` in `*.CSS`.
+* **PostCSS support.** Write a cutting age css code.
+* **Development server with automatic bundling on request**. Only if you use it then it will have bundled.
+* **Build anyone module as standalone bundle**. You can develope thousand of modules in one project.
+* **Cordova project generation**. Simply add `config.xml` to module and `-cordova` dir with cordova project will have generated.
+
+# Installation
+
+**Checkout this repo (~2s):**
+
+```sh
+git clone https://github.com/hyoo-ru/mam.git ./mam && cd mam
 ```
-= MarkedText
 
-Формат текста с **легковесным форматированием**.
+## Linux limits
 
---
+$mol_build and typescript uses inotify by default on Linux to monitor directories for changes. It's not uncommon to encounter a system limit on the number of files you can monitor.
 
-== Принципы
+/etc/sysctl.d/20-watch.conf
 
-+ Синтаксис:
-  - Однозначность
-  - Простота
-  - Единообразность
-+ Внешний вид:
-  - Минимальное влияние на естественный вид текста
-  - Наглядность форматирования
-+ Редактирование:
-  - Независимость от раскладки
-  - Быстрая и надёжная запоминаемость
-
-== Cравнение с альтернативами
-
-! **Язык**
-  ! **Плюсы**
-    ! **Минусы**
-! MarkedText
-  ! - Удобное редактирование таблиц.
-  ! - Поддержка сложного форматирования внутри ячеек.
-  ! - Простота реализации.
-  ! - Легко запоминающийся консистентный синтаксис.
-  ! - Удобство редактирования в русской раскладке.
-  ! - Колонки не расползаются далеко вправо за горизонтальный скроллинг и не переносятся на новую строку.
-    ! - Не поддерживается пока что никакими сторонними инструментами.
-! MarkDown
-  ! - Широкая поддержка различными инструментами.
-  ! - Наглядное представление таблиц.
-    ! - Сложности с редактированием таблиц.
-    ! - Сильно ограниченное содержимое ячеек.
-
-== Парсинг
-
-    const res = [ ... $hyoo_marked_line.parse( '**text**' ) ]
-  --$mol_assert_equal( res[0].strong, '**text**' )
-  ++$mol_assert_equal( res[0].marker, '**' )
-  **$mol_assert_equal( res[0].content, 'text' )
-
-== Отзывы
-
-" " " Типичный пользователь: Нигде не поддерживается, идите в --жопу-- ++Жодино++ с таким синтаксисом!
-" " 
-" " Но мы же программисты, мы можем это исправить.. Для этого даже не надо быть экспертом по ;;C++;; ..
-" 
-" Никому это не нужно (с) Диванный Эксперт
-
-Тем не менее, это полезное упражнение в проектировании.
-
-== Ссылки
-
-- Песочница: \\https://marked.hyoo.ru/\\
-- \\Статья о MarkedText\https://github.com/nin-jin/HabHub/issues/39\\
-- \\Парсер на TS\https://github.com/hyoo-ru/marked.hyoo.ru/\\
-- \\Конвертер в HTML на TS\https://github.com/hyoo-ru/marked.hyoo.ru/tree/master/to/html\\
-- ""Результат билда $mol_regexp\https://github.com/hyoo-ru/mam_mol/workflows/mol_regexp/badge.svg""
 ```
+fs.inotify.max_user_watches=524288
+fs.file-max=500000
+```
+
+# Development server
+
+**Install node modules (~1m)**
+
+```sh
+npm install
+```
+
+**Build dev server from sources and start that (first ~15s, second ~10s):**
+
+```sh
+npm start
+```
+
+**Open simple $mol based ToDoMVC application (first ~4s, second ~0.3s):**
+
+```sh
+start http://localhost:9080/mol/app/todomvc/
+```
+
+**Open $mol demos application (first ~11s, second ~0.5s):**
+
+```sh
+start http://localhost:9080/mol/
+```
+
+# Manual building
+
+* Execute `npm start mol/app/todomvc` to build ToDoMVC application (~13s).
+* Execute `npm start mol` to build $mol demos application (~15s).
+* Execute `npm start lib/pdfjs` to build PDFJS library (~1s).
+
+# Custom package
+
+[Video tutorial](https://www.youtube.com/watch?v=PyK3if5sgN0)
+
+1. Create dir for your namespace. `my` in example.
+2. Create dir for your module. `my/alert` in example.
+3. Create module source file. `my/alert/alert.ts` with content `function $my_alert( msg : string ) { alert( msg ) }` in example.
+4. Create dir for your application module. `my/app` in example.
+5. Create application source file. `my/app/app.ts` with content `$my_alert( 'Hello, World!' )` in example.
+6. Create application web entry point. `my/app/index.html` with content `<script src="-/web.js"></script><script src="-/web.test.js"></script>` in example.
+7. Start development server: `npm start`
+8. Open your application. `http://localhost:9080/my/app/` in example.
+
+# MAM based projects
+
+- https://github.com/hyoo-ru?q=hyoo.ru
