@@ -1,10 +1,16 @@
 namespace $ {
 
 	const templates = $$.$mol_tree2_from_string( `
-		body function
-			make_dom
-			(,) parent
-			{;} %body
+		body {;}
+			var
+				parent
+				(||)
+					parent
+					()
+						document
+						[] \\createElement
+						(,) \\body
+			%body
 		element const
 			child
 			()
