@@ -59,6 +59,7 @@ declare namespace $ {
         set $(next: $);
         constructor(init?: (obj: any) => void);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+        static [Symbol.toPrimitive](): any;
         static toString(): any;
         destructor(): void;
         toString(): any;
@@ -2396,6 +2397,7 @@ declare namespace $ {
     }, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element) | typeof $mol_jsx_view, props: Props, ...childNodes: Children): Element;
     namespace $mol_jsx.JSX {
         interface Element extends HTMLElement {
+            class?: string;
         }
         interface ElementClass {
             attributes: {};
@@ -2404,7 +2406,7 @@ declare namespace $ {
             valueOf(): Element;
         }
         type IntrinsicElements = {
-            [key in keyof HTMLElementTagNameMap]?: $.$mol_type_partial_deep<HTMLElementTagNameMap[key]>;
+            [key in keyof HTMLElementTagNameMap]?: $.$mol_type_partial_deep<Element & HTMLElementTagNameMap[key]>;
         };
         interface IntrinsicAttributes {
             id?: string;
