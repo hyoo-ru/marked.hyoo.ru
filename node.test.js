@@ -556,7 +556,13 @@ var $;
             });
         }
         make(config) {
-            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col, length: this.length }, config));
+            return new $mol_tree({
+                baseUri: this.baseUri,
+                row: this.row,
+                col: this.col,
+                length: this.length,
+                ...config,
+            });
         }
         make_data(value, sub) {
             return this.make({ value, sub });
@@ -637,7 +643,7 @@ var $;
                     }
                     if (json instanceof Error) {
                         const { name, message, stack } = json;
-                        json = Object.assign(Object.assign({}, json), { name, message, stack });
+                        json = { ...json, name, message, stack };
                     }
                     var sub = [];
                     for (var key in json) {
@@ -833,7 +839,7 @@ var $;
     function $mol_log3_node_make(level, output, type, color) {
         return function $mol_log3_logger(event) {
             if (!event.time)
-                event = Object.assign({ time: new Date().toISOString() }, event);
+                event = { time: new Date().toISOString(), ...event };
             const tree = this.$mol_tree.fromJSON(event).clone({ type });
             let str = tree.toString();
             if (process[output].isTTY) {
@@ -1113,7 +1119,10 @@ var $;
     }
     $.$mol_dev_format_element = $mol_dev_format_element;
     function $mol_dev_format_span(style, ...content) {
-        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
+        return $mol_dev_format_element('span', {
+            'vertical-align': '8%',
+            ...style,
+        }, ...content);
     }
     $.$mol_dev_format_span = $mol_dev_format_span;
     $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
@@ -1885,7 +1894,10 @@ var $;
                 return get_cache(this).put(next);
             });
         }
-        return Object.assign(Object.assign({}, descr || {}), { value: Object.assign(value, { orig }) });
+        return {
+            ...descr || {},
+            value: Object.assign(value, { orig })
+        };
     }
     $.$mol_mem = $mol_mem;
 })($ || ($ = {}));
@@ -2948,10 +2960,18 @@ var $;
             return null;
         }
         field() {
-            return Object.assign(Object.assign({}, super.field()), { scrollTop: this.scroll_top(), scrollLeft: this.scroll_left(), tabIndex: this.tabindex() });
+            return {
+                ...super.field(),
+                scrollTop: this.scroll_top(),
+                scrollLeft: this.scroll_left(),
+                tabIndex: this.tabindex()
+            };
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
+            return {
+                ...super.event(),
+                scroll: (event) => this.event_scroll(event)
+            };
         }
         scroll_top(val) {
             if (val !== undefined)
@@ -3410,10 +3430,16 @@ var $;
 (function ($) {
     class $mol_speck extends $.$mol_view {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_theme: "$mol_theme_accent" });
+            return {
+                ...super.attr(),
+                mol_theme: "$mol_theme_accent"
+            };
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { minHeight: "1em" });
+            return {
+                ...super.style(),
+                minHeight: "1em"
+            };
         }
         sub() {
             return [
@@ -3456,10 +3482,20 @@ var $;
             return null;
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keydown: (event) => this.event_key_press(event) });
+            return {
+                ...super.event(),
+                click: (event) => this.event_activate(event),
+                keydown: (event) => this.event_key_press(event)
+            };
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { disabled: this.disabled(), role: "button", tabindex: this.tab_index(), title: this.hint_or_error() });
+            return {
+                ...super.attr(),
+                disabled: this.disabled(),
+                role: "button",
+                tabindex: this.tab_index(),
+                title: this.hint_or_error()
+            };
         }
         sub() {
             return [
@@ -3726,7 +3762,12 @@ var $;
 (function ($) {
     class $mol_check extends $.$mol_button_minor {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_check_checked: this.checked(), "aria-checked": this.checked(), role: "checkbox" });
+            return {
+                ...super.attr(),
+                mol_check_checked: this.checked(),
+                "aria-checked": this.checked(),
+                role: "checkbox"
+            };
         }
         sub() {
             return [
@@ -4338,7 +4379,11 @@ var $;
             return "svg";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { viewBox: this.view_box(), preserveAspectRatio: this.aspect() });
+            return {
+                ...super.attr(),
+                viewBox: this.view_box(),
+                preserveAspectRatio: this.aspect()
+            };
         }
         view_box() {
             return "0 0 100 100";
@@ -4366,7 +4411,10 @@ var $;
             return "path";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { d: this.geometry() });
+            return {
+                ...super.attr(),
+                d: this.geometry()
+            };
         }
         geometry() {
             return "";
@@ -4492,7 +4540,14 @@ var $;
             return "a";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { href: this.uri(), title: this.hint(), target: this.target(), download: this.file_name(), mol_link_current: this.current() });
+            return {
+                ...super.attr(),
+                href: this.uri(),
+                title: this.hint(),
+                target: this.target(),
+                download: this.file_name(),
+                mol_link_current: this.current()
+            };
         }
         sub() {
             return [
@@ -4503,7 +4558,10 @@ var $;
             return {};
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.click(event) });
+            return {
+                ...super.event(),
+                click: (event) => this.click(event)
+            };
         }
         uri() {
             return "";
@@ -4765,7 +4823,10 @@ var $;
 (function ($) {
     class $mol_hotkey extends $.$mol_plugin {
         event() {
-            return Object.assign(Object.assign({}, super.event()), { keydown: (event) => this.keydown(event) });
+            return {
+                ...super.event(),
+                keydown: (event) => this.keydown(event)
+            };
         }
         key() {
             return {};
@@ -4845,13 +4906,30 @@ var $;
             ];
         }
         field() {
-            return Object.assign(Object.assign({}, super.field()), { disabled: this.disabled(), value: this.value_changed(), placeholder: this.hint(), spellcheck: this.spellcheck(), autocomplete: this.autocomplete_native(), selectionEnd: this.selection_end(), selectionStart: this.selection_start() });
+            return {
+                ...super.field(),
+                disabled: this.disabled(),
+                value: this.value_changed(),
+                placeholder: this.hint(),
+                spellcheck: this.spellcheck(),
+                autocomplete: this.autocomplete_native(),
+                selectionEnd: this.selection_end(),
+                selectionStart: this.selection_start()
+            };
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { maxlength: this.length_max(), type: this.type() });
+            return {
+                ...super.attr(),
+                maxlength: this.length_max(),
+                type: this.type()
+            };
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { input: (event) => this.event_change(event), keydown: (event) => this.event_key_press(event) });
+            return {
+                ...super.event(),
+                input: (event) => this.event_change(event),
+                keydown: (event) => this.event_key_press(event)
+            };
         }
         plugins() {
             return [
@@ -5213,7 +5291,10 @@ var $;
 (function ($) {
     class $mol_float extends $.$mol_view {
         style() {
-            return Object.assign(Object.assign({}, super.style()), { minHeight: "auto" });
+            return {
+                ...super.style(),
+                minHeight: "auto"
+            };
         }
     }
     $.$mol_float = $mol_float;
@@ -5254,7 +5335,10 @@ var $;
             return 0;
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { paddingLeft: this.level_style() });
+            return {
+                ...super.style(),
+                paddingLeft: this.level_style()
+            };
         }
         checked(val) {
             return this.expanded(val);
@@ -5950,7 +6034,11 @@ var $;
             return "img";
         }
         field() {
-            return Object.assign(Object.assign({}, super.field()), { src: this.uri(), alt: this.title() });
+            return {
+                ...super.field(),
+                src: this.uri(),
+                alt: this.title()
+            };
         }
         uri() {
             return "";
@@ -6174,7 +6262,10 @@ var $;
     $.$mol_text = $mol_text;
     class $mol_text_row extends $.$mol_paragraph {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_type: this.type() });
+            return {
+                ...super.attr(),
+                mol_text_type: this.type()
+            };
         }
         type() {
             return "";
@@ -6186,7 +6277,10 @@ var $;
             return "h";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_header_level: this.level() });
+            return {
+                ...super.attr(),
+                mol_text_header_level: this.level()
+            };
         }
         sub() {
             return this.content();
@@ -6209,7 +6303,10 @@ var $;
             return "span";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_type: this.type() });
+            return {
+                ...super.attr(),
+                mol_text_type: this.type()
+            };
         }
         sub() {
             return this.content();
@@ -6234,7 +6331,10 @@ var $;
     $.$mol_text_span = $mol_text_span;
     class $mol_text_link extends $.$mol_link_iconed {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_type: this.type() });
+            return {
+                ...super.attr(),
+                mol_text_type: this.type()
+            };
         }
         uri() {
             return this.link();
@@ -6270,7 +6370,12 @@ var $;
             return "object";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { allowfullscreen: true, mol_text_type: this.type(), data: this.link() });
+            return {
+                ...super.attr(),
+                allowfullscreen: true,
+                mol_text_type: this.type(),
+                data: this.link()
+            };
         }
         sub() {
             return [
@@ -6589,7 +6694,10 @@ var $;
 (function ($) {
     class $mol_text_code_token extends $.$mol_dimmer {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_code_token_type: this.type() });
+            return {
+                ...super.attr(),
+                mol_text_code_token_type: this.type()
+            };
         }
         type() {
             return "";
@@ -6604,7 +6712,11 @@ var $;
             return "code-link";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { href: this.haystack(), target: "_blank" });
+            return {
+                ...super.attr(),
+                href: this.haystack(),
+                target: "_blank"
+            };
         }
         haystack() {
             return "";
@@ -6837,7 +6949,10 @@ var $;
 (function ($) {
     class $mol_text_code extends $.$mol_list {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_text_code_sidebar_showed: this.sidebar_showed() });
+            return {
+                ...super.attr(),
+                mol_text_code_sidebar_showed: this.sidebar_showed()
+            };
         }
         text() {
             return "";
@@ -6937,7 +7052,11 @@ var $;
 (function ($) {
     class $mol_textarea extends $.$mol_view {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_textarea_clickable: this.clickable(), mol_textarea_sidebar_showed: this.sidebar_showed() });
+            return {
+                ...super.attr(),
+                mol_textarea_clickable: this.clickable(),
+                mol_textarea_sidebar_showed: this.sidebar_showed()
+            };
         }
         event() {
             return {
@@ -8039,7 +8158,10 @@ var $;
     $.$mol_view_tree_test_attributes_super = $mol_view_tree_test_attributes_super;
     class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
         some() {
-            return Object.assign(Object.assign({}, super.some()), { a: 1 });
+            return {
+                ...super.some(),
+                a: 1
+            };
         }
     }
     $.$mol_view_tree_test_attributes = $mol_view_tree_test_attributes;
