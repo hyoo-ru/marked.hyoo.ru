@@ -2,7 +2,7 @@ namespace $ {
 
 	const { optional, slash_back, char_any, char_except, repeat } = $mol_regexp
 
-	export let $hyoo_marked_line_content = repeat( char_any, 1 )
+	export let $hyoo_marked_line_content = repeat( char_except( '\r\n' ), 1 )
 
 	const uri = repeat( char_except( slash_back ) )
 

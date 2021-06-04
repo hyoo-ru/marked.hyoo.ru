@@ -4,7 +4,10 @@ namespace $ {
 	const NL = '\n'
 
 	function flow( marked: string ) {
-		return [ ... $hyoo_marked_flow.parse( marked ) ].map( token => {
+		return [ ... marked.matchAll( $hyoo_marked_flow ) ].map( found => {
+			
+			const token = found.groups
+			if( !token ) return found[0]
 			
 			if( token.cut ) {
 				return <hr/>
@@ -38,61 +41,64 @@ namespace $ {
 				return <p>{NL}{ line( token.content ) }{NL}</p>
 			}
 			
-			return token[0]
+			return $mol_fail( new SyntaxError( `Unknown token` ) )
 
 		} ).filter( Boolean )
 	}
 	
 	function table_cells( marked: string ) {
 		
-		const tokens = [ ... $hyoo_marked_table_line.parse( marked ) ]
+		const tokens = [ ... marked.matchAll( $hyoo_marked_table_line ) ]
 		const cols = [] as ( typeof tokens )[]
 		
 		for( const token of tokens ) {
-			const index = Math.ceil( token.indent.length / 2 )
+			const index = Math.ceil( token.groups!.indent.length / 2 )
 			const col = cols[ index ] || ( cols[ index ] = [] )
 			col.push( token )
 		}
 
 		return cols.map( col => {
-			const lines = col.map( line => line.content )
+			const lines = col.map( line => line.groups!.content )
 			return <td>{NL}{ flow( lines.join( '\n' ) + '\n' ) }{NL}</td>
 		} )
 
 	}
 	
 	function table_rows( marked: string ) {
-		return [ ... $hyoo_marked_table_row.parse( marked ) ].map( token => {
+		return [ ... marked.matchAll( $hyoo_marked_table_row ) ].map( token => {
 			
-			return <tr>{NL}{ table_cells( token.content ) }{NL}</tr>
+			return <tr>{NL}{ table_cells( token.groups!.content ) }{NL}</tr>
 			
 		} ).filter( Boolean )
 	}
 	
 	function list_items( marked: string ) {
-		return [ ... $hyoo_marked_list_item.parse( marked ) ].map( token => {
+		return [ ... marked.matchAll( $hyoo_marked_list_item ) ].map( token => {
 
-			const kids = token.kids.replace( /^  /gm, '' )
+			const kids = token.groups!.kids.replace( /^  /gm, '' )
 
-			return <li>{NL}{ flow( token.content.replace( /^  /gm, '' ) + '\n' ) }{ flow( kids ) }{NL}</li>
+			return <li>{NL}{ flow( token.groups!.content.replace( /^  /gm, '' ) + '\n' ) }{ flow( kids ) }{NL}</li>
 			
 		} ).filter( Boolean )
 	}
 	
 	function script_lines( marked: string ) {
-		return [ ... $hyoo_marked_script_line.parse( marked ) ].map( token => {
+		return [ ... marked.matchAll( $hyoo_marked_script_line ) ].map( token => {
 
-			if( token.marker === '++' ) return <ins>${ token.content }{NL}</ins>
-			if( token.marker === '--' ) return <del>${ token.content }{NL}</del>
-			if( token.marker === '**' ) return <strong>${ token.content }{NL}</strong>
+			if( token.groups!.marker === '++' ) return <ins>${ token.groups!.content }{NL}</ins>
+			if( token.groups!.marker === '--' ) return <del>${ token.groups!.content }{NL}</del>
+			if( token.groups!.marker === '**' ) return <strong>${ token.groups!.content }{NL}</strong>
 
-			return <span>{ token.content }{NL}</span>
+			return <span>{ token.groups!.content }{NL}</span>
 			
 		} ).filter( Boolean )
 	}
 	
 	function line( marked: string ) {
-		return [ ... $hyoo_marked_line.parse( marked ) ].map( token => {
+		return [ ... marked.matchAll( $hyoo_marked_line ) ].map( found => {
+			
+			const token = found.groups!
+			if( !token ) return <span>found[0]</span>
 			
 			if( token.strong ) {
 				return <strong>{ line( token.content ) }</strong>

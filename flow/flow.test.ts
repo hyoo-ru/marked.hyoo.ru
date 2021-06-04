@@ -3,30 +3,30 @@ namespace $ {
 
 		'header level 1'() {
 			
-			const res = [ ... $hyoo_marked_flow.parse( `= text\n` ) ]
+			const res = [ ... `= text\n`.matchAll( $hyoo_marked_flow ) ][0].groups!
 
-			$mol_assert_equal( res[0].header, '= text\n' )
-			$mol_assert_equal( res[0].marker, '=' )
-			$mol_assert_equal( res[0].content, 'text' )
+			$mol_assert_equal( res.header, '= text\n' )
+			$mol_assert_equal( res.marker, '=' )
+			$mol_assert_equal( res.content, 'text' )
 			
 		},
 
 		'header level 6'() {
 			
-			const res = [ ... $hyoo_marked_flow.parse( `====== text\n` ) ]
+			const res = [ ... `====== text\n`.matchAll( $hyoo_marked_flow ) ][0].groups!
 
-			$mol_assert_equal( res[0].header, '====== text\n' )
-			$mol_assert_equal( res[0].marker, '======' )
-			$mol_assert_equal( res[0].content, 'text' )
+			$mol_assert_equal( res.header, '====== text\n' )
+			$mol_assert_equal( res.marker, '======' )
+			$mol_assert_equal( res.content, 'text' )
 			
 		},
 
 		'header level too many'() {
 			
-			const res = [ ... $hyoo_marked_flow.parse( `======= text\n` ) ]
+			const res = [ ... `======= text\n`.matchAll( $hyoo_marked_flow ) ][0].groups!
 
-			$mol_assert_equal( res[0].paragraph, '======= text\n' )
-			$mol_assert_equal( res[0].content, '======= text' )
+			$mol_assert_equal( res.paragraph, '======= text\n' )
+			$mol_assert_equal( res.content, '======= text' )
 			
 		},
 
@@ -38,21 +38,21 @@ namespace $ {
 				= header
 			`.replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ]
 			
-			$mol_assert_equal( res[0].paragraph, '\n' )
-			$mol_assert_equal( res[0].content, '' )
+			$mol_assert_equal( res[0].groups!.paragraph, '\n' )
+			$mol_assert_equal( res[0].groups!.content, '' )
 
-			$mol_assert_equal( res[1].header, '= header\n' )
-			$mol_assert_equal( res[1].marker, '=' )
-			$mol_assert_equal( res[1].content, 'header' )
+			$mol_assert_equal( res[1].groups!.header, '= header\n' )
+			$mol_assert_equal( res[1].groups!.marker, '=' )
+			$mol_assert_equal( res[1].groups!.content, 'header' )
 			
-			$mol_assert_equal( res[2].paragraph, 'paragraph\n' )
-			$mol_assert_equal( res[2].content, 'paragraph' )
+			$mol_assert_equal( res[2].groups!.paragraph, 'paragraph\n' )
+			$mol_assert_equal( res[2].groups!.content, 'paragraph' )
 			
-			$mol_assert_equal( res[3].header, '= header\n' )
-			$mol_assert_equal( res[3].marker, '=' )
-			$mol_assert_equal( res[3].content, 'header' )
+			$mol_assert_equal( res[3].groups!.header, '= header\n' )
+			$mol_assert_equal( res[3].groups!.marker, '=' )
+			$mol_assert_equal( res[3].groups!.content, 'header' )
 			
 		},
 
@@ -63,9 +63,9 @@ namespace $ {
 				- bar
 			`.slice(1).replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ][0].groups!
 			
-			$mol_assert_equal( res[0].list, '- foo\n- bar\n' )
+			$mol_assert_equal( res.list, '- foo\n- bar\n' )
 			
 		},
 
@@ -77,9 +77,9 @@ namespace $ {
 				- lol
 			`.slice(1).replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ][0].groups!
 			
-			$mol_assert_equal( res[0].list, '- foo\n  + bar\n- lol\n' )
+			$mol_assert_equal( res.list, '- foo\n  + bar\n- lol\n' )
 			
 		},
 
@@ -90,9 +90,9 @@ namespace $ {
 				" bar
 			`.slice(1).replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ][0].groups!
 			
-			$mol_assert_equal( res[0].quote, '" foo\n" bar\n' )
+			$mol_assert_equal( res.quote, '" foo\n" bar\n' )
 			
 		},
 
@@ -104,9 +104,9 @@ namespace $ {
 				- lol
 			`.slice(1).replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ][0].groups!
 			
-			$mol_assert_equal( res[0].list, '- foo\n  " bar\n- lol\n' )
+			$mol_assert_equal( res.list, '- foo\n  " bar\n- lol\n' )
 			
 		},
 
@@ -119,9 +119,9 @@ namespace $ {
 				  ! 777
 			`.slice(1).replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ][0].groups!
 			
-			$mol_assert_equal( res[0].table, '! foo\n  ! bar\n! lol\n  ! 777\n' )
+			$mol_assert_equal( res.table, '! foo\n  ! bar\n! lol\n  ! 777\n' )
 			
 		},
 
@@ -134,9 +134,9 @@ namespace $ {
 			  **777
 			`.slice(1).replace( /^\t+/gm, '' )
 
-			const res = [ ... $hyoo_marked_flow.parse( text ) ]
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ][0].groups!
 			
-			$mol_assert_equal( res[0].script, '    foo\n  ++bar\n  --lol\n  **777\n' )
+			$mol_assert_equal( res.script, '    foo\n  ++bar\n  --lol\n  **777\n' )
 			
 		},
 
