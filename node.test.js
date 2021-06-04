@@ -85,7 +85,7 @@ var $;
                 return false;
             return true;
         }
-        catch (_a) {
+        catch {
             return false;
         }
     }
@@ -162,7 +162,7 @@ var $;
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
             const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
+            return this[$.$mol_ambient_ref] = owner?.$ || $mol_object2.$;
         }
         set $(next) {
             if (this[$.$mol_ambient_ref])
@@ -244,7 +244,7 @@ var $node = new Proxy({ require }, {
                 try {
                     $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
                 }
-                catch (_a) { }
+                catch { }
                 break;
             }
             else {
@@ -1645,7 +1645,7 @@ var $;
                 try {
                     next[Symbol.toStringTag] = this[Symbol.toStringTag];
                 }
-                catch (_a) { }
+                catch { }
                 next[$.$mol_object_field] = this[$.$mol_object_field];
             }
             this._value = next;
@@ -2288,10 +2288,9 @@ var $;
         static wrap(task) {
             const store = new WeakMap();
             return function (next) {
-                var _a;
                 if (next === undefined && store.has(this))
                     return store.get(this);
-                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
+                const val = task.call(this, next) ?? next;
                 store.set(this, val);
                 return val;
             };
@@ -2306,7 +2305,7 @@ var $;
 (function ($) {
     function $mol_func_name(func) {
         let name = func.name;
-        if ((name === null || name === void 0 ? void 0 : name.length) > 1)
+        if (name?.length > 1)
             return name;
         for (let key in this) {
             try {
@@ -2316,7 +2315,7 @@ var $;
                 Object.defineProperty(func, 'name', { value: name });
                 break;
             }
-            catch (_a) { }
+            catch { }
         }
         return name;
     }
@@ -2419,10 +2418,9 @@ var $;
             return this.minimal_width();
         }
         minimal_height() {
-            var _a;
             let min = 0;
             try {
-                for (const view of (_a = this.sub()) !== null && _a !== void 0 ? _a : []) {
+                for (const view of this.sub() ?? []) {
                     if (view instanceof $mol_view) {
                         min = Math.max(min, view.minimal_height());
                     }
@@ -3191,8 +3189,7 @@ var $;
                 return next;
             }
             event_scroll(next) {
-                var _a;
-                (_a = this._event_scroll_timer()) === null || _a === void 0 ? void 0 : _a.destructor();
+                this._event_scroll_timer()?.destructor();
                 const el = this.dom_node();
                 this._event_scroll_timer(new $.$mol_after_timeout(200, $.$mol_fiber_solid.func(() => {
                     this.scroll_top(Math.max(0, el.scrollTop));
@@ -3256,12 +3253,11 @@ var $;
     (function ($$) {
         class $mol_book2 extends $.$mol_book2 {
             title() {
-                return this.pages().map(page => page === null || page === void 0 ? void 0 : page.title()).reverse().filter(Boolean).join(' | ');
+                return this.pages().map(page => page?.title()).reverse().filter(Boolean).join(' | ');
             }
             sub() {
-                var _a;
                 const next = [...this.pages().slice(), this.Placeholder()];
-                const prev = (_a = $.$mol_mem_cached(() => this.sub())) !== null && _a !== void 0 ? _a : [];
+                const prev = $.$mol_mem_cached(() => this.sub()) ?? [];
                 for (let i = 1; i++;) {
                     const p = prev[prev.length - i];
                     const n = next[next.length - i];
@@ -3385,8 +3381,8 @@ var $;
 var $;
 (function ($) {
     function $mol_lights(next) {
-        var _a;
-        return (_a = this.$mol_state_local.value('$mol_lights', next)) !== null && _a !== void 0 ? _a : $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
+        return this.$mol_state_local.value('$mol_lights', next)
+            ?? $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
     }
     $.$mol_lights = $mol_lights;
 })($ || ($ = {}));
@@ -3695,16 +3691,15 @@ var $;
                 return this.enabled() ? super.tab_index() : -1;
             }
             error() {
-                var _a, _b;
                 try {
-                    (_a = this.fiber()) === null || _a === void 0 ? void 0 : _a.get();
+                    this.fiber()?.get();
                     return '';
                 }
                 catch (error) {
                     if (error instanceof Promise) {
                         return $.$mol_fail_hidden(error);
                     }
-                    return String((_b = error.message) !== null && _b !== void 0 ? _b : error);
+                    return String(error.message ?? error);
                 }
             }
             hint_or_error() {
@@ -3833,7 +3828,7 @@ var $;
     (function ($$) {
         class $mol_check extends $.$mol_check {
             click(next) {
-                if (next === null || next === void 0 ? void 0 : next.defaultPrevented)
+                if (next?.defaultPrevented)
                     return;
                 this.checked(!this.checked());
                 if (next)
@@ -3873,8 +3868,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
-    const TextDecoder = (_a = globalThis.TextDecoder) !== null && _a !== void 0 ? _a : $node.util.TextDecoder;
+    const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder;
     function $mol_charset_decode(value, code = 'utf8') {
         return new TextDecoder(code).decode(value);
     }
@@ -3885,8 +3879,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
-    const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
+    const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder;
     const encoder = new TextEncoder();
     function $mol_charset_encode(value) {
         return encoder.encode(value);
@@ -4116,7 +4109,7 @@ var $;
             const path = this.path();
             this.parent().watcher();
             try {
-                stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(path));
+                stat = next ?? stat_convert($node.fs.statSync(path));
             }
             catch (error) {
                 if (error.code === 'ENOENT')
@@ -5142,8 +5135,7 @@ var $;
 var $;
 (function ($) {
     function $mol_support_css_overflow_anchor() {
-        var _a, _b;
-        return (_b = (_a = this.$mol_dom_context.CSS) === null || _a === void 0 ? void 0 : _a.supports('overflow-anchor:auto')) !== null && _b !== void 0 ? _b : false;
+        return this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false;
     }
     $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
 })($ || ($ = {}));
@@ -5170,13 +5162,12 @@ var $;
                 return this.$.$mol_support_css_overflow_anchor();
             }
             view_window() {
-                var _a, _b, _c, _d, _e, _f;
                 const kids = this.sub();
                 if (kids.length < 3)
                     return [0, kids.length];
                 if (this.$.$mol_print.active())
                     return [0, kids.length];
-                let [min, max] = (_a = $.$mol_mem_cached(() => this.view_window())) !== null && _a !== void 0 ? _a : [0, 0];
+                let [min, max] = $.$mol_mem_cached(() => this.view_window()) ?? [0, 0];
                 let max2 = max = Math.min(max, kids.length);
                 let min2 = min = Math.max(0, Math.min(min, max - 1));
                 const anchoring = this.render_visible_only();
@@ -5185,16 +5176,16 @@ var $;
                 const limit_top = -over;
                 const limit_bottom = window_height + over;
                 const rect = this.view_rect();
-                const gap_before = (_b = $.$mol_mem_cached(() => this.gap_before())) !== null && _b !== void 0 ? _b : 0;
-                const gap_after = (_c = $.$mol_mem_cached(() => this.gap_after())) !== null && _c !== void 0 ? _c : 0;
-                let top = Math.ceil((_d = rect === null || rect === void 0 ? void 0 : rect.top) !== null && _d !== void 0 ? _d : 0) + gap_before;
-                let bottom = Math.ceil((_e = rect === null || rect === void 0 ? void 0 : rect.bottom) !== null && _e !== void 0 ? _e : 0) - gap_after;
+                const gap_before = $.$mol_mem_cached(() => this.gap_before()) ?? 0;
+                const gap_after = $.$mol_mem_cached(() => this.gap_after()) ?? 0;
+                let top = Math.ceil(rect?.top ?? 0) + gap_before;
+                let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
                 if (top <= limit_top && bottom >= limit_bottom) {
                     return [min2, max2];
                 }
                 if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
                     min = 0;
-                    top = Math.ceil((_f = rect === null || rect === void 0 ? void 0 : rect.top) !== null && _f !== void 0 ? _f : 0);
+                    top = Math.ceil(rect?.top ?? 0);
                     while (min < (kids.length - 1)) {
                         const height = kids[min].minimal_height();
                         if (top + height >= limit_top)
@@ -5512,6 +5503,12 @@ var $;
 //dimmer.view.tree.js.map
 ;
 "use strict";
+//equals.js.map
+;
+"use strict";
+//merge.js.map
+;
+"use strict";
 //intersect.js.map
 ;
 "use strict";
@@ -5521,45 +5518,89 @@ var $;
 var $;
 (function ($) {
     class $mol_regexp extends RegExp {
-        constructor(source, flags = '', groups = []) {
+        constructor(source, flags = 'gsu', groups = []) {
             super(source, flags);
             this.groups = groups;
         }
-        get parse() {
-            const self = this;
-            return function* parsing(str, from = 0) {
-                while (from < str.length) {
-                    self.lastIndex = from;
-                    const res = self.exec(str);
-                    if (res === null) {
-                        yield { 0: str.substring(from) };
-                        return null;
-                    }
-                    if (from === self.lastIndex) {
-                        $.$mol_fail(new Error('Captured empty substring'));
-                    }
-                    const found = {};
-                    const skipped = str.slice(from, self.lastIndex - res[0].length);
-                    if (skipped)
-                        yield { 0: skipped };
-                    from = self.lastIndex;
-                    for (let i = 0; i < self.groups.length; ++i) {
-                        const group = self.groups[i];
-                        found[group] = found[group] || res[i + 1] || '';
-                    }
-                    yield found;
-                }
-            };
+        *[Symbol.matchAll](str) {
+            const index = this.lastIndex;
+            this.lastIndex = 0;
+            while (this.lastIndex < str.length) {
+                const found = this.exec(str);
+                if (!found)
+                    break;
+                yield found;
+            }
+            this.lastIndex = index;
+        }
+        [Symbol.match](str) {
+            const res = [...this[Symbol.matchAll](str)].filter(r => r.groups).map(r => r[0]);
+            if (!res.length)
+                return null;
+            return res;
+        }
+        exec(str) {
+            const from = this.lastIndex;
+            const res = super.exec(str);
+            if (res === null) {
+                this.lastIndex = str.length;
+                if (!str)
+                    return null;
+                return Object.assign([str.slice(from)], {
+                    index: from,
+                    input: str,
+                });
+            }
+            if (from === this.lastIndex) {
+                $.$mol_fail(new Error('Captured empty substring'));
+            }
+            const groups = {};
+            const skipped = str.slice(from, this.lastIndex - res[0].length);
+            if (skipped) {
+                this.lastIndex = this.lastIndex - res[0].length;
+                return Object.assign([skipped], {
+                    index: from,
+                    input: res.input,
+                });
+            }
+            for (let i = 0; i < this.groups.length; ++i) {
+                const group = this.groups[i];
+                groups[group] = groups[group] || res[i + 1] || '';
+            }
+            return Object.assign(res, { groups });
+        }
+        generate(params) {
+            return null;
         }
         static repeat(source, min = 0, max = Number.POSITIVE_INFINITY) {
             const regexp = $mol_regexp.from(source);
             const upper = Number.isFinite(max) ? max : '';
-            return new $mol_regexp(`(?:${regexp.source}){${min},${upper}}?`, regexp.flags, regexp.groups);
+            const str = `(?:${regexp.source}){${min},${upper}}?`;
+            const regexp2 = new $mol_regexp(str, regexp.flags, regexp.groups);
+            regexp2.generate = params => {
+                const res = regexp.generate(params);
+                if (res)
+                    return res;
+                if (min > 0)
+                    return res;
+                return '';
+            };
+            return regexp2;
         }
         static repeat_greedy(source, min = 0, max = Number.POSITIVE_INFINITY) {
             const regexp = $mol_regexp.from(source);
             const upper = Number.isFinite(max) ? max : '';
-            return new $mol_regexp(`(?:${regexp.source}){${min},${upper}}`, regexp.flags, regexp.groups);
+            const str = `(?:${regexp.source}){${min},${upper}}`;
+            const regexp2 = new $mol_regexp(str, regexp.flags, regexp.groups);
+            regexp2.generate = params => {
+                const res = regexp.generate(params);
+                if (res)
+                    return res;
+                if (min > 0)
+                    return res;
+                return '';
+            };
+            return regexp2;
         }
         static optional(source) {
             return $mol_regexp.repeat_greedy(source, 0, 1);
@@ -5576,29 +5617,41 @@ var $;
             ignoreCase: false,
             multiline: false,
         }) {
-            let flags = 'gu';
+            let flags = 'gsu';
             if (multiline)
                 flags += 'm';
             if (ignoreCase)
                 flags += 'i';
+            if (typeof source === 'number') {
+                const src = `\\u{${source.toString(16)}}`;
+                const regexp = new $mol_regexp(src, flags);
+                regexp.generate = () => src;
+                return regexp;
+            }
             if (typeof source === 'string') {
-                return new $mol_regexp(source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                const src = source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regexp = new $mol_regexp(src, flags);
+                regexp.generate = () => source;
+                return regexp;
             }
             else if (source instanceof RegExp) {
                 if (source instanceof $mol_regexp)
                     return source;
-                const test = new $mol_regexp('|' + source.source);
+                const test = new RegExp('|' + source.source);
                 const groups = Array.from({ length: test.exec('').length - 1 }, (_, i) => String(i + 1));
-                return new $mol_regexp(source.source, source.flags, groups);
+                const regexp = new $mol_regexp(source.source, source.flags, groups);
+                regexp.generate = () => '';
+                return regexp;
             }
             if (Array.isArray(source)) {
-                const sources = [];
+                const patterns = source.map(src => Array.isArray(src)
+                    ? $mol_regexp.optional(src)
+                    : $mol_regexp.from(src));
+                const chunks = patterns.map(pattern => pattern.source);
                 const groups = [];
                 let index = 0;
-                for (const item of source) {
-                    const regexp = $mol_regexp.from(item);
-                    sources.push(regexp.source);
-                    for (let group of regexp.groups) {
+                for (const pattern of patterns) {
+                    for (let group of pattern.groups) {
                         if (Number(group) >= 0) {
                             groups.push(String(index++));
                         }
@@ -5607,7 +5660,18 @@ var $;
                         }
                     }
                 }
-                return new $mol_regexp(sources.join(''), flags, groups);
+                const regexp = new $mol_regexp(chunks.join(''), flags, groups);
+                regexp.generate = params => {
+                    let res = '';
+                    for (const pattern of patterns) {
+                        let sub = pattern.generate(params);
+                        if (sub === null)
+                            return '';
+                        res += sub;
+                    }
+                    return res;
+                };
+                return regexp;
             }
             else {
                 const groups = [];
@@ -5617,11 +5681,30 @@ var $;
                     groups.push(...regexp.groups);
                     return `(${regexp.source})`;
                 });
-                return new $mol_regexp(`(?:${chunks.join('|')})`, flags, groups);
+                const regexp = new $mol_regexp(`(?:${chunks.join('|')})`, flags, groups);
+                const validator = new RegExp('^' + regexp.source + '$', flags);
+                regexp.generate = params => {
+                    for (let option in source) {
+                        if (params[option]) {
+                            if (typeof params[option] !== 'boolean') {
+                                const str = String(params[option]);
+                                if (str.match(validator))
+                                    return str;
+                                $.$mol_fail(new Error(`Wrong param: ${option}=${str}`));
+                            }
+                        }
+                        else {
+                            if (typeof source[option] !== 'object')
+                                continue;
+                        }
+                        const res = $mol_regexp.from(source[option]).generate(params);
+                        if (res)
+                            return res;
+                    }
+                    return null;
+                };
+                return regexp;
             }
-        }
-        static char_code(code) {
-            return new $mol_regexp(`\\u${code.toString(16).padStart(4, '0')}`);
         }
         static unicode_only(...category) {
             return new $mol_regexp(`\\p{${category.join('=')}}`);
@@ -5630,7 +5713,7 @@ var $;
             return new $mol_regexp(`\\P{${category.join('=')}}`);
         }
         static char_range(from, to) {
-            return new $mol_regexp(`${$mol_regexp.char_code(from)}..${$mol_regexp.char_code(to)}`);
+            return new $mol_regexp(`${$mol_regexp.from(from).source}-${$mol_regexp.from(to).source}`);
         }
         static char_only(...allowed) {
             const regexp = allowed.map(f => $mol_regexp.from(f).source).join('');
@@ -5641,17 +5724,25 @@ var $;
             return new $mol_regexp(`[^${regexp}]`);
         }
     }
-    $mol_regexp.char_any = $mol_regexp.from(/[\s\S]/);
-    $mol_regexp.digit = $mol_regexp.from(/\d/);
-    $mol_regexp.letter = $mol_regexp.from(/\w/);
-    $mol_regexp.space = $mol_regexp.from(/\s/);
-    $mol_regexp.tab = $mol_regexp.from(/\t/);
-    $mol_regexp.slash_back = $mol_regexp.from(/\\/);
-    $mol_regexp.word_break = $mol_regexp.from(/\b/);
-    $mol_regexp.line_end = $mol_regexp.from(/(?:\r?\n|\r)/);
-    $mol_regexp.begin = $mol_regexp.from(/^/);
-    $mol_regexp.end = $mol_regexp.from(/$/);
-    $mol_regexp.or = $mol_regexp.from(/|/);
+    $mol_regexp.decimal_only = $mol_regexp.from(/\d/gsu);
+    $mol_regexp.decimal_except = $mol_regexp.from(/\D/gsu);
+    $mol_regexp.latin_only = $mol_regexp.from(/\w/gsu);
+    $mol_regexp.latin_except = $mol_regexp.from(/\W/gsu);
+    $mol_regexp.space_only = $mol_regexp.from(/\s/gsu);
+    $mol_regexp.space_except = $mol_regexp.from(/\S/gsu);
+    $mol_regexp.word_break_only = $mol_regexp.from(/\b/gsu);
+    $mol_regexp.word_break_except = $mol_regexp.from(/\B/gsu);
+    $mol_regexp.tab = $mol_regexp.from(/\t/gsu);
+    $mol_regexp.slash_back = $mol_regexp.from(/\\/gsu);
+    $mol_regexp.nul = $mol_regexp.from(/\0/gsu);
+    $mol_regexp.char_any = $mol_regexp.from(/./gsu);
+    $mol_regexp.begin = $mol_regexp.from(/^/gsu);
+    $mol_regexp.end = $mol_regexp.from(/$/gsu);
+    $mol_regexp.or = $mol_regexp.from(/|/gsu);
+    $mol_regexp.line_end = $mol_regexp.from({
+        win_end: [['\r'], '\n'],
+        mac_end: '\r',
+    });
     $.$mol_regexp = $mol_regexp;
 })($ || ($ = {}));
 //regexp.js.map
@@ -7630,7 +7721,7 @@ var $;
 var $;
 (function ($) {
     const { optional, slash_back, char_any, char_except, repeat } = $.$mol_regexp;
-    $.$hyoo_marked_line_content = repeat(char_any, 1);
+    $.$hyoo_marked_line_content = repeat(char_except('\r\n'), 1);
     const uri = repeat(char_except(slash_back));
     function with_marker(marker, content = $.$mol_regexp.from({
         content: $.$hyoo_marked_line_content
@@ -7772,7 +7863,10 @@ var $;
 (function ($) {
     const NL = '\n';
     function flow(marked) {
-        return [...$.$hyoo_marked_flow.parse(marked)].map(token => {
+        return [...marked.matchAll($.$hyoo_marked_flow)].map(found => {
+            const token = found.groups;
+            if (!token)
+                return found[0];
             if (token.cut) {
                 return $.$mol_jsx("hr", null);
             }
@@ -7817,19 +7911,19 @@ var $;
                     line(token.content),
                     NL);
             }
-            return token[0];
+            return $.$mol_fail(new SyntaxError(`Unknown token`));
         }).filter(Boolean);
     }
     function table_cells(marked) {
-        const tokens = [...$.$hyoo_marked_table_line.parse(marked)];
+        const tokens = [...marked.matchAll($.$hyoo_marked_table_line)];
         const cols = [];
         for (const token of tokens) {
-            const index = Math.ceil(token.indent.length / 2);
+            const index = Math.ceil(token.groups.indent.length / 2);
             const col = cols[index] || (cols[index] = []);
             col.push(token);
         }
         return cols.map(col => {
-            const lines = col.map(line => line.content);
+            const lines = col.map(line => line.groups.content);
             return $.$mol_jsx("td", null,
                 NL,
                 flow(lines.join('\n') + '\n'),
@@ -7837,47 +7931,50 @@ var $;
         });
     }
     function table_rows(marked) {
-        return [...$.$hyoo_marked_table_row.parse(marked)].map(token => {
+        return [...marked.matchAll($.$hyoo_marked_table_row)].map(token => {
             return $.$mol_jsx("tr", null,
                 NL,
-                table_cells(token.content),
+                table_cells(token.groups.content),
                 NL);
         }).filter(Boolean);
     }
     function list_items(marked) {
-        return [...$.$hyoo_marked_list_item.parse(marked)].map(token => {
-            const kids = token.kids.replace(/^  /gm, '');
+        return [...marked.matchAll($.$hyoo_marked_list_item)].map(token => {
+            const kids = token.groups.kids.replace(/^  /gm, '');
             return $.$mol_jsx("li", null,
                 NL,
-                flow(token.content.replace(/^  /gm, '') + '\n'),
+                flow(token.groups.content.replace(/^  /gm, '') + '\n'),
                 flow(kids),
                 NL);
         }).filter(Boolean);
     }
     function script_lines(marked) {
-        return [...$.$hyoo_marked_script_line.parse(marked)].map(token => {
-            if (token.marker === '++')
+        return [...marked.matchAll($.$hyoo_marked_script_line)].map(token => {
+            if (token.groups.marker === '++')
                 return $.$mol_jsx("ins", null,
                     "$",
-                    token.content,
+                    token.groups.content,
                     NL);
-            if (token.marker === '--')
+            if (token.groups.marker === '--')
                 return $.$mol_jsx("del", null,
                     "$",
-                    token.content,
+                    token.groups.content,
                     NL);
-            if (token.marker === '**')
+            if (token.groups.marker === '**')
                 return $.$mol_jsx("strong", null,
                     "$",
-                    token.content,
+                    token.groups.content,
                     NL);
             return $.$mol_jsx("span", null,
-                token.content,
+                token.groups.content,
                 NL);
         }).filter(Boolean);
     }
     function line(marked) {
-        return [...$.$hyoo_marked_line.parse(marked)].map(token => {
+        return [...marked.matchAll($.$hyoo_marked_line)].map(found => {
+            const token = found.groups;
+            if (!token)
+                return $.$mol_jsx("span", null, "found[0]");
             if (token.strong) {
                 return $.$mol_jsx("strong", null, line(token.content));
             }
@@ -8101,9 +8198,9 @@ var $;
                 return this.$.$hyoo_marked_to_html(this.marked());
             }
             marked(next) {
-                var _a;
-                return (_a = this.$.$mol_state_arg.value('marked', next)) !== null && _a !== void 0 ? _a : this.$.$mol_fetch.text('hyoo/marked/readme.md')
-                    .replace(/```\n*/g, '');
+                return this.$.$mol_state_arg.value('marked', next)
+                    ?? this.$.$mol_fetch.text('hyoo/marked/readme.md')
+                        .replace(/```\n*/g, '');
             }
         }
         __decorate([
@@ -10795,6 +10892,12 @@ var $;
 //work.test.js.map
 ;
 "use strict";
+//equals.test.js.map
+;
+"use strict";
+//merge.test.js.map
+;
+"use strict";
 //intersect.test.js.map
 ;
 "use strict";
@@ -10806,46 +10909,39 @@ var $;
             $.$mol_assert_equal(specials.source, '\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\|\\[\\]\\\\');
         },
         'char code'() {
-            const space = $.$mol_regexp.char_code(32);
-            $.$mol_assert_equal(space.exec(' ')[0], ' ');
+            const space = $.$mol_regexp.from(32);
+            $.$mol_assert_like(' '.match(space), [' ']);
         },
         'repeat fixed'() {
-            const { repeat, digit } = $.$mol_regexp;
+            const { repeat, decimal_only: digit } = $.$mol_regexp;
             const year = repeat(digit, 4, 4);
-            $.$mol_assert_equal(year.exec('#2020#')[0], '2020');
+            $.$mol_assert_like('#2020#'.match(year), ['2020']);
         },
         'greedy repeat'() {
-            const { repeat, repeat_greedy, letter } = $.$mol_regexp;
-            $.$mol_assert_equal(repeat(letter).exec('abc')[0], '');
-            $.$mol_assert_equal(repeat_greedy(letter).exec('abc')[0], 'abc');
+            const { repeat, repeat_greedy, latin_only: letter } = $.$mol_regexp;
+            $.$mol_assert_like('abc'.match(repeat(letter, 1, 2)), ['a', 'b', 'c']);
+            $.$mol_assert_like('abc'.match(repeat_greedy(letter, 1, 2)), ['ab', 'c']);
         },
         'repeat range'() {
-            const { repeat_greedy, digit } = $.$mol_regexp;
+            const { repeat_greedy, decimal_only: digit } = $.$mol_regexp;
             const year = repeat_greedy(digit, 2, 4);
-            $.$mol_assert_equal(year.exec('#2#'), null);
-            $.$mol_assert_equal(year.exec('#20#')[0], '20');
-            $.$mol_assert_equal(year.exec('#2020#')[0], '2020');
-            $.$mol_assert_equal(year.exec('#20201#')[0], '2020');
+            $.$mol_assert_like('#2#'.match(year), null);
+            $.$mol_assert_like('#20#'.match(year), ['20']);
+            $.$mol_assert_like('#2020#'.match(year), ['2020']);
+            $.$mol_assert_like('#20201#'.match(year), ['2020']);
         },
         'repeat from'() {
-            const { repeat_greedy, letter } = $.$mol_regexp;
+            const { repeat_greedy, latin_only: letter } = $.$mol_regexp;
             const name = repeat_greedy(letter, 2);
-            $.$mol_assert_equal(name.exec('##'), null);
-            $.$mol_assert_equal(name.exec('#a#'), null);
-            $.$mol_assert_equal(name.exec('#ab#')[0], 'ab');
-            $.$mol_assert_equal(name.exec('#abc#')[0], 'abc');
-        },
-        'optional'() {
-            const { optional, letter } = $.$mol_regexp;
-            const name = optional(letter);
-            $.$mol_assert_equal(name.exec('')[0], '');
-            $.$mol_assert_equal(name.exec('a')[0], 'a');
-            $.$mol_assert_equal(name.exec('ab')[0], 'a');
+            $.$mol_assert_like('##'.match(name), null);
+            $.$mol_assert_like('#a#'.match(name), null);
+            $.$mol_assert_like('#ab#'.match(name), ['ab']);
+            $.$mol_assert_like('#abc#'.match(name), ['abc']);
         },
         'from string'() {
             const regexp = $.$mol_regexp.from('[\\d]');
             $.$mol_assert_equal(regexp.source, '\\[\\\\d\\]');
-            $.$mol_assert_equal(regexp.flags, 'gu');
+            $.$mol_assert_equal(regexp.flags, 'gsu');
         },
         'from regexp'() {
             const regexp = $.$mol_regexp.from(/[\d]/i);
@@ -10854,37 +10950,41 @@ var $;
         },
         'case ignoring'() {
             const xxx = $.$mol_regexp.from('x', { ignoreCase: true });
-            $.$mol_assert_like(xxx.flags, 'giu');
+            $.$mol_assert_like(xxx.flags, 'gisu');
             $.$mol_assert_like(xxx.exec('xx')[0], 'x');
             $.$mol_assert_like(xxx.exec('XX')[0], 'X');
         },
         'multiline mode'() {
-            const { end } = $.$mol_regexp;
-            const xxx = $.$mol_regexp.from(['x', end], { multiline: true });
+            const { end, from } = $.$mol_regexp;
+            const xxx = from(['x', end], { multiline: true });
             $.$mol_assert_like(xxx.exec('x\ny')[0], 'x');
-            $.$mol_assert_like(xxx.flags, 'gmu');
+            $.$mol_assert_like(xxx.flags, 'gmsu');
         },
         'sequence'() {
-            const { begin, end, digit, repeat } = $.$mol_regexp;
+            const { begin, end, decimal_only: digit, repeat, from } = $.$mol_regexp;
             const year = repeat(digit, 4, 4);
             const dash = '-';
             const month = repeat(digit, 2, 2);
             const day = repeat(digit, 2, 2);
-            const date = $.$mol_regexp.from([begin, year, dash, month, dash, day, end], { ignoreCase: true });
+            const date = from([begin, year, dash, month, dash, day, end]);
             $.$mol_assert_like(date.exec('2020-01-02')[0], '2020-01-02');
-            $.$mol_assert_like(date.ignoreCase, true);
+        },
+        'optional'() {
+            const name = $.$mol_regexp.from(['A', ['4']]);
+            $.$mol_assert_equal('AB'.match(name)[0], 'A');
+            $.$mol_assert_equal('A4'.match(name)[0], 'A4');
         },
         'only groups'() {
             const regexp = $.$mol_regexp.from({ dog: '@' });
-            $.$mol_assert_like([...regexp.parse('#')], [{ 0: '#' }]);
-            $.$mol_assert_like([...regexp.parse('@')], [{ dog: '@' }]);
+            $.$mol_assert_like([...'#'.matchAll(regexp)][0].groups, undefined);
+            $.$mol_assert_like([...'@'.matchAll(regexp)][0].groups, { dog: '@' });
         },
         'catch skipped'() {
             const regexp = $.$mol_regexp.from(/(@)(\d?)/g);
-            $.$mol_assert_like([...regexp.parse('[[@]]')], [
-                { 0: '[[' },
-                { 1: '@', 2: '' },
-                { 0: ']]' },
+            $.$mol_assert_like([...'[[@]]'.matchAll(regexp)].map(f => [...f]), [
+                ['[['],
+                ['@', '@', ''],
+                [']]'],
             ]);
         },
         'enum variants'() {
@@ -10894,9 +10994,10 @@ var $;
                 Sex["female"] = "female";
             })(Sex || (Sex = {}));
             const sexism = $.$mol_regexp.from(Sex);
-            $.$mol_assert_like([...sexism.parse('')], []);
-            $.$mol_assert_like([...sexism.parse('male')], [{ male: 'male', female: '' }]);
-            $.$mol_assert_like([...sexism.parse('female')], [{ male: '', female: 'female' }]);
+            $.$mol_assert_like([...''.matchAll(sexism)].length, 0);
+            $.$mol_assert_like([...'trans'.matchAll(sexism)][0].groups, undefined);
+            $.$mol_assert_like([...'male'.matchAll(sexism)][0].groups, { male: 'male', female: '' });
+            $.$mol_assert_like([...'female'.matchAll(sexism)][0].groups, { male: '', female: 'female' });
         },
         'recursive only groups'() {
             let Sex;
@@ -10905,95 +11006,155 @@ var $;
                 Sex["female"] = "female";
             })(Sex || (Sex = {}));
             const sexism = $.$mol_regexp.from({ Sex });
-            $.$mol_assert_like([...sexism.parse('')], []);
-            $.$mol_assert_like([...sexism.parse('male')], [{ Sex: 'male', male: 'male', female: '' }]);
-            $.$mol_assert_like([...sexism.parse('female')], [{ Sex: 'female', male: '', female: 'female' }]);
+            $.$mol_assert_like([...''.matchAll(sexism)].length, 0);
+            $.$mol_assert_like([...'male'.matchAll(sexism)][0].groups, { Sex: 'male', male: 'male', female: '' });
+            $.$mol_assert_like([...'female'.matchAll(sexism)][0].groups, { Sex: 'female', male: '', female: 'female' });
         },
         'sequence with groups'() {
-            const { begin, end, digit, repeat } = $.$mol_regexp;
+            const { begin, end, decimal_only: digit, repeat, from } = $.$mol_regexp;
             const year = repeat(digit, 4, 4);
             const dash = '-';
             const month = repeat(digit, 2, 2);
             const day = repeat(digit, 2, 2);
-            const regexp = $.$mol_regexp.from([begin, { year }, dash, { month }, dash, { day }, end]);
-            const found = [...regexp.parse('2020-01-02')];
-            $.$mol_assert_like(found, [{
-                    year: '2020',
-                    month: '01',
-                    day: '02',
-                }]);
+            const regexp = from([begin, { year }, dash, { month }, dash, { day }, end]);
+            const found = [...'2020-01-02'.matchAll(regexp)];
+            $.$mol_assert_like(found[0].groups, {
+                year: '2020',
+                month: '01',
+                day: '02',
+            });
         },
         'sequence with groups of mixed type'() {
             const prefix = '/';
             const postfix = '/';
             const regexp = $.$mol_regexp.from([{ prefix }, /(\w+)/, { postfix }, /([gumi]*)/]);
-            const found = [...regexp.parse('/foo/mi')];
-            $.$mol_assert_like(found, [{
-                    prefix: '/',
-                    0: 'foo',
-                    postfix: '/',
-                    1: 'mi',
-                }]);
+            $.$mol_assert_like([...'/foo/mi'.matchAll(regexp)], [
+                Object.assign(["/foo/mi", "/", "foo", "/", "mi"], {
+                    groups: {
+                        prefix: '/',
+                        postfix: '/',
+                    },
+                    index: 0,
+                    input: "/",
+                }),
+            ]);
         },
         'recursive sequence with groups'() {
-            const { begin, end, digit, repeat } = $.$mol_regexp;
+            const { begin, end, decimal_only: digit, repeat, from } = $.$mol_regexp;
             const year = repeat(digit, 4, 4);
             const dash = '-';
             const month = repeat(digit, 2, 2);
             const day = repeat(digit, 2, 2);
-            const regexp = $.$mol_regexp.from([begin, { date: [{ year }, dash, { month }] }, dash, { day }, end]);
-            const found = [...regexp.parse('2020-01-02')];
-            $.$mol_assert_like(found, [{
-                    date: '2020-01',
-                    year: '2020',
-                    month: '01',
-                    day: '02',
-                }]);
+            const regexp = from([
+                begin, { date: [{ year }, dash, { month }] }, dash, { day }, end
+            ]);
+            const found = [...'2020-01-02'.matchAll(regexp)];
+            $.$mol_assert_like(found[0].groups, {
+                date: '2020-01',
+                year: '2020',
+                month: '01',
+                day: '02',
+            });
         },
         'parse multiple'() {
-            const { digit } = $.$mol_regexp;
-            const regexp = $.$mol_regexp.from({ digit });
-            $.$mol_assert_like([...regexp.parse('123')], [
+            const { decimal_only: digit, from } = $.$mol_regexp;
+            const regexp = from({ digit });
+            $.$mol_assert_like([...'123'.matchAll(regexp)].map(f => f.groups), [
                 { digit: '1' },
                 { digit: '2' },
                 { digit: '3' },
             ]);
         },
         'variants'() {
-            const { begin, or, end } = $.$mol_regexp;
-            const sexism = $.$mol_regexp.from([begin, 'sex = ', { sex: ['male', or, 'female'] }, end]);
-            $.$mol_assert_like([...sexism.parse('sex = male')], [{ sex: 'male' }]);
-            $.$mol_assert_like([...sexism.parse('sex = female')], [{ sex: 'female' }]);
-            $.$mol_assert_like([...sexism.parse('sex = malefemale')], [{ 0: 'sex = malefemale' }]);
+            const { begin, or, end, from } = $.$mol_regexp;
+            const sexism = from([
+                begin, 'sex = ', { sex: ['male', or, 'female'] }, end
+            ]);
+            $.$mol_assert_like([...'sex = male'.matchAll(sexism)][0].groups, { sex: 'male' });
+            $.$mol_assert_like([...'sex = female'.matchAll(sexism)][0].groups, { sex: 'female' });
+            $.$mol_assert_like([...'sex = malefemale'.matchAll(sexism)][0].groups, undefined);
         },
         'force after'() {
-            const { letter, force_after } = $.$mol_regexp;
-            const regexp = $.$mol_regexp.from([letter, force_after('.')]);
-            $.$mol_assert_equal(regexp.exec('x.')[0], 'x');
-            $.$mol_assert_equal(regexp.exec('x5'), null);
+            const { latin_only: letter, force_after, from } = $.$mol_regexp;
+            const regexp = from([letter, force_after('.')]);
+            $.$mol_assert_like('x.'.match(regexp), ['x']);
+            $.$mol_assert_like('x,'.match(regexp), null);
         },
         'forbid after'() {
-            const { letter, forbid_after } = $.$mol_regexp;
-            const regexp = $.$mol_regexp.from([letter, forbid_after('.')]);
-            $.$mol_assert_equal(regexp.exec('x.'), null);
-            $.$mol_assert_equal(regexp.exec('x5')[0], 'x');
+            const { latin_only: letter, forbid_after, from } = $.$mol_regexp;
+            const regexp = from([letter, forbid_after('.')]);
+            $.$mol_assert_like('x.'.match(regexp), null);
+            $.$mol_assert_like('x,'.match(regexp), ['x']);
         },
         'byte except'() {
-            const { char_except, letter, tab } = $.$mol_regexp;
-            const name = char_except(letter, tab);
-            $.$mol_assert_equal(name.exec('a'), null);
-            $.$mol_assert_equal(name.exec('\t'), null);
-            $.$mol_assert_equal(name.exec('(')[0], '(');
+            const { char_except, latin_only, tab } = $.$mol_regexp;
+            const name = char_except(latin_only, tab);
+            $.$mol_assert_like('a'.match(name), null);
+            $.$mol_assert_like('\t'.match(name), null);
+            $.$mol_assert_like('('.match(name), ['(']);
         },
         'unicode only'() {
-            const { unicode_only } = $.$mol_regexp;
-            const name = $.$mol_regexp.from([
+            const { unicode_only, from } = $.$mol_regexp;
+            const name = from([
                 unicode_only('Script', 'Cyrillic'),
                 unicode_only('Hex_Digit'),
             ]);
-            $.$mol_assert_equal(name.exec('FF'), null);
-            $.$mol_assert_equal(name.exec('ФG'), null);
-            $.$mol_assert_equal(name.exec('ФF')[0], 'ФF');
+            $.$mol_assert_like('FF'.match(name), null);
+            $.$mol_assert_like('ФG'.match(name), null);
+            $.$mol_assert_like('ФF'.match(name), ['ФF']);
+        },
+        'generate by optional with inner group'() {
+            const { begin, end, from } = $.$mol_regexp;
+            const animals = from([begin, '#', ['^', { dog: '@' }], end]);
+            $.$mol_assert_equal(animals.generate({}), '#');
+            $.$mol_assert_equal(animals.generate({ dog: false }), '#');
+            $.$mol_assert_equal(animals.generate({ dog: true }), '#^@');
+            $.$mol_assert_fail(() => animals.generate({ dog: '$' }), 'Wrong param: dog=$');
+        },
+        'generate by optional with inner group with variants'() {
+            const { begin, end, from } = $.$mol_regexp;
+            const animals = from([begin, '#', ['^', { animal: { dog: '@', fox: '&' } }], end]);
+            $.$mol_assert_equal(animals.generate({}), '#');
+            $.$mol_assert_equal(animals.generate({ dog: true }), '#^@');
+            $.$mol_assert_equal(animals.generate({ fox: true }), '#^&');
+            $.$mol_assert_fail(() => animals.generate({ dog: '$' }), 'Wrong param: dog=$');
+        },
+        'complex example'() {
+            const { begin, end, char_only, char_range, latin_only, slash_back, repeat_greedy, from, } = $.$mol_regexp;
+            const atom_char = char_only(latin_only, "!#$%&'*+/=?^`{|}~-");
+            const atom = repeat_greedy(atom_char, 1);
+            const dot_atom = [atom, repeat_greedy(['.', atom])];
+            const name_letter = char_only(char_range(0x01, 0x08), 0x0b, 0x0c, char_range(0x0e, 0x1f), 0x21, char_range(0x23, 0x5b), char_range(0x5d, 0x7f));
+            const quoted_pair = [
+                slash_back,
+                char_only(char_range(0x01, 0x09), 0x0b, 0x0c, char_range(0x0e, 0x7f))
+            ];
+            const name = repeat_greedy({ name_letter, quoted_pair });
+            const quoted_name = from(['"', { name }, '"']);
+            const local_part = { dot_atom, quoted_name };
+            const domain = dot_atom;
+            const mail = from([begin, local_part, '@', { domain }, end]);
+            $.$mol_assert_equal('foo..bar@hyoo.ru'.match(mail), null);
+            $.$mol_assert_equal('foo..bar"@hyoo.ru'.match(mail), null);
+            $.$mol_assert_like([...'foo.bar@hyoo.ru'.matchAll(mail)][0].groups, {
+                domain: "hyoo.ru",
+                dot_atom: "foo.bar",
+                name: "",
+                name_letter: "",
+                quoted_name: "",
+                quoted_pair: "",
+            });
+            $.$mol_assert_like([...'"foo..bar"@hyoo.ru'.matchAll(mail)][0].groups, {
+                dot_atom: "",
+                quoted_name: '"foo..bar"',
+                name: "foo..bar",
+                name_letter: "r",
+                quoted_pair: "",
+                domain: "hyoo.ru",
+            });
+            $.$mol_assert_equal(mail.generate({ dot_atom: 'foo.bar', domain: 'hyoo.ru' }), 'foo.bar@hyoo.ru');
+            $.$mol_assert_equal(mail.generate({ name: 'foo..bar', domain: 'hyoo.ru' }), '"foo..bar"@hyoo.ru');
+            $.$mol_assert_fail(() => mail.generate({ dot_atom: 'foo..bar', domain: 'hyoo.ru' }), 'Wrong param: dot_atom=foo..bar');
         },
     });
 })($ || ($ = {}));
@@ -11038,64 +11199,64 @@ var $;
 (function ($) {
     $.$mol_test({
         'strong'() {
-            const res = $.$hyoo_marked_line.parse('**text**').next().value;
+            const res = [...'**text**'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.strong, '**text**');
             $.$mol_assert_equal(res.marker, '**');
             $.$mol_assert_equal(res.content, 'text');
         },
         'emphasis'() {
-            const res = $.$hyoo_marked_line.parse('//text//').next().value;
+            const res = [...'//text//'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.emphasis, '//text//');
             $.$mol_assert_equal(res.marker, '//');
             $.$mol_assert_equal(res.content, 'text');
         },
         'insertion'() {
-            const res = $.$hyoo_marked_line.parse('++text++').next().value;
+            const res = [...'++text++'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.insertion, '++text++');
             $.$mol_assert_equal(res.marker, '++');
             $.$mol_assert_equal(res.content, 'text');
         },
         'deletion'() {
-            const res = $.$hyoo_marked_line.parse('--text--').next().value;
+            const res = [...'--text--'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.deletion, '--text--');
             $.$mol_assert_equal(res.marker, '--');
             $.$mol_assert_equal(res.content, 'text');
         },
         'code'() {
-            const res = $.$hyoo_marked_line.parse(';;text;;').next().value;
+            const res = [...';;text;;'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.code, ';;text;;');
             $.$mol_assert_equal(res.marker, ';;');
             $.$mol_assert_equal(res.content, 'text');
         },
         'nested simple'() {
-            const res = $.$hyoo_marked_line.parse('**//foo//bar**').next().value;
+            const res = [...'**//foo//bar**'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.strong, '**//foo//bar**');
             $.$mol_assert_equal(res.marker, '**');
             $.$mol_assert_equal(res.content, '//foo//bar');
         },
         'nested simple overlap'() {
-            const res = [...$.$hyoo_marked_line.parse('**//foo**bar//')];
-            $.$mol_assert_equal(res[0].strong, '**//foo**');
-            $.$mol_assert_equal(res[0].marker, '**');
-            $.$mol_assert_equal(res[0].content, '//foo');
+            const res = [...'**//foo**bar//'.matchAll($.$hyoo_marked_line)];
+            $.$mol_assert_equal(res[0].groups.strong, '**//foo**');
+            $.$mol_assert_equal(res[0].groups.marker, '**');
+            $.$mol_assert_equal(res[0].groups.content, '//foo');
             $.$mol_assert_equal(res[1][0], 'bar//');
         },
         'link'() {
-            const res = $.$hyoo_marked_line.parse('\\\\text\\url\\\\').next().value;
+            const res = [...'\\\\text\\url\\\\'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.link, '\\\\text\\url\\\\');
             $.$mol_assert_equal(res.marker, '\\\\');
             $.$mol_assert_equal(res.content, 'text');
             $.$mol_assert_equal(res.uri, 'url');
         },
         'embed'() {
-            const res = $.$hyoo_marked_line.parse('""text\\url""').next().value;
+            const res = [...'""text\\url""'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.embed, '""text\\url""');
             $.$mol_assert_equal(res.marker, '""');
             $.$mol_assert_equal(res.content, 'text');
             $.$mol_assert_equal(res.uri, 'url');
         },
         'link with embed'() {
-            const res = $.$hyoo_marked_line.parse('\\\\""text\\url1""\\url2\\\\').next().value;
+            const res = [...'\\\\""text\\url1""\\url2\\\\'.matchAll($.$hyoo_marked_line)][0].groups;
             $.$mol_assert_equal(res.link, '\\\\""text\\url1""\\url2\\\\');
             $.$mol_assert_equal(res.marker, '\\\\');
             $.$mol_assert_equal(res.content, '""text\\url1""');
@@ -11110,21 +11271,21 @@ var $;
 (function ($) {
     $.$mol_test({
         'header level 1'() {
-            const res = [...$.$hyoo_marked_flow.parse(`= text\n`)];
-            $.$mol_assert_equal(res[0].header, '= text\n');
-            $.$mol_assert_equal(res[0].marker, '=');
-            $.$mol_assert_equal(res[0].content, 'text');
+            const res = [...`= text\n`.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.header, '= text\n');
+            $.$mol_assert_equal(res.marker, '=');
+            $.$mol_assert_equal(res.content, 'text');
         },
         'header level 6'() {
-            const res = [...$.$hyoo_marked_flow.parse(`====== text\n`)];
-            $.$mol_assert_equal(res[0].header, '====== text\n');
-            $.$mol_assert_equal(res[0].marker, '======');
-            $.$mol_assert_equal(res[0].content, 'text');
+            const res = [...`====== text\n`.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.header, '====== text\n');
+            $.$mol_assert_equal(res.marker, '======');
+            $.$mol_assert_equal(res.content, 'text');
         },
         'header level too many'() {
-            const res = [...$.$hyoo_marked_flow.parse(`======= text\n`)];
-            $.$mol_assert_equal(res[0].paragraph, '======= text\n');
-            $.$mol_assert_equal(res[0].content, '======= text');
+            const res = [...`======= text\n`.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.paragraph, '======= text\n');
+            $.$mol_assert_equal(res.content, '======= text');
         },
         'different blocks'() {
             const text = `
@@ -11132,25 +11293,25 @@ var $;
 				paragraph
 				= header
 			`.replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].paragraph, '\n');
-            $.$mol_assert_equal(res[0].content, '');
-            $.$mol_assert_equal(res[1].header, '= header\n');
-            $.$mol_assert_equal(res[1].marker, '=');
-            $.$mol_assert_equal(res[1].content, 'header');
-            $.$mol_assert_equal(res[2].paragraph, 'paragraph\n');
-            $.$mol_assert_equal(res[2].content, 'paragraph');
-            $.$mol_assert_equal(res[3].header, '= header\n');
-            $.$mol_assert_equal(res[3].marker, '=');
-            $.$mol_assert_equal(res[3].content, 'header');
+            const res = [...text.matchAll($.$hyoo_marked_flow)];
+            $.$mol_assert_equal(res[0].groups.paragraph, '\n');
+            $.$mol_assert_equal(res[0].groups.content, '');
+            $.$mol_assert_equal(res[1].groups.header, '= header\n');
+            $.$mol_assert_equal(res[1].groups.marker, '=');
+            $.$mol_assert_equal(res[1].groups.content, 'header');
+            $.$mol_assert_equal(res[2].groups.paragraph, 'paragraph\n');
+            $.$mol_assert_equal(res[2].groups.content, 'paragraph');
+            $.$mol_assert_equal(res[3].groups.header, '= header\n');
+            $.$mol_assert_equal(res[3].groups.marker, '=');
+            $.$mol_assert_equal(res[3].groups.content, 'header');
         },
         'plain list'() {
             const text = `
 				- foo
 				- bar
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].list, '- foo\n- bar\n');
+            const res = [...text.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.list, '- foo\n- bar\n');
         },
         'nested lists'() {
             const text = `
@@ -11158,16 +11319,16 @@ var $;
 				  + bar
 				- lol
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].list, '- foo\n  + bar\n- lol\n');
+            const res = [...text.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.list, '- foo\n  + bar\n- lol\n');
         },
         'quote'() {
             const text = `
 				" foo
 				" bar
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].quote, '" foo\n" bar\n');
+            const res = [...text.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.quote, '" foo\n" bar\n');
         },
         'quote in list'() {
             const text = `
@@ -11175,8 +11336,8 @@ var $;
 				  " bar
 				- lol
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].list, '- foo\n  " bar\n- lol\n');
+            const res = [...text.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.list, '- foo\n  " bar\n- lol\n');
         },
         'table'() {
             const text = `
@@ -11185,8 +11346,8 @@ var $;
 				! lol
 				  ! 777
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].table, '! foo\n  ! bar\n! lol\n  ! 777\n');
+            const res = [...text.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.table, '! foo\n  ! bar\n! lol\n  ! 777\n');
         },
         'script'() {
             const text = `
@@ -11195,8 +11356,8 @@ var $;
 			  --lol
 			  **777
 			`.slice(1).replace(/^\t+/gm, '');
-            const res = [...$.$hyoo_marked_flow.parse(text)];
-            $.$mol_assert_equal(res[0].script, '    foo\n  ++bar\n  --lol\n  **777\n');
+            const res = [...text.matchAll($.$hyoo_marked_flow)][0].groups;
+            $.$mol_assert_equal(res.script, '    foo\n  ++bar\n  --lol\n  **777\n');
         },
     });
 })($ || ($ = {}));
@@ -11379,12 +11540,6 @@ var $;
     });
 })($ || ($ = {}));
 //view.test.js.map
-;
-"use strict";
-//equals.test.js.map
-;
-"use strict";
-//equals.js.map
 ;
 "use strict";
 var $;
