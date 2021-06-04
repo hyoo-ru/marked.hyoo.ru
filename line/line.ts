@@ -1,6 +1,6 @@
 namespace $ {
 
-	const { optional, slash_back, byte, byte_except, repeat } = $mol_regexp
+	const { optional, slash_back, char_any: byte, char_except: byte_except, repeat } = $mol_regexp
 
 	export let $hyoo_marked_line_content = repeat( byte, 1 )
 

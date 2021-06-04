@@ -2,57 +2,57 @@ namespace $ {
 	$mol_test({
 
 		'strong'() {
-			const res = $hyoo_marked_line.parse( '**text**' ).next().value!
+			const res = [ ... '**text**'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.strong, '**text**' )
 			$mol_assert_equal( res.marker, '**' )
 			$mol_assert_equal( res.content, 'text' )
 		},
 		
 		'emphasis'() {
-			const res = $hyoo_marked_line.parse( '//text//' ).next().value!
+			const res = [ ... '//text//'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.emphasis, '//text//' )
 			$mol_assert_equal( res.marker, '//' )
 			$mol_assert_equal( res.content, 'text' )
 		},
 		
 		'insertion'() {
-			const res = $hyoo_marked_line.parse( '++text++' ).next().value!
+			const res = [ ... '++text++'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.insertion, '++text++' )
 			$mol_assert_equal( res.marker, '++' )
 			$mol_assert_equal( res.content, 'text' )
 		},
 		
 		'deletion'() {
-			const res = $hyoo_marked_line.parse( '--text--' ).next().value!
+			const res = [ ... '--text--'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.deletion, '--text--' )
 			$mol_assert_equal( res.marker, '--' )
 			$mol_assert_equal( res.content, 'text' )
 		},
 		
 		'code'() {
-			const res = $hyoo_marked_line.parse( ';;text;;' ).next().value!
+			const res = [ ... ';;text;;'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.code, ';;text;;' )
 			$mol_assert_equal( res.marker, ';;' )
 			$mol_assert_equal( res.content, 'text' )
 		},
 		
 		'nested simple'() {
-			const res = $hyoo_marked_line.parse( '**//foo//bar**' ).next().value!
+			const res = [ ... '**//foo//bar**'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.strong, '**//foo//bar**' )
 			$mol_assert_equal( res.marker, '**' )
 			$mol_assert_equal( res.content, '//foo//bar' )
 		},
 
 		'nested simple overlap'() {
-			const res = [ ... $hyoo_marked_line.parse( '**//foo**bar//' ) ]
-			$mol_assert_equal( res[0].strong, '**//foo**' )
-			$mol_assert_equal( res[0].marker, '**' )
-			$mol_assert_equal( res[0].content, '//foo' )
+			const res = [ ... '**//foo**bar//'.matchAll( $hyoo_marked_line ) ]
+			$mol_assert_equal( res[0].groups!.strong, '**//foo**' )
+			$mol_assert_equal( res[0].groups!.marker, '**' )
+			$mol_assert_equal( res[0].groups!.content, '//foo' )
 			$mol_assert_equal( res[1][0], 'bar//' )
 		},
 
 		'link'() {
-			const res = $hyoo_marked_line.parse( '\\\\text\\url\\\\' ).next().value!
+			const res = [ ... '\\\\text\\url\\\\'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.link, '\\\\text\\url\\\\' )
 			$mol_assert_equal( res.marker, '\\\\' )
 			$mol_assert_equal( res.content, 'text' )
@@ -60,7 +60,7 @@ namespace $ {
 		},
 		
 		'embed'() {
-			const res = $hyoo_marked_line.parse( '""text\\url""' ).next().value!
+			const res = [ ... '""text\\url""' .matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.embed, '""text\\url""' )
 			$mol_assert_equal( res.marker, '""' )
 			$mol_assert_equal( res.content, 'text' )
@@ -68,7 +68,7 @@ namespace $ {
 		},
 		
 		'link with embed'() {
-			const res = $hyoo_marked_line.parse( '\\\\""text\\url1""\\url2\\\\' ).next().value!
+			const res = [ ... '\\\\""text\\url1""\\url2\\\\'.matchAll( $hyoo_marked_line ) ][0].groups!
 			$mol_assert_equal( res.link, '\\\\""text\\url1""\\url2\\\\' )
 			$mol_assert_equal( res.marker, '\\\\' )
 			$mol_assert_equal( res.content, '""text\\url1""' )

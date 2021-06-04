@@ -19,9 +19,10 @@ namespace $ {
 		let span = span_entire.slice( 0, 0 )
 		const nodes = [] as $mol_tree2[]
 	
-		for( const token of $hyoo_marked_line.parse( code ) ) {
+		for( const found of code.matchAll( $hyoo_marked_line ) ) {
 	
-			if( token.inline ) {
+			const token = found.groups
+			if( token ) {
 
 				const uri_sep_length = token.uri.length + ( token.uri && token.content ? 1 : 0 )
 				span = span.after( token.marker.length * 2 + token.content.length + uri_sep_length )
@@ -48,9 +49,9 @@ namespace $ {
 
 			} else {
 				
-				span = span.after( token[0].length )
+				span = span.after( found[0].length )
 				nodes.push(
-					$mol_tree2.data( token[0], [], span )
+					$mol_tree2.data( found[0], [], span )
 				)
 
 			}

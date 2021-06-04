@@ -40,12 +40,12 @@ namespace $ {
 			(,) child
 	`, '$hyoo_marked_tree_to_js_templates' )
 
-	const wrap_body = templates.select( 'body', '' )
-	const wrap_element = templates.select( 'element', '' )
-	const wrap_attr = templates.select( 'attr', '' )
-	const wrap_text = templates.select( 'text', '' )
-	const wrap_content = templates.select( 'content', '' )
-	const append_child = templates.select( 'append', '' )
+	const wrap_body = templates.select( 'body', null )
+	const wrap_element = templates.select( 'element', null )
+	const wrap_attr = templates.select( 'attr', null )
+	const wrap_text = templates.select( 'text', null )
+	const wrap_content = templates.select( 'content', null )
+	const append_child = templates.select( 'append', null )
 
 	function hack_inline( name: string, link_attr?: string ) {
 		return < Belt extends $mol_tree2_belt< any > >(
