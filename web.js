@@ -2844,6 +2844,9 @@ var $;
     (function ($$) {
         const { per, rem, px } = $.$mol_style_unit;
         $.$mol_style_define($$.$mol_scroll, {
+            overflow: 'auto',
+        });
+        $.$mol_style_define($$.$mol_scroll, {
             display: 'flex',
             overflow: 'overlay',
             flex: {
@@ -5985,7 +5988,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n}\n");
+    $.$mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n}\n");
 })($ || ($ = {}));
 //image.view.css.js.map
 ;
@@ -6672,34 +6675,34 @@ var $;
             '@': {
                 mol_text_code_token_type: {
                     'code-keyword': {
-                        color: hsla(0, 70, 60, 1),
+                        color: hsla(0, 70, 40, 1),
                     },
                     'code-field': {
-                        color: hsla(300, 70, 60, 1),
+                        color: hsla(300, 70, 40, 1),
                     },
                     'code-tag': {
-                        color: hsla(330, 70, 60, 1),
+                        color: hsla(330, 70, 40, 1),
                     },
                     'code-global': {
-                        color: hsla(210, 80, 60, 1),
+                        color: hsla(210, 80, 40, 1),
                     },
                     'code-decorator': {
-                        color: hsla(180, 40, 60, 1),
+                        color: hsla(180, 40, 40, 1),
                     },
                     'code-punctuation': {
                         color: hsla(0, 0, 50, 1),
                     },
                     'code-string': {
-                        color: hsla(90, 40, 50, 1),
+                        color: hsla(90, 40, 40, 1),
                     },
                     'code-number': {
                         color: hsla(60, 70, 30, 1),
                     },
                     'code-call': {
-                        color: hsla(270, 60, 60, 1),
+                        color: hsla(270, 60, 40, 1),
                     },
                     'code-link': {
-                        color: hsla(240, 60, 60, 1),
+                        color: hsla(240, 60, 40, 1),
                     },
                     'code-comment-inline': {
                         opacity: .5,
@@ -7054,12 +7057,16 @@ var $;
         row_numb(index) {
             return 0;
         }
+        highlight() {
+            return "";
+        }
         View() {
             const obj = new this.$.$mol_text_code();
             obj.text = () => this.value();
             obj.render_visible_only = () => false;
             obj.row_numb = (index) => this.row_numb(index);
             obj.sidebar_showed = () => this.sidebar_showed();
+            obj.highlight = () => this.highlight();
             return obj;
         }
     }
@@ -7270,7 +7277,7 @@ var $;
                 flex: {
                     grow: 1000,
                     shrink: 1,
-                    basis: per(50),
+                    basis: 'auto',
                 },
             },
             Tools: {
