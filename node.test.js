@@ -4484,7 +4484,7 @@ var $;
             mol_link_current: {
                 'true': {
                     background: {
-                        color: $.$mol_theme.back,
+                        color: $.$mol_theme.hover,
                     },
                     color: $.$mol_theme.text,
                     textShadow: '0 0',
@@ -8114,6 +8114,16 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    function $mol_test_complete() {
+        process.exit(0);
+    }
+    $.$mol_test_complete = $mol_test_complete;
+})($ || ($ = {}));
+//test.node.test.js.map
+;
+"use strict";
+var $;
 (function ($_1) {
     function $mol_test(set) {
         for (let name in set) {
@@ -8133,9 +8143,9 @@ var $;
                 await mock(context);
             await test(context);
         }
-        $_1.$mol_ambient({}).$mol_log3_done({
+        $_1.$$.$mol_log3_done({
             place: '$mol_test',
-            message: 'Completed',
+            message: 'All tests passed',
             count: $_1.$mol_test_all.length,
         });
     }
@@ -8145,9 +8155,14 @@ var $;
         if (scheduled)
             return;
         scheduled = true;
-        setTimeout(() => {
+        setTimeout(async () => {
             scheduled = false;
-            $mol_test_run();
+            try {
+                await $mol_test_run();
+            }
+            finally {
+                $_1.$$.$mol_test_complete();
+            }
         }, 0);
     }
     $_1.$mol_test_schedule = $mol_test_schedule;
