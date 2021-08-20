@@ -1,64 +1,64 @@
 ```
 = MarkedText
 
-Формат текста с **легковесным форматированием**.
+Text format with **lightweight consistent formatting**
 
 --
 
-== Принципы
+== Principles
 
-+ Синтаксис:
-  - Однозначность
-  - Простота
-  - Единообразность
-+ Внешний вид:
-  - Минимальное влияние на естественный вид текста
-  - Наглядность форматирования
-+ Редактирование:
-  - Независимость от раскладки
-  - Быстрая и надёжная запоминаемость
++ Syntax:
+  - Unambiguity
+  - Simplicity
+  - Uniformity
++ Look:
+  - Minimal impact on the natural appearance of the text
+  - Clarity of formatting and naturalness of metaphors
++ Editing:
+  - Independence from the keyboard layout
+  - Fast and reliable memorability
 
-== Cравнение с альтернативами
+== Comparison
 
-! **Язык**
-  ! **Плюсы**
-    ! **Минусы**
+! **Language**
+  ! **Pros**
+    ! **Cons**
 ! MarkedText
-  ! - Удобное редактирование таблиц.
-  ! - Поддержка сложного форматирования внутри ячеек.
-  ! - Простота реализации.
-  ! - Легко запоминающийся консистентный синтаксис.
-  ! - Удобство редактирования в русской раскладке.
-  ! - Колонки не расползаются далеко вправо за горизонтальный скроллинг и не переносятся на новую строку.
-    ! - Не поддерживается пока что никакими сторонними инструментами.
+  ! - Convenient editing of tables.
+  ! - Support for complex formatting inside cells.
+  ! - Ease of implementation.
+  ! - Easy-to-remember consistent syntax.
+  ! - Ease of editing in a non-English keyboard layout.
+  ! - The columns do not spread far to the right for horizontal scrolling and are not transferred to a new line.
+    ! - There is no broad support by third-party tools.
 ! MarkDown
-  ! - Широкая поддержка различными инструментами.
-  ! - Наглядное представление таблиц.
-    ! - Сложности с редактированием таблиц.
-    ! - Сильно ограниченное содержимое ячеек.
+  ! - Extensive support with various tools.
+  ! - A human-readable representation of simple tables.
+    ! - Difficulties with editing tables.
+    ! - Highly restricted cell contents.
 
-== Парсинг
+== Parsing
 
     const res = [ ... $hyoo_marked_line.parse( '**text**' ) ]
   --$mol_assert_equal( res[0].strong, '**text**' )
   ++$mol_assert_equal( res[0].marker, '**' )
   **$mol_assert_equal( res[0].content, 'text' )
 
-== Отзывы
+== Comments
 
-" " " Типичный пользователь: Нигде не поддерживается, идите в --жопу-- ++Жодино++ с таким синтаксисом!
+" " " Typical user: Not supported anywhere, go to --ass-- ++assassins++ with this syntax!
 " " 
-" " Но мы же программисты, мы можем это исправить.. Для этого даже не надо быть экспертом по ;;C++;; ..
+" " But we are programmers, we can fix it.. You don't even need to be an expert on ;;C++;; to do this ..
 " 
-" Никому это не нужно (с) Диванный Эксперт
+" No one needs it (c) Sofa Expert
 
-Тем не менее, это полезное упражнение в проектировании.
+Nevertheless, it is a useful exercise in design.
 
-== Ссылки
+== Links
 
-- Песочница: \\https://marked.hyoo.ru/\\
-- \\Статья о MarkedText\https://github.com/nin-jin/HabHub/issues/39\\
-- \\Парсер на TS\https://github.com/hyoo-ru/marked.hyoo.ru/\\
-- \\Конвертер в HTML на TS\https://github.com/hyoo-ru/marked.hyoo.ru/tree/master/to/html\\
-- ""Результат билда $mol_regexp\https://github.com/hyoo-ru/mam_mol/workflows/mol_regexp/badge.svg""
+- Online sandbox: \\https://marked.hyoo.ru/\\
+- \\Article about MarkedText (Russian)\https://github.com/nin-jin/HabHub/issues/39\\
+- \\Parser on TS\https://github.com/hyoo-ru/marked.hyoo.ru/\\
+- \\MarkedText => HTML converter on TS\https://github.com/hyoo-ru/marked.hyoo.ru/tree/master/to/html\\
+- ""Build results of $mol_regexp\https://github.com/hyoo-ru/mam_mol/workflows/mol_regexp/badge.svg""
 ```
