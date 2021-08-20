@@ -7046,6 +7046,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $hyoo_marked_app.prototype, "html", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_marked_app.prototype, "marked", null);
         $$.$hyoo_marked_app = $hyoo_marked_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
