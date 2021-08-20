@@ -18,6 +18,7 @@ namespace $.$$ {
 			return this.$.$hyoo_marked_to_html( this.marked() )
 		}
 
+		@ $mol_mem
 		marked( next? : string ) {
 			return this.$.$mol_state_arg.value( 'marked' , next )
 				?? this.$.$mol_fetch.text( 'hyoo/marked/readme.md' )
