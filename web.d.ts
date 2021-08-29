@@ -207,7 +207,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
+    type $mol_type_keys_extract<Input, Upper> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? Field : never;
+    }[keyof Input];
+}
+
+declare namespace $ {
+    function $mol_log3_web_make(level: $mol_type_keys_extract<Console, Function>, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
 
 declare namespace $ {
@@ -511,12 +517,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
-}
-
-declare namespace $ {
-    type $mol_type_keys_extract<Input, Upper> = {
-        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? Field : never;
-    }[keyof Input];
 }
 
 declare namespace $ {
@@ -1736,8 +1736,8 @@ declare namespace $ {
         static end: $mol_regexp<{}>;
         static or: $mol_regexp<{}>;
         static line_end: $mol_regexp<{
-            readonly mac_end: string;
             readonly win_end: string;
+            readonly mac_end: string;
         }>;
     }
     export {};
@@ -2026,8 +2026,8 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_cut: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
     }>;
 }
 
@@ -2050,8 +2050,8 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_header: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly marker: string;
         readonly content: string;
     }>;
@@ -2059,24 +2059,24 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_list_line: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly indent: string;
         readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_list_item: $mol_regexp<{
         readonly kids: string;
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly indent: string;
         readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_list: $mol_regexp<{
         readonly kids: string;
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly indent: string;
         readonly marker: string;
         readonly content: string;
@@ -2085,14 +2085,14 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_quote_line: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_quote: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly marker: string;
         readonly content: string;
     }>;
@@ -2100,22 +2100,22 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_table_line: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly indent: string;
         readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_table_row: $mol_regexp<{
         readonly content: string;
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly indent: string;
         readonly marker: string;
     }>;
     let $hyoo_marked_table: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly indent: string;
         readonly marker: string;
         readonly content: string;
@@ -2124,14 +2124,14 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_script_line: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_script: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly marker: string;
         readonly content: string;
     }>;
@@ -2139,8 +2139,8 @@ declare namespace $ {
 
 declare namespace $ {
     let $hyoo_marked_paragraph: $mol_regexp<{
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly content: string;
     }>;
 }
@@ -2154,8 +2154,8 @@ declare namespace $ {
         readonly quote: string;
         readonly paragraph: string;
         readonly script: string;
-        readonly mac_end: string;
         readonly win_end: string;
+        readonly mac_end: string;
         readonly marker: string;
         readonly content: string;
         readonly indent: string;
