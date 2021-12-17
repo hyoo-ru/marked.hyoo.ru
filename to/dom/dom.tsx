@@ -98,7 +98,7 @@ namespace $ {
 		return [ ... marked.matchAll( $hyoo_marked_line ) ].map( found => {
 			
 			const token = found.groups!
-			if( !token ) return <span>found[0]</span>
+			if( !token ) return <span>{ found[0] }</span>
 			
 			if( token.strong ) {
 				return <strong>{ line( token.content ) }</strong>
