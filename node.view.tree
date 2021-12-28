@@ -125,44 +125,6 @@ $mol_link_source $mol_link
 	sub /
 		<= Icon $mol_icon_github_circle
 
-$mol_hotkey $mol_plugin
-	event *
-		^
-		keydown?event <=> keydown?event null
-	key *
-	mod_ctrl false
-	mod_alt false
-	mod_shift false
-
-$mol_string $mol_view
-	dom_name \input
-	enabled true
-	minimal_height 40
-	autocomplete false
-	selection?val /number
-	auto /
-		<= selection_watcher null
-	field *
-		^
-		disabled <= disabled false
-		value <= value_changed?val <=> value?val \
-		placeholder <= hint \ 
-		spellcheck <= spellcheck false
-		autocomplete <= autocomplete_native \
-		selectionEnd <= selection_end 0
-		selectionStart <= selection_start 0
-	attr *
-		^
-		maxlength <= length_max Infinity
-		type <= type?val \text
-	event *
-		^
-		input?event <=> event_change?event null
-		keydown?event <=> event_key_press?event null
-	plugins /
-		<= Submit $mol_hotkey
-			key * enter?event <=> submit?event null
-
 $mol_list $mol_view
 	render_visible_only true
 	render_over 0
@@ -231,6 +193,44 @@ $mol_text_code $mol_list
 		text <= row_text!id \
 		highlight <= highlight \
 
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
+$mol_string $mol_view
+	dom_name \input
+	enabled true
+	minimal_height 40
+	autocomplete false
+	selection?val /number
+	auto /
+		<= selection_watcher null
+	field *
+		^
+		disabled <= disabled false
+		value <= value_changed?val <=> value?val \
+		placeholder <= hint \ 
+		spellcheck <= spellcheck false
+		autocomplete <= autocomplete_native \
+		selectionEnd <= selection_end 0
+		selectionStart <= selection_start 0
+	attr *
+		^
+		maxlength <= length_max Infinity
+		type <= type?val \text
+	event *
+		^
+		input?event <=> event_change?event null
+		keydown?event <=> event_key_press?event null
+	plugins /
+		<= Submit $mol_hotkey
+			key * enter?event <=> submit?event null
+
 $mol_textarea $mol_view
 	attr *
 		^
@@ -240,8 +240,7 @@ $mol_textarea $mol_view
 		keydown?event <=> press?event null
 		pointermove?event <=> hover?event null
 	sub /
-		<= Edit $mol_string
-			dom_name \textarea
+		<= Edit $mol_textarea_edit
 			value?val <=> value?val \
 			hint <= hint \ 
 			enabled <= enabled true
@@ -253,6 +252,12 @@ $mol_textarea $mol_view
 			row_numb!index <= row_numb!index 0
 			sidebar_showed <= sidebar_showed
 			highlight <= highlight \
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	field *
+		^
+		scrollTop 0
 
 $mol_page $mol_view
 	sub /
