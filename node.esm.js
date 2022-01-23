@@ -846,6 +846,8 @@ var $;
             this.sub_from = from;
         }
         affect(quant) {
+            if (this.cursor === $mol_wire_cursor.final)
+                return false;
             if (this.cursor >= quant)
                 return false;
             this.cursor = quant;
@@ -2568,11 +2570,26 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_work extends $mol_after_timeout {
+    class $mol_after_work extends $mol_object2 {
+        delay;
+        task;
+        id;
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = requestIdleCallback(task, { timeout: delay });
+        }
+        destructor() {
+            cancelIdleCallback(this.id);
+        }
     }
     $.$mol_after_work = $mol_after_work;
+    if (typeof requestIdleCallback !== 'function') {
+        $.$mol_after_work = $mol_after_timeout;
+    }
 })($ || ($ = {}));
-//mol/after/work/work.node.ts
+//mol/after/work/work.ts
 ;
 "use strict";
 var $;
@@ -8120,6 +8137,9 @@ var $;
         ], $mol_text.prototype, "rows", null);
         __decorate([
             $mol_mem_key
+        ], $mol_text.prototype, "header_content", null);
+        __decorate([
+            $mol_mem_key
         ], $mol_text.prototype, "cell_contents", null);
         __decorate([
             $mol_mem_key
@@ -8133,12 +8153,6 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_text.prototype, "table_cell_content", null);
-        __decorate([
-            $mol_mem_key2
-        ], $mol_text.prototype, "text2spans", null);
-        __decorate([
-            $mol_mem_key2
-        ], $mol_text.prototype, "code2spans", null);
         __decorate([
             $mol_mem_key
         ], $mol_text.prototype, "block_content", null);
