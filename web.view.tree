@@ -230,87 +230,6 @@ $mol_string $mol_view
 		<= Submit $mol_hotkey
 			key * enter?event <=> submit?event null
 
-$mol_textarea $mol_view
-	attr *
-		^
-		mol_textarea_clickable <= clickable?val false
-		mol_textarea_sidebar_showed <= sidebar_showed false
-	event *
-		keydown?event <=> press?event null
-		pointermove?event <=> hover?event null
-	sub /
-		<= Edit $mol_textarea_edit
-			value?val <=> value?val \
-			hint <= hint \ 
-			enabled <= enabled true
-			length_max <= length_max Infinity
-			selection?val <=> selection?val /number
-		<= View $mol_text_code
-			text <= value
-			render_visible_only false
-			row_numb!index <= row_numb!index 0
-			sidebar_showed <= sidebar_showed
-			highlight <= highlight \
-
-$mol_textarea_edit $mol_string
-	dom_name \textarea
-	field *
-		^
-		scrollTop 0
-
-$mol_page $mol_view
-	dom_name \article
-	sub /
-		<= Head $mol_view
-			minimal_height 64
-			dom_name \header
-			sub <= head /
-				<= Title $mol_view
-					dom_name \h1
-					sub /
-						<= title
-				<= Tools $mol_view
-					sub <= tools /$mol_view_content
-		<= Body $mol_scroll
-			scroll_top?val => body_scroll_top?val
-			sub <= body /$mol_view_content
-		<= Foot $mol_view
-			dom_name \footer
-			sub <= foot /$mol_view
-
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
-
-$hyoo_marked_app $mol_book2
-	plugins /
-		<= Theme $mol_theme_auto
-	pages /
-		<= Marked $mol_page
-			title \MarkedText
-			tools /
-				<= Lights $mol_lights_toggle
-				<= Source $mol_link_source
-					uri \https://github.com/hyoo-ru/marked.hyoo.ru/
-				<= Html_show $mol_link 
-					sub /
-						<= html_show_label \HTML
-					arg *
-						html \
-			body /
-				<= Marked_text $mol_textarea
-					value?val <=> marked?val \
-		<= Html $mol_page
-			title \HTML
-			tools /
-				<= Close $mol_link 
-					sub /
-						<= Close_icon $mol_icon_cross
-					arg *
-						html null
-			body /
-				<= Html_text $mol_textarea
-					enabled false
-					value <= html \
-
 $mol_float $mol_view
 	style *
 		^
@@ -470,3 +389,84 @@ $mol_text_image $mol_view
 		<= Image $mol_image
 			uri <= link
 			title <= title?val \
+
+$mol_textarea $mol_view
+	attr *
+		^
+		mol_textarea_clickable <= clickable?val false
+		mol_textarea_sidebar_showed <= sidebar_showed false
+	event *
+		keydown?event <=> press?event null
+		pointermove?event <=> hover?event null
+	sub /
+		<= Edit $mol_textarea_edit
+			value?val <=> value?val \
+			hint <= hint \ 
+			enabled <= enabled true
+			length_max <= length_max Infinity
+			selection?val <=> selection?val /number
+		<= View $mol_text_code
+			text <= value
+			render_visible_only false
+			row_numb!index <= row_numb!index 0
+			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	field *
+		^
+		scrollTop 0
+
+$mol_page $mol_view
+	dom_name \article
+	sub /
+		<= Head $mol_view
+			minimal_height 64
+			dom_name \header
+			sub <= head /
+				<= Title $mol_view
+					dom_name \h1
+					sub /
+						<= title
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top?val => body_scroll_top?val
+			sub <= body /$mol_view_content
+		<= Foot $mol_view
+			dom_name \footer
+			sub <= foot /$mol_view
+
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
+$hyoo_marked_app $mol_book2
+	plugins /
+		<= Theme $mol_theme_auto
+	pages /
+		<= Marked $mol_page
+			title \MarkedText
+			tools /
+				<= Lights $mol_lights_toggle
+				<= Source $mol_link_source
+					uri \https://github.com/hyoo-ru/marked.hyoo.ru/
+				<= Html_show $mol_link 
+					sub /
+						<= html_show_label \HTML
+					arg *
+						html \
+			body /
+				<= Marked_text $mol_textarea
+					value?val <=> marked?val \
+		<= Html $mol_page
+			title \HTML
+			tools /
+				<= Close $mol_link 
+					sub /
+						<= Close_icon $mol_icon_cross
+					arg *
+						html null
+			body /
+				<= Html_text $mol_textarea
+					enabled false
+					value <= html \
