@@ -14,20 +14,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    let $mol_report_bugsnag: string;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
     function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
@@ -88,6 +74,13 @@ declare namespace $ {
         constructor(task: () => void);
         destructor(): void;
     }
+}
+
+declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
