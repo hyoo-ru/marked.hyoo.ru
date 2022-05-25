@@ -293,30 +293,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_deprecated(message) {
-        return (host, field, descr) => {
-            const value = descr.value;
-            let warned = false;
-            descr.value = function $mol_deprecated_wrapper(...args) {
-                if (!warned) {
-                    $$.$mol_log3_warn({
-                        place: `${host.constructor.name}::${field}`,
-                        message: `Deprecated`,
-                        hint: message,
-                    });
-                    warned = true;
-                }
-                return value.call(this, ...args);
-            };
-        };
-    }
-    $.$mol_deprecated = $mol_deprecated;
-})($ || ($ = {}));
-//mol/deprecated/deprecated.ts
-;
-"use strict";
-var $;
-(function ($) {
     $.$mol_tree_convert = Symbol('$mol_tree_convert');
     class $mol_tree extends $mol_object2 {
         type;
@@ -640,9 +616,6 @@ var $;
             return new Error(`${message}:\n${this} ${this.baseUri}:${this.row}:${this.col}`);
         }
     }
-    __decorate([
-        $mol_deprecated('Use $mol_tree:hack')
-    ], $mol_tree.prototype, "transform", null);
     $.$mol_tree = $mol_tree;
 })($ || ($ = {}));
 //mol/tree/tree.ts
@@ -7606,9 +7579,8 @@ var $;
             return "";
         }
         Html_text() {
-            const obj = new this.$.$mol_textarea();
-            obj.enabled = () => false;
-            obj.value = () => this.html();
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.html();
             return obj;
         }
         Html() {

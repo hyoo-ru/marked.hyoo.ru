@@ -452,7 +452,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_memo extends $mol_wrapper {
-        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value | undefined) => Value | undefined;
+        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value) => Value | undefined;
     }
 }
 
@@ -2326,7 +2326,7 @@ declare namespace $ {
         Close_icon(): $mol_icon_cross;
         Close(): $$.$mol_link;
         html(): string;
-        Html_text(): $$.$mol_textarea;
+        Html_text(): $$.$mol_text_code;
         Html(): $mol_page;
     }
 }
