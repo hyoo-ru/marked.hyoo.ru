@@ -29,6 +29,8 @@
     "$mol_exec",
     "$mol_log3",
     "$mol_tree",
+    "$mol_term_color",
+    "$mol_term",
     "$mol_env",
     "$mol_book2",
     "$mol_scroll",
@@ -66,6 +68,7 @@
     "$mol_memo",
     "$mol_wrapper",
     "$mol_dom_qname",
+    "$mol_wire_watch",
     "$mol_const",
     "$mol_dom_render_attributes",
     "$mol_dom_render",
@@ -178,7 +181,6 @@
     "$mol_dom_parse"
   ],
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*",
     "chokidar": "*",
     "node-fetch": "*"
