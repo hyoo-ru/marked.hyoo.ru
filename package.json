@@ -102,6 +102,7 @@
     "$mol_lights",
     "$mol_state_arg",
     "$mol_state",
+    "$mol_action",
     "$mol_media",
     "$mol_state_local",
     "$mol_lights_toggle",
@@ -173,7 +174,6 @@
     "$hyoo_marked_script",
     "$hyoo_marked_paragraph",
     "$mol_fetch",
-    "$mol_action",
     "$mol_wire_sync",
     "$mol_dom_parse"
   ],
