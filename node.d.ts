@@ -58,11 +58,11 @@ declare namespace $ {
         get $(): $;
         set $(next: $);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
-        static [Symbol.toPrimitive](): unknown;
-        static toString(): unknown;
+        static [Symbol.toPrimitive](): string;
+        static toString(): string;
         destructor(): void;
-        toString(): any;
-        toJSON(): any;
+        toString(): string;
+        toJSON(): string;
     }
 }
 
@@ -655,7 +655,7 @@ declare namespace $ {
             top: number;
             bottom: number;
         } | null;
-        dom_id(): any;
+        dom_id(): string;
         dom_node(next?: Element): Element;
         dom_final(): Element | undefined;
         dom_tree(next?: Element): Element;
@@ -1561,15 +1561,15 @@ declare namespace $ {
     export class $mol_regexp<Groups extends Record<string, string>> extends RegExp {
         readonly groups: (Extract<keyof Groups, string>)[];
         constructor(source: string, flags?: string, groups?: (Extract<keyof Groups, string>)[]);
-        [Symbol.matchAll](str: string): IterableIterator<$mol_type_override<RegExpExecArray, {
+        [Symbol.matchAll](str: string): IterableIterator<RegExpMatchArray & $mol_type_override<RegExpMatchArray, {
             groups?: {
                 [key in keyof Groups]: string;
             };
         }>>;
-        [Symbol.match](str: string): null | string[];
+        [Symbol.match](str: string): null | RegExpMatchArray;
         [Symbol.split](str: string): string[];
         test(str: string): boolean;
-        exec(str: string): $mol_type_override<RegExpExecArray, {
+        exec(str: string): RegExpExecArray & $mol_type_override<RegExpExecArray, {
             groups?: {
                 [key in keyof Groups]: string;
             };
@@ -2175,77 +2175,164 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $hyoo_marked_cut: $mol_regexp<{} | {
+    let $hyoo_marked_cut: $mol_regexp<{
         [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
     }>;
 }
 
 declare namespace $ {
-    let $hyoo_marked_line_content: $mol_regexp<{} | {
+    let $hyoo_marked_line_content: $mol_regexp<{}>;
+    let $hyoo_marked_line: $mol_regexp<{
         [x: string]: string;
-    }>;
-    let $hyoo_marked_line: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-}
-
-declare namespace $ {
-    let $hyoo_marked_header: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-}
-
-declare namespace $ {
-    let $hyoo_marked_list_line: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-    let $hyoo_marked_list_item: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-    let $hyoo_marked_list: $mol_regexp<{} | {
-        [x: string]: string;
+        readonly inline: string;
+        readonly code: string;
+        readonly embed: string;
+        readonly strong: string;
+        readonly emphasis: string;
+        readonly insertion: string;
+        readonly deletion: string;
+        readonly link: string;
+        readonly uri: string;
+        content: string;
+        readonly marker: string;
     }>;
 }
 
 declare namespace $ {
-    let $hyoo_marked_quote_line: $mol_regexp<{} | {
+    let $hyoo_marked_header: $mol_regexp<{
         [x: string]: string;
-    }>;
-    let $hyoo_marked_quote: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-}
-
-declare namespace $ {
-    let $hyoo_marked_table_line: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-    let $hyoo_marked_table_row: $mol_regexp<{} | {
-        [x: string]: string;
-    }>;
-    let $hyoo_marked_table: $mol_regexp<{} | {
-        [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly marker: string;
+        readonly content: string;
     }>;
 }
 
 declare namespace $ {
-    let $hyoo_marked_script_line: $mol_regexp<{} | {
+    let $hyoo_marked_list_line: $mol_regexp<{
         [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly indent: string;
+        readonly marker: string;
+        readonly content: string;
     }>;
-    let $hyoo_marked_script: $mol_regexp<{} | {
+    let $hyoo_marked_list_item: $mol_regexp<{
         [x: string]: string;
+        readonly kids: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly indent: string;
+        readonly marker: string;
+        readonly content: string;
+    }>;
+    let $hyoo_marked_list: $mol_regexp<{
+        [key: string]: string;
+    } & {
+        [x: string]: string;
+        readonly kids: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly indent: string;
+        readonly marker: string;
+        readonly content: string;
     }>;
 }
 
 declare namespace $ {
-    let $hyoo_marked_paragraph: $mol_regexp<{} | {
+    let $hyoo_marked_quote_line: $mol_regexp<{
         [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly marker: string;
+        readonly content: string;
+    }>;
+    let $hyoo_marked_quote: $mol_regexp<{
+        [key: string]: string;
+    } & {
+        [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly marker: string;
+        readonly content: string;
     }>;
 }
 
 declare namespace $ {
-    let $hyoo_marked_flow: $mol_regexp<{} | {
+    let $hyoo_marked_table_line: $mol_regexp<{
         [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly indent: string;
+        readonly marker: string;
+        readonly content: string;
+    }>;
+    let $hyoo_marked_table_row: $mol_regexp<{
+        [x: string]: string;
+        readonly content: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly indent: string;
+        readonly marker: string;
+    }>;
+    let $hyoo_marked_table: $mol_regexp<{
+        [key: string]: string;
+    } & {
+        [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly indent: string;
+        readonly marker: string;
+        readonly content: string;
+    }>;
+}
+
+declare namespace $ {
+    let $hyoo_marked_script_line: $mol_regexp<{
+        [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly marker: string;
+        readonly content: string;
+    }>;
+    let $hyoo_marked_script: $mol_regexp<{
+        [key: string]: string;
+    } & {
+        [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly marker: string;
+        readonly content: string;
+    }>;
+}
+
+declare namespace $ {
+    let $hyoo_marked_paragraph: $mol_regexp<{
+        [x: string]: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly content: string;
+    }>;
+}
+
+declare namespace $ {
+    let $hyoo_marked_flow: $mol_regexp<{
+        [x: string]: string;
+        readonly table: string;
+        readonly header: string;
+        readonly list: string;
+        readonly quote: string;
+        readonly cut: string;
+        readonly paragraph: string;
+        readonly script: string;
+        readonly win_end: string;
+        readonly mac_end: string;
+        readonly marker: string;
+        readonly content: string;
+        readonly indent: string;
+        readonly kids: string;
     }>;
 }
 
