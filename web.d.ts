@@ -1593,7 +1593,7 @@ declare namespace $ {
             target: string;
             mol_text_code_token_type: string;
         };
-        haystack(): string;
+        uri(): string;
     }
 }
 
@@ -1605,6 +1605,8 @@ declare namespace $ {
         text(): string;
         minimal_height(): number;
         numb_showed(): boolean;
+        syntax(): any;
+        uri_resolve(id: any): string;
         Numb(): $mol_view;
         Token(id: any): $mol_text_code_token;
         Token_link(id: any): $mol_text_code_token_link;
@@ -1613,6 +1615,7 @@ declare namespace $ {
         token_type(id: any): string;
         token_text(id: any): string;
         highlight(): string;
+        token_uri(id: any): string;
     }
 }
 
@@ -1681,6 +1684,24 @@ declare namespace $.$$ {
 declare namespace $.$$ {
     class $mol_text_code_row extends $.$mol_text_code_row {
         maximal_width(): number;
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
         tokens(path: number[]): readonly {
             name: string;
             found: string;
@@ -1692,6 +1713,7 @@ declare namespace $.$$ {
         token_type(path: number[]): string;
         token_content(path: number[]): (string | $mol_text_code_token)[];
         token_text(path: number[]): string;
+        token_uri(path: number[]): string;
         view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
         find_pos(offset: number): {
             token: $mol_text_code_token;
@@ -1767,11 +1789,14 @@ declare namespace $ {
         text(): string;
         text_lines(): readonly string[];
         find_pos(id: any): any;
+        uri_base(): string;
         sub(): readonly any[];
         sidebar_showed(): boolean;
         render_visible_only(): boolean;
         row_numb(id: any): number;
         row_text(id: any): string;
+        syntax(): any;
+        uri_resolve(id: any): string;
         highlight(): string;
         Row(id: any): $$.$mol_text_code_row;
         rows(): readonly any[];
@@ -1795,6 +1820,26 @@ declare namespace $.$$ {
             offset: number;
         } | null;
         sub(): ($mol_list | $mol_button_copy)[];
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+        uri_base(): string;
+        uri_resolve(uri: string): string;
     }
 }
 

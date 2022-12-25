@@ -156,13 +156,15 @@ $mol_text_code_token_link $mol_text_code_token
 	type \code-link
 	attr *
 		^
-		href <= haystack \
+		href <= uri \
 		target \_blank
 
 $mol_text_code_row $mol_paragraph
 	text \
 	minimal_height 24
 	numb_showed true
+	syntax null
+	uri_resolve* \
 	Numb $mol_view
 		sub /
 			<= numb 0
@@ -173,6 +175,7 @@ $mol_text_code_row $mol_paragraph
 	Token_link* $mol_text_code_token_link
 		haystack <= token_text* \
 		needle <= highlight \
+		uri <= token_uri* \
 	find_pos* null
 
 $mol_list $mol_view
@@ -200,6 +203,7 @@ $mol_text_code $mol_stack
 	text \
 	text_lines /string
 	find_pos* null
+	uri_base \
 	sub /
 		<= Rows $mol_list
 			render_visible_only <= render_visible_only false
@@ -208,6 +212,8 @@ $mol_text_code $mol_stack
 					numb_showed <= sidebar_showed
 					numb <= row_numb* 0
 					text <= row_text* \
+					syntax <= syntax null
+					uri_resolve* <= uri_resolve* \
 					highlight <= highlight \
 		<= Copy $mol_button_copy
 			hint @ \Copy whole code
