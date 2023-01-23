@@ -5707,7 +5707,7 @@ var $;
         'code': /^(```\s*)([\w.-]*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
         'code-indent': /^((?:(?:  |\t)(?:[^]*?)$([\n\r]*))+)/,
         'table': /((?:^\|.+?$\r?\n)+)([\n\r]*)/,
-        'grid': /((?:^ *!.+?$\r?\n)+)([\n\r]*)/,
+        'grid': /((?:^ *! .+?$\r?\n)+)([\n\r]*)/,
         'cut': /^--+$((?:\r?\n)*)/,
         'block': /^(.*?)$((?:\r?\n)*)/,
     });
@@ -6347,8 +6347,14 @@ var $;
             uri_resolve(uri) {
                 if (/^(\w+script+:)+/.test(uri))
                     return null;
-                const url = new URL(uri, this.uri_base());
-                return url.toString();
+                try {
+                    const url = new URL(uri, this.uri_base());
+                    return url.toString();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return null;
+                }
             }
         }
         __decorate([
@@ -8572,8 +8578,14 @@ var $;
             uri_resolve(uri) {
                 if (/^(\w+script+:)+/.test(uri))
                     return null;
-                const url = new URL(uri, this.uri_base());
-                return url.toString();
+                try {
+                    const url = new URL(uri, this.uri_base());
+                    return url.toString();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return null;
+                }
             }
             code_syntax() {
                 return this.$.$mol_syntax2_md_code;
