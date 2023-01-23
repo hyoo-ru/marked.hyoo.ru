@@ -2,14 +2,15 @@ namespace $.$$ {
 
 	export class $hyoo_marked_app extends $.$hyoo_marked_app {
 
-		html_show() {
-			return this.$.$mol_state_arg.value( 'html' ) === ''
+		preview( next?: string ) {
+			return this.$.$mol_state_arg.value( 'preview', next ) ?? ''
 		}
-
+		
 		pages() {
 			return [
 				this.Marked() ,
-				... this.html_show() ? [ this.Html() ] : []
+				... this.preview() === 'html' ? [ this.Html() ] : [],
+				... this.preview() === 'view' ? [ this.View() ] : [],
 			]
 		}
 
