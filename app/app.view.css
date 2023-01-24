@@ -1,5 +1,5 @@
 [hyoo_marked_app_marked] {
-	flex: 1000 1 40rem;
+	flex: 1000 0 40rem;
 }
 
 [hyoo_marked_app_preview] {
@@ -7,9 +7,9 @@
 }
 
 [hyoo_marked_app_html] {
-	flex: 1000 1 40rem;
+	flex: 1000 0 40rem;
 }
 
 [hyoo_marked_app_view] {
-	flex: 1000 1 40rem;
+	flex: 1000 0 40rem;
 }
