@@ -37,8 +37,19 @@ namespace $ {
 			}
 			
 			if( token.paragraph ) {
+				
 				if( !token.content ) return ''
-				return <p>{NL}{ line( token.content ) }{NL}</p>
+				
+				const content = line( token.content )
+				
+				if( content.length !== 1 ) return <p>{NL}{ content }{NL}</p>
+				if( typeof content[0] === 'string' ) return <p>{NL}{ content }{NL}</p>
+					
+				switch( content[0].localName ) {
+					case 'object': return content[0]
+					default: return <p>{NL}{ content }{NL}</p>
+				}
+				
 			}
 			
 			return $mol_fail( new SyntaxError( `Unknown token` ) )
@@ -125,7 +136,21 @@ namespace $ {
 			}
 			
 			if( token.embed ) {
-				return <object data={ token.uri }>{ line( token.content || token.uri ) }</object>
+				
+				if( /\.(png|jpg|jpeg|webp|gif)$/.test( token.uri ) ) {
+					return <img src={ token.uri } alt={ token.content } />
+				}
+				
+				return (
+					<object data={ token.uri }>
+						{NL}
+						<iframe src={ token.uri }>
+							{ token.uri }
+						</iframe>
+						{NL}
+					</object>
+				)
+				
 			}
 			
 			return token[0]
