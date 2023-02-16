@@ -5378,7 +5378,7 @@ var $;
         'code-call': /\.?\w+ *(?=\()/,
         'code-sexpr': /\((\w+ )/,
         'code-field': /(?:(?:\.|::|->)\w+|[\w-]+\??\s*:(?!\/\/|:))/,
-        'code-keyword': /\b(throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void|int|float|ref)\b/,
+        'code-keyword': /\b(throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|val|let|const|for|do|while|until|in|out|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void|int|float|ref)\b/,
         'code-global': /[$]+\w*|\b[A-Z][a-z0-9]+[A-Z]\w*/,
         'code-word': /\w+/,
         'code-decorator': /@\s*\S+/,
@@ -5775,12 +5775,16 @@ var $;
         }
         sub() {
             return [
-                this.Icon()
+                this.Icon(),
+                this.title()
             ];
         }
         Icon() {
             const obj = new this.$.$mol_icon_clipboard_outline();
             return obj;
+        }
+        title() {
+            return "";
         }
     }
     __decorate([
@@ -8989,10 +8993,24 @@ var $;
             if (token.paragraph) {
                 if (!token.content)
                     return '';
-                return $mol_jsx("p", null,
-                    NL,
-                    line(token.content),
-                    NL);
+                const content = line(token.content);
+                if (content.length !== 1)
+                    return $mol_jsx("p", null,
+                        NL,
+                        content,
+                        NL);
+                if (typeof content[0] === 'string')
+                    return $mol_jsx("p", null,
+                        NL,
+                        content,
+                        NL);
+                switch (content[0].localName) {
+                    case 'object': return content[0];
+                    default: return $mol_jsx("p", null,
+                        NL,
+                        content,
+                        NL);
+                }
             }
             return $mol_fail(new SyntaxError(`Unknown token`));
         }).filter(Boolean);
@@ -9077,7 +9095,13 @@ var $;
                 return $mol_jsx("a", { href: token.uri }, line(token.content || token.uri));
             }
             if (token.embed) {
-                return $mol_jsx("object", { data: token.uri }, line(token.content || token.uri));
+                if (/\.(png|jpg|jpeg|webp|gif)$/.test(token.uri)) {
+                    return $mol_jsx("img", { src: token.uri, alt: token.content });
+                }
+                return ($mol_jsx("object", { data: token.uri },
+                    NL,
+                    $mol_jsx("iframe", { src: token.uri }, token.uri),
+                    NL));
             }
             return token[0];
         }).filter(Boolean);
