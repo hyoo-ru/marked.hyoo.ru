@@ -2908,7 +2908,6 @@ declare namespace $ {
         [x: string]: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_script: $mol_regexp<{
@@ -2917,7 +2916,6 @@ declare namespace $ {
         [x: string]: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly marker: string;
         readonly content: string;
     }>;
 }
@@ -2943,8 +2941,8 @@ declare namespace $ {
         readonly script: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly marker: string;
         readonly content: string;
+        readonly marker: string;
         readonly indent: string;
         readonly kids: string;
     }>;
