@@ -1935,8 +1935,8 @@ declare namespace $ {
     class $mol_button_copy extends $mol_button_minor {
         text(): string;
         sub(): readonly any[];
-        Icon(): $mol_icon_clipboard_outline;
         title(): string;
+        Icon(): $mol_icon_clipboard_outline;
     }
 }
 
@@ -2569,17 +2569,18 @@ declare namespace $ {
             src: string;
             srcdoc: any;
             allow: string;
-            allowfullscreen: boolean;
         };
+        fullscreen(): boolean;
         accelerometer(): boolean;
         autoplay(): boolean;
         encription(): boolean;
         gyroscope(): boolean;
         pip(): boolean;
+        clipboard_read(): boolean;
+        clipboard_write(): boolean;
         uri(val?: any): string;
         html(): any;
         allow(): string;
-        fullscreen(): boolean;
     }
 }
 
