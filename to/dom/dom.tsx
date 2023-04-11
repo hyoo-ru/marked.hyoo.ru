@@ -137,7 +137,7 @@ namespace $ {
 			
 			if( token.embed ) {
 				
-				if( /\.(png|jpg|jpeg|webp|gif)$/.test( token.uri ) ) {
+				if( /\b(png|gif|jpg|jpeg|jfif|webp|svg)\b/.test( token.uri ) ) {
 					return <img src={ token.uri } alt={ token.content } />
 				}
 				
