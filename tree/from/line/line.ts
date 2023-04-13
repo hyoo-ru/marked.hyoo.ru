@@ -40,7 +40,7 @@ namespace $ {
 						).kids : [],
 					]
 				
-				const name = marker2name[ token.marker ]
+				const name = marker2name[ token.marker as keyof typeof marker2name ]
 				if( !name ) this.$mol_fail( `Undefined name for marker ${ token.marker }` )
 
 				nodes.push(
