@@ -6,6 +6,7 @@ $hyoo_marked_demo $mol_example_large
 		\MarkDown
 		\HTML
 	aspects /
+		\Application
 		\Language/MarkedText
 		\Algorithm/Parse
 		\Algorithm/Transform
