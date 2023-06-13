@@ -9565,4 +9565,5 @@ var $;
 })($ || ($ = {}));
 //hyoo/marked/app/-css/app.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map
