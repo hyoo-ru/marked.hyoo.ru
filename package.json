@@ -125,6 +125,7 @@
     "$mol_theme_auto",
     "$mol_lights",
     "$mol_state_local",
+    "$mol_storage",
     "$mol_lights_toggle",
     "$mol_check_icon",
     "$mol_check",
