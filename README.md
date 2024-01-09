@@ -48,18 +48,18 @@ Text format with **lightweight consistent formatting**
 
 == Comments
 
-" " " Typical user: Isn't supported anywhere, go to --ass-- ++assassins++ with this syntax!
+" " " //Typical user//: Isn't supported anywhere, go to --ass-- ++assassins++ with this syntax!
 " " 
 " " But we are **programmers**, we can //fix// it.. You don't even need to be an expert on ;;C++;; to do this ..
 " 
-" No one needs it (c) Sofa Expert
+" No one needs it (c) //Sofa Expert//
 
 Nevertheless, it is a useful exercise in design.
 
 == Links
 
-- \\Article about MarkedText\https://github.com/nin-jin/HabHub/issues/39\\
-- TypeScript API: \https://github.com/hyoo-ru/marked.hyoo.ru/\\
+- \\Article about MarkedText\https://page.hyoo.ru/#!=6lqg5m_deygy0\\
+- TypeScript API: \\https://github.com/hyoo-ru/marked.hyoo.ru/\\
 
 == Online sandbox
 
