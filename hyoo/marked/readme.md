@@ -3,6 +3,8 @@
 
 Text format with **lightweight consistent formatting**
 
+""Logo\https://marked.hyoo.ru/hyoo/marked/logo/logo.svg""
+
 --
 
 == Principles
@@ -56,8 +58,10 @@ Nevertheless, it is a useful exercise in design.
 
 == Links
 
-- Online sandbox: \\https://marked.hyoo.ru/\\
 - \\Article about MarkedText\https://github.com/nin-jin/HabHub/issues/39\\
-- \\TypeScript API\https://github.com/hyoo-ru/marked.hyoo.ru/\\
-- ""Map of our projects\https://raw.githubusercontent.com/hyoo-ru/hyoo.ru/master/hyoo.svg""
+- TypeScript API: \https://github.com/hyoo-ru/marked.hyoo.ru/\\
+
+== Online sandbox
+
+""https://marked.hyoo.ru/""
 ```
