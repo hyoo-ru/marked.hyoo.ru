@@ -14,16 +14,12 @@ jobs:
     
     steps:
     
-    - name: Build app
-      uses: hyoo-ru/mam_build@master2
+    - uses: hyoo-ru/mam_build@master2
       with:
-        token: ${{ secrets.GH_PAT }}
         package: 'hyoo/marked'
         modules: 'app'
     
-    - name: Deploy on GitHub Pages
+    - uses: hyoo-ru/gh-deploy@v4.4.1
       if: github.ref == 'refs/heads/master'
-      uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
       with:
-        repo-token: ${{ secrets.GH_PAT }}
-        site-directory: 'hyoo/marked/app/-'
+        folder: 'hyoo/marked/app/-'
