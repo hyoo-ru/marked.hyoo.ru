@@ -1,4 +1,4 @@
-name: Deploy
+name: hyoo_marked
 
 on:
   workflow_dispatch:
