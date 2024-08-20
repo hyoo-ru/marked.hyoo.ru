@@ -65,7 +65,7 @@ Nevertheless, it is a useful exercise in design.
 
 ? It's **title** of spoiler
 ? And this is the spoiler content
-? " The //content// supports ++any++ marku
+? " The //content// supports ++any++ markup
 
 == Online sandbox
 
