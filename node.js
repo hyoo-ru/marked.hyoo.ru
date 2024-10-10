@@ -2121,19 +2121,30 @@ var $;
     $.$mol_run_error = $mol_run_error;
     const child_process = $node['child_process'];
     $.$mol_run_spawn = child_process.spawn.bind(child_process);
+    $.$mol_run_spawn_sync = child_process.spawnSync.bind(child_process);
     function $mol_run_async({ dir, timeout, command, env }) {
         const args_raw = typeof command === 'string' ? command.split(' ') : command;
         const [app, ...args] = args_raw;
-        this.$mol_log3_come({
-            place: '$mol_run_async',
-            dir: $node.path.relative('', dir),
-            message: 'Run',
-            command: args_raw.join(' '),
-        });
+        if (!env?.MOL_RUN_ASYNC) {
+            this.$mol_log3_come({
+                place: '$mol_run_sync',
+                message: 'Run',
+                command: args_raw.join(' '),
+                dir: $node.path.relative('', dir),
+            });
+            return this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env });
+        }
         const sub = this.$mol_run_spawn(app, args, {
             shell: true,
             cwd: dir,
             env
+        });
+        this.$mol_log3_come({
+            place: '$mol_run_async',
+            pid: sub.pid,
+            message: 'Run',
+            command: args_raw.join(' '),
+            dir: $node.path.relative('', dir),
         });
         let killed = false;
         let timer;
@@ -2170,6 +2181,14 @@ var $;
                     get stdout() { return Buffer.concat(std_data); },
                     get stderr() { return Buffer.concat(error_data); }
                 };
+                this.$mol_log3_done({
+                    place: '$mol_run_async',
+                    pid: sub.pid,
+                    message: 'Run',
+                    status,
+                    command: args_raw.join(' '),
+                    dir: $node.path.relative('', dir),
+                });
                 if (error || status || killed)
                     return fail(new $mol_run_error((res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''), { signal, timeout: killed }, ...error ? [error] : []));
                 done(res);
