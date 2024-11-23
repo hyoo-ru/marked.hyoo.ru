@@ -374,7 +374,7 @@ $mol_textarea_edit $mol_string
 
 $mol_page $mol_view
 	dom_name \article
-	field *
+	attr *
 		^
 		tabIndex <= tabindex -1
 	sub /
