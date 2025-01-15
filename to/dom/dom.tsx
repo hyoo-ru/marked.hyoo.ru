@@ -14,14 +14,14 @@ namespace $ {
 			}
 			
 			if( token.header ) {
-				const level = token.marker.length
-				const Tag = `h${level}`
-				return <Tag>{NL}{ line( token.content ) }{NL}</Tag>
+				const level = token.marker.length as 1|2|3|4|5|6
+				const Tag = `h${level}` as const
+				return <Tag style="break-after: avoid">{NL}{ line( token.content ) }{NL}</Tag>
 			}
 			
 			if( token.list ) {
 				const Tag = token.list[0] === '+' ? 'ol' : 'ul'
-				return <Tag>{NL}{ list_items( token.list ) }{NL}</Tag>
+				return <Tag style="break-before: avoid">{NL}{ list_items( token.list ) }{NL}</Tag>
 			}
 			
 			if( token.table ) {
@@ -33,7 +33,7 @@ namespace $ {
 			}
 			
 			if( token.quote ) {
-				return <blockquote>{NL}{ flow( token.quote.replace( /^" /gm, '' ) ) }{NL}</blockquote>
+				return <blockquote style="break-before: avoid">{NL}{ flow( token.quote.replace( /^" /gm, '' ) ) }{NL}</blockquote>
 			}
 			
 			if( token.paragraph ) {
