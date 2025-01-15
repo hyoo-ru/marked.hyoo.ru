@@ -10365,10 +10365,8 @@ var $;
         return [...marked.matchAll($hyoo_marked_list_item)].map(token => {
             const kids = token.groups.kids.replace(/^  /gm, '');
             return $mol_jsx("li", null,
-                NL,
                 flow(token.groups.content.replace(/^  /gm, '') + '\n'),
-                flow(kids),
-                NL);
+                flow(kids));
         }).filter(Boolean);
     }
     function script_lines(marked) {
