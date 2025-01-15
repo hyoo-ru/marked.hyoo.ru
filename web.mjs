@@ -9766,14 +9766,14 @@ var $;
             if (token.header) {
                 const level = token.marker.length;
                 const Tag = `h${level}`;
-                return $mol_jsx(Tag, null,
+                return $mol_jsx(Tag, { style: "break-after: avoid" },
                     NL,
                     line(token.content),
                     NL);
             }
             if (token.list) {
                 const Tag = token.list[0] === '+' ? 'ol' : 'ul';
-                return $mol_jsx(Tag, null,
+                return $mol_jsx(Tag, { style: "break-before: avoid" },
                     NL,
                     list_items(token.list),
                     NL);
@@ -9791,7 +9791,7 @@ var $;
                     NL);
             }
             if (token.quote) {
-                return $mol_jsx("blockquote", null,
+                return $mol_jsx("blockquote", { style: "break-before: avoid" },
                     NL,
                     flow(token.quote.replace(/^" /gm, '')),
                     NL);
