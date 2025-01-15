@@ -88,7 +88,7 @@ namespace $ {
 
 			const kids = token.groups!.kids.replace( /^  /gm, '' )
 
-			return <li>{NL}{ flow( token.groups!.content.replace( /^  /gm, '' ) + '\n' ) }{ flow( kids ) }{NL}</li>
+			return <li>{ flow( token.groups!.content.replace( /^  /gm, '' ) + '\n' ) }{ flow( kids ) }</li>
 			
 		} ).filter( Boolean )
 	}
