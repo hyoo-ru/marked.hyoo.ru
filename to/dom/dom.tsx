@@ -21,8 +21,7 @@ namespace $ {
 			
 			if( token.list ) {
 				const Tag = token.list[0] === '+' ? 'ol' : 'ul'
-				const style = 'break-before: avoid;' + ( Tag === 'ul' ? ` list-style-type: ' – ';` : `` )
-				return <Tag style={ style }>{NL}{ list_items( token.list ) }{NL}</Tag>
+				return <Tag style="break-before: avoid">{NL}{ list_items( token.list ) }{NL}</Tag>
 			}
 			
 			if( token.table ) {
