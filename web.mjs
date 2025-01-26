@@ -9769,8 +9769,7 @@ var $;
             }
             if (token.list) {
                 const Tag = token.list[0] === '+' ? 'ol' : 'ul';
-                const style = 'break-before: avoid;' + (Tag === 'ul' ? ` list-style-type: ' – ';` : ``);
-                return $mol_jsx(Tag, { style: style },
+                return $mol_jsx(Tag, { style: "break-before: avoid" },
                     NL,
                     list_items(token.list),
                     NL);
