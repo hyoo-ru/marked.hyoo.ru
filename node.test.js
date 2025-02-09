@@ -21,6 +21,9 @@ $.$$ = $
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
