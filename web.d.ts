@@ -1616,7 +1616,7 @@ declare namespace $ {
         message(): string;
         headers(): Headers;
         mime(): string | null;
-        stream(): ReadableStream<Uint8Array<ArrayBufferLike>> | null;
+        stream(): ReadableStream<Uint8Array<ArrayBuffer>> | null;
         text(): string;
         json(): unknown;
         blob(): Blob;
@@ -1631,7 +1631,7 @@ declare namespace $ {
         };
         static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
         static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBufferLike>> | null;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
         static text(input: RequestInfo, init?: RequestInit): string;
         static json(input: RequestInfo, init?: RequestInit): unknown;
         static blob(input: RequestInfo, init?: RequestInit): Blob;
