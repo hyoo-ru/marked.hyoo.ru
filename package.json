@@ -177,6 +177,7 @@
     "$mol_locale",
     "$mol_link_source",
     "$mol_link",
+    "$mol_dom_safe",
     "$mol_icon_script_text",
     "$mol_icon_script",
     "$mol_switch",
