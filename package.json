@@ -206,6 +206,7 @@
     "$mol_html",
     "$mol_string",
     "$mol_hotkey",
+    "$mol_hotkey2",
     "$mol_page",
     "$mol_text_text",
     "$mol_text_list",
