@@ -29,7 +29,7 @@ namespace $ {
 			}
 			
 			if( token.script ) {
-				return <pre>{NL}{ script_lines( token.script ) }{NL}</pre>
+				return <pre>{ script_lines( token.script ) }</pre>
 			}
 			
 			if( token.quote ) {
