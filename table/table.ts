@@ -4,7 +4,7 @@ namespace $ {
 		{ indent: $mol_regexp.repeat('  ') },
 		{ marker: '!' },
 		' ',
-		{ content: $hyoo_marked_line_content },
+		[ { content: $hyoo_marked_line_content } ],
 		$mol_regexp.line_end,
 	])
 
