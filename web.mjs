@@ -11275,10 +11275,7 @@ var $;
                     NL);
             }
             if (token.script) {
-                return $mol_jsx("pre", null,
-                    NL,
-                    script_lines(token.script),
-                    NL);
+                return $mol_jsx("pre", null, script_lines(token.script));
             }
             if (token.quote) {
                 return $mol_jsx("blockquote", { style: "break-before: avoid" },
