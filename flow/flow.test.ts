@@ -96,6 +96,16 @@ namespace $ {
 			
 		},
 
+		'spoiler'() {
+			
+			const text = `? title\n? content\n? more content\nparagraph\n`
+			const res = [ ... text.matchAll( $hyoo_marked_flow ) ]
+			
+			$mol_assert_equal( res[0].groups!.spoiler, '? title\n? content\n? more content\n' )
+			$mol_assert_equal( res[1].groups!.paragraph, 'paragraph\n' )
+			
+		},
+
 		'quote in list'() {
 			
 			const text = `

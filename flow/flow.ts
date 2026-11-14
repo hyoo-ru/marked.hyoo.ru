@@ -10,6 +10,7 @@ namespace $ {
 				quote: $hyoo_marked_quote,
 				table: $hyoo_marked_table,
 				script: $hyoo_marked_script,
+				spoiler: $hyoo_marked_spoiler,
 				paragraph: $hyoo_marked_paragraph,
 			},
 		],

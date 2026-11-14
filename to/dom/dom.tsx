@@ -32,7 +32,25 @@ namespace $ {
 				return <pre>{ script_lines( token.script ) }</pre>
 			}
 			
+			if( token.spoiler ) {
+				
+				const rows = [ ... token.spoiler.matchAll( $hyoo_marked_spoiler_line ) ].map( found => found.groups!.content )
+				const label = rows.shift()!
+				
+				return (
+					<details>
+						<summary>{ line( label ) }</summary>{NL}
+						{ flow( rows.join( '\n' ) + '\n' ) }{NL}
+					</details>
+				)
+				
+			}
+			
 			if( token.quote ) {
+				return <blockquote style="break-before: avoid">{NL}{ flow( token.quote.replace( /^" /gm, '' ) ) }{NL}</blockquote>
+			}
+			
+			if( token.cut ) {
 				return <blockquote style="break-before: avoid">{NL}{ flow( token.quote.replace( /^" /gm, '' ) ) }{NL}</blockquote>
 			}
 			
