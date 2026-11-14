@@ -11142,7 +11142,7 @@ var $;
 var $;
 (function ($) {
     const { optional, slash_back, char_any, char_except, repeat } = $mol_regexp;
-    $.$hyoo_marked_line_content = repeat(char_except('\r\n'), 1);
+    $.$hyoo_marked_line_content = repeat(char_except('\r\n'), 0);
     const uri = repeat(char_except(slash_back));
     const content = { content: $.$hyoo_marked_line_content };
     const strong = $mol_regexp.from([{ marker: '**' }, content, '**']);
@@ -11252,6 +11252,19 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$hyoo_marked_spoiler_line = $mol_regexp.from([
+        { marker: '?' },
+        ' ',
+        { content: $hyoo_marked_line_content },
+        $mol_regexp.line_end,
+    ]);
+    $.$hyoo_marked_spoiler = $mol_regexp.repeat_greedy($.$hyoo_marked_spoiler_line, 1);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     $.$hyoo_marked_paragraph = $mol_regexp.from([
         { content: $mol_regexp.repeat($mol_regexp.char_any) },
         $mol_regexp.line_end,
@@ -11271,6 +11284,7 @@ var $;
             quote: $hyoo_marked_quote,
             table: $hyoo_marked_table,
             script: $hyoo_marked_script,
+            spoiler: $hyoo_marked_spoiler,
             paragraph: $hyoo_marked_paragraph,
         },
     ], { multiline: true });
@@ -11314,7 +11328,22 @@ var $;
             if (token.script) {
                 return $mol_jsx("pre", null, script_lines(token.script));
             }
+            if (token.spoiler) {
+                const rows = [...token.spoiler.matchAll($hyoo_marked_spoiler_line)].map(found => found.groups.content);
+                const label = rows.shift();
+                return ($mol_jsx("details", null,
+                    $mol_jsx("summary", null, line(label)),
+                    NL,
+                    flow(rows.join('\n') + '\n'),
+                    NL));
+            }
             if (token.quote) {
+                return $mol_jsx("blockquote", { style: "break-before: avoid" },
+                    NL,
+                    flow(token.quote.replace(/^" /gm, '')),
+                    NL);
+            }
+            if (token.cut) {
                 return $mol_jsx("blockquote", { style: "break-before: avoid" },
                     NL,
                     flow(token.quote.replace(/^" /gm, '')),
